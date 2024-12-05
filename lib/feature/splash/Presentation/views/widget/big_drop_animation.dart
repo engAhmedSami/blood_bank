@@ -1,4 +1,4 @@
-import 'package:blood_bank/core/utils/assets.dart';
+import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -23,7 +23,7 @@ class BigDropAnimation extends StatelessWidget {
           top: animation.value,
           left: size.width / 3.3 - 50,
           child: SvgPicture.asset(
-            Assets.imagesHugeBlood,
+            Assets.imagesImagesSplashHugeBlood,
             fit: BoxFit.cover,
           ),
         );

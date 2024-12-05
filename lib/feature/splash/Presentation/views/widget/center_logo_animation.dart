@@ -1,4 +1,4 @@
-import 'package:blood_bank/core/utils/assets.dart';
+import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -27,9 +27,9 @@ class CenterLogoAnimation extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(height: 50),
-                  SvgPicture.asset(Assets.imagesLogo),
+                  SvgPicture.asset(Assets.imagesImagesSplashLogo),
                   const SizedBox(height: 20),
-                  SvgPicture.asset(Assets.imagesAppName),
+                  SvgPicture.asset(Assets.imagesImagesSplashAppName),
                 ],
               ),
             ),
