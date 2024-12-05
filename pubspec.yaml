@@ -2,7 +2,7 @@ name: blood_bank
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -31,6 +31,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.1
   flutter_svg: ^2.0.16
   jumping_dot: ^0.0.7
 
@@ -43,7 +44,6 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -79,3 +79,12 @@ flutter_assets:
   output_path: lib/core/utils
   filename: assets.dart
   field_prefix: images
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/app_logo_two.png" 
+  adaptive_icon_foreground: "assets/app_logo_two.png" # Set the foreground image (same or different from image_path)
+  adaptive_icon_background: "#630909"
+  min_sdk_android: 24
