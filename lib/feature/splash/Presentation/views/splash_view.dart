@@ -1,6 +1,6 @@
-import 'package:blood_bank/feature/splash/Presentation/views/widget/big_drop_animation.dart';
-import 'package:blood_bank/feature/splash/Presentation/views/widget/blood_drops_animation.dart';
-import 'package:blood_bank/feature/splash/Presentation/views/widget/center_logo_animation.dart';
+import 'package:blood_bank/feature/splash/presentation/views/widget/big_drop_animation.dart';
+import 'package:blood_bank/feature/splash/presentation/views/widget/blood_drops_animation.dart';
+import 'package:blood_bank/feature/splash/presentation/views/widget/center_logo_animation.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
