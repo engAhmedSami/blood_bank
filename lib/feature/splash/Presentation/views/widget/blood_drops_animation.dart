@@ -1,3 +1,4 @@
+import 'package:blood_bank/core/utils/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -31,7 +32,7 @@ class WaterDropsAnimation extends StatelessWidget {
               left: dropX,
               top: dropY,
               child: SvgPicture.asset(
-                'assets/drop.svg',
+                Assets.imagesDrop,
                 width: 50,
                 height: 50,
                 fit: BoxFit.cover,
