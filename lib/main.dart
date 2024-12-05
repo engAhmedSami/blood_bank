@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:blood_bank/feature/splash/presentation/views/splash_view.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +12,8 @@ class BloodBank extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(fontFamily: 'MPLUSRounded1c'),
       debugShowCheckedModeBanner: false,
       home: SplashView(),
     );

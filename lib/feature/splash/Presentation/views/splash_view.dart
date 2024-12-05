@@ -1,3 +1,4 @@
+import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/feature/splash/presentation/views/widget/big_drop_animation.dart';
 import 'package:blood_bank/feature/splash/presentation/views/widget/blood_drops_animation.dart';
 import 'package:blood_bank/feature/splash/presentation/views/widget/center_logo_animation.dart';
@@ -123,10 +124,8 @@ class SplashViewState extends State<SplashView> with TickerProviderStateMixin {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            "Loading",
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
+          Text("Loading",
+              style: TextStyles.bold19.copyWith(color: Colors.white)),
           const SizedBox(width: 5),
           Transform.translate(
             offset: const Offset(0, 5),
