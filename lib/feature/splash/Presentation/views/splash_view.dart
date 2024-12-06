@@ -139,7 +139,7 @@ class SplashViewState extends State<SplashView> with TickerProviderStateMixin {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("loding".tr(context),
+          Text("loading".tr(context),
               style: TextStyles.bold19.copyWith(color: Colors.white)),
           const SizedBox(width: 5),
           Transform.translate(
