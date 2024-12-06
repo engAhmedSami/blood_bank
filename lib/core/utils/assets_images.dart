@@ -6,9 +6,21 @@ class Assets {
   /// assets/images/app_bar.svg
   static const String imagesAppBar = "assets/images/app_bar.svg";
 
+  /// Assets for imagesApple
+  /// assets/images/apple.svg
+  static const String imagesApple = "assets/images/apple.svg";
+
   /// Assets for imagesArrowRight
   /// assets/images/arrow_right.svg
   static const String imagesArrowRight = "assets/images/arrow_right.svg";
+
+  /// Assets for imagesDeviconGoogle
+  /// assets/images/devicon_google.svg
+  static const String imagesDeviconGoogle = "assets/images/devicon_google.svg";
+
+  /// Assets for imagesLogosFacebook
+  /// assets/images/logos_facebook.svg
+  static const String imagesLogosFacebook = "assets/images/logos_facebook.svg";
 
   /// Assets for imagesOnBordingOnBordingFour
   /// assets/images/on_bording/on_bording_four.svg
