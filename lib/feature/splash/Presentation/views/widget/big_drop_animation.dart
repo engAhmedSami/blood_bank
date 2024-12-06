@@ -23,7 +23,7 @@ class BigDropAnimation extends StatelessWidget {
           top: animation.value,
           left: size.width / 3.3 - 50,
           child: SvgPicture.asset(
-            Assets.imagesImagesSplashHugeBlood,
+            Assets.imagesSplashHugeBlood,
             fit: BoxFit.cover,
           ),
         );

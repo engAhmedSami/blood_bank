@@ -88,4 +88,10 @@ abstract class TextStyles {
     fontSize: 11,
     fontFamily: 'MPLUSRounded1c',
   );
+
+  static const TextStyle regular17 = TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 17,
+    fontFamily: 'MPLUSRounded1c',
+  );
 }

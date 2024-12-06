@@ -2,40 +2,44 @@
 class Assets {
   Assets._();
   
-  /// Assets for imagesImagesOnBordingOnBordingOne
+  /// Assets for imagesArrowRight
+  /// assets/images/arrow_right.svg
+  static const String imagesArrowRight = "assets/images/arrow_right.svg";
+
+  /// Assets for imagesOnBordingOnBordingOne
   /// assets/images/on_bording/on_bording_one.svg
-  static const String imagesImagesOnBordingOnBordingOne = "assets/images/on_bording/on_bording_one.svg";
+  static const String imagesOnBordingOnBordingOne = "assets/images/on_bording/on_bording_one.svg";
 
-  /// Assets for imagesImagesOnBordingOnBordingThree
+  /// Assets for imagesOnBordingOnBordingThree
   /// assets/images/on_bording/on_bording_three.svg
-  static const String imagesImagesOnBordingOnBordingThree = "assets/images/on_bording/on_bording_three.svg";
+  static const String imagesOnBordingOnBordingThree = "assets/images/on_bording/on_bording_three.svg";
 
-  /// Assets for imagesImagesOnBordingOnBordingTwo
+  /// Assets for imagesOnBordingOnBordingTwo
   /// assets/images/on_bording/on_bording_two.svg
-  static const String imagesImagesOnBordingOnBordingTwo = "assets/images/on_bording/on_bording_two.svg";
+  static const String imagesOnBordingOnBordingTwo = "assets/images/on_bording/on_bording_two.svg";
 
-  /// Assets for imagesImagesSplashAppLogo
+  /// Assets for imagesSplashAppLogo
   /// assets/images/splash/app_logo.png
-  static const String imagesImagesSplashAppLogo = "assets/images/splash/app_logo.png";
+  static const String imagesSplashAppLogo = "assets/images/splash/app_logo.png";
 
-  /// Assets for imagesImagesSplashAppLogoTwo
+  /// Assets for imagesSplashAppLogoTwo
   /// assets/images/splash/app_logo_two.png
-  static const String imagesImagesSplashAppLogoTwo = "assets/images/splash/app_logo_two.png";
+  static const String imagesSplashAppLogoTwo = "assets/images/splash/app_logo_two.png";
 
-  /// Assets for imagesImagesSplashAppName
+  /// Assets for imagesSplashAppName
   /// assets/images/splash/app_name.svg
-  static const String imagesImagesSplashAppName = "assets/images/splash/app_name.svg";
+  static const String imagesSplashAppName = "assets/images/splash/app_name.svg";
 
-  /// Assets for imagesImagesSplashDrop
+  /// Assets for imagesSplashDrop
   /// assets/images/splash/drop.svg
-  static const String imagesImagesSplashDrop = "assets/images/splash/drop.svg";
+  static const String imagesSplashDrop = "assets/images/splash/drop.svg";
 
-  /// Assets for imagesImagesSplashHugeBlood
+  /// Assets for imagesSplashHugeBlood
   /// assets/images/splash/Huge_blood.svg
-  static const String imagesImagesSplashHugeBlood = "assets/images/splash/Huge_blood.svg";
+  static const String imagesSplashHugeBlood = "assets/images/splash/Huge_blood.svg";
 
-  /// Assets for imagesImagesSplashLogo
+  /// Assets for imagesSplashLogo
   /// assets/images/splash/logo.svg
-  static const String imagesImagesSplashLogo = "assets/images/splash/logo.svg";
+  static const String imagesSplashLogo = "assets/images/splash/logo.svg";
 }
 

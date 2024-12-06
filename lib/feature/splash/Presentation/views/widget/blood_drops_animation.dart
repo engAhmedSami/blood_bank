@@ -32,7 +32,7 @@ class WaterDropsAnimation extends StatelessWidget {
               left: dropX,
               top: dropY,
               child: SvgPicture.asset(
-                Assets.imagesImagesSplashDrop,
+                Assets.imagesSplashDrop,
                 width: 50,
                 height: 50,
                 fit: BoxFit.cover,

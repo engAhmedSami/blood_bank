@@ -41,6 +41,7 @@ dependencies:
   jumping_dot: ^0.0.7
   provider: ^6.1.2
   shared_preferences: ^2.3.3
+  smooth_page_indicator: ^1.2.0+3
 dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_test:
@@ -83,7 +84,7 @@ flutter_assets:
   assets_path: assets/images/
   output_path: lib/core/utils
   filename: assets_images.dart
-  field_prefix: images
+  field_prefix: null
 
 flutter_launcher_icons:
   android: "launcher_icon"

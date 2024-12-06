@@ -1,4 +1,6 @@
 import 'package:blood_bank/core/utils/app_text_style.dart';
+import 'package:blood_bank/core/utils/page_rout_builder.dart';
+import 'package:blood_bank/feature/on_boarding/presentation/views/on_boarding_view.dart';
 import 'package:blood_bank/feature/splash/presentation/views/widget/big_drop_animation.dart';
 import 'package:blood_bank/feature/splash/presentation/views/widget/blood_drops_animation.dart';
 import 'package:blood_bank/feature/splash/presentation/views/widget/center_logo_animation.dart';
@@ -67,6 +69,18 @@ class SplashViewState extends State<SplashView> with TickerProviderStateMixin {
     );
 
     _startAnimations();
+    _startNavigation();
+  }
+
+  Future<void> _startNavigation() async {
+    // انتظار انتهاء الرسوم المتحركة
+    await Future.delayed(const Duration(seconds: 8));
+    if (!mounted) return;
+    Navigator.of(context).pushReplacement(
+      buildPageRoute(
+        OnBoardingView(),
+      ),
+    );
   }
 
   Future<void> _startAnimations() async {
