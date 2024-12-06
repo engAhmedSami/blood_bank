@@ -7,12 +7,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final IconData? leadingIcon;
   final VoidCallback? onBackPressed;
+  final double? top;
+  final double? left;
 
   const CustomAppBar({
     super.key,
     required this.title,
     this.onBackPressed,
     this.leadingIcon,
+    this.top = 100,
+    this.left = 100,
   });
 
   @override
@@ -39,11 +43,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             height: preferredSize.height,
           ),
           Positioned(
-            top: 100,
-            left: 75,
+            top: top,
+            left: left,
             child: Text(
               title,
-              style: TextStyles.medium40.copyWith(color: Colors.white),
+              style: TextStyles.regular32.copyWith(color: Colors.white),
             ),
           ),
         ],
@@ -52,5 +56,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(205);
+  Size get preferredSize => const Size.fromHeight(220);
 }

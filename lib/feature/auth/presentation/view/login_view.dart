@@ -10,6 +10,8 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        top: 120,
+        left: 95,
         title: 'login'.tr(context),
       ),
       body: const LoginViewBody(),

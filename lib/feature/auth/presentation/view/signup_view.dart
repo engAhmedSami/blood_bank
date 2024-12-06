@@ -10,6 +10,8 @@ class SignupView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        top: 120,
+        leadingIcon: Icons.arrow_back_ios_new_rounded,
         title: 'sign_up'.tr(context),
       ),
       body: const SignupViewBody(),
