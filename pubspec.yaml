@@ -28,11 +28,14 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  
   cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.1
   flutter_launcher_icons: ^0.14.1
+  flutter_localization: ^0.2.3
+  flutter_localizations:
+    sdk: flutter
   flutter_svg: ^2.0.16
   jumping_dot: ^0.0.7
   shared_preferences: ^2.3.3
@@ -56,6 +59,8 @@ flutter:
     - assets/images/on_bording/
     - assets/
     - assets/images/
+    - assets/lang/en.json
+    - assets/lang/ar.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see
@@ -89,4 +94,3 @@ flutter_launcher_icons:
   adaptive_icon_foreground: "assets/images/splash/app_logo_two.png" # Set the foreground image (same or different from image_path)
   adaptive_icon_background: "#630909"
   min_sdk_android: 24
-

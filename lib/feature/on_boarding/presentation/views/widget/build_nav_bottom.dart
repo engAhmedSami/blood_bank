@@ -1,6 +1,7 @@
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/page_rout_builder.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:blood_bank/feature/on_boarding/presentation/views/chooes_to_signup_or_login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -30,7 +31,7 @@ Widget buildNavigationBar(
               padding: const EdgeInsets.symmetric(vertical: 12),
             ),
             child: Text(
-              "Prev",
+              "Prev".tr(context),
               style: TextStyles.bold16.copyWith(color: AppColors.primaryColor),
             ),
           ),
@@ -76,8 +77,8 @@ Widget buildNavigationBar(
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-                child: const Text(
-                  "Start",
+                child: Text(
+                  "Start".tr(context),
                   style: TextStyle(color: Colors.white),
                 ),
               )
@@ -92,7 +93,7 @@ Widget buildNavigationBar(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
                 child: Text(
-                  "Next",
+                  "Next".tr(context),
                   style:
                       TextStyles.bold16.copyWith(color: AppColors.primaryColor),
                 ),
