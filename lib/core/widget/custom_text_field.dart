@@ -1,4 +1,5 @@
 import 'package:blood_bank/core/utils/app_colors.dart';
+import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -28,6 +29,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: TextStyles.regular13.copyWith(color: Colors.grey),
       controller: controller,
       obscureText: obobscureText,
       onSaved: onSaved,

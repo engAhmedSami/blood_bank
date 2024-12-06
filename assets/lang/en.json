@@ -16,7 +16,7 @@
     "Start": "Start",
     "Create your account" : "Create your account",
     "Register" : "Register now to create a new account",
-    "Already have an account" : "Already have an account",
+    "Already have an account" : "Already have an account? ",
     "Name" : "Name",
     "Email" : "Email",
     "Password" : "Password",
@@ -28,9 +28,14 @@
     "Welcome Back" : "Welcome Back!",
     "Let’s login for explore continues" : "Let’s login for explore continues.",
     "Forgot Password" : "Forgot Password",
-    "Don't have an account" : "Don't have an account",
+    "Don't have an account" : "Don't have an account? ",
     "Remember me" : "Remember me",
     "Enter Eamil"   : "Please enter your email. We’ll send you a link to reset your password.",
     "Send code" : "Send code",
-    "Go Back To?" : "Go Back To?"
+    "Go Back To?" : "Go Back To?",
+    "or continue with" : "or continue with",
+    "By creating an account, you agree to" : "By creating an account, you agree to ",
+   "the terms" : "the terms",
+   "and conditions of our policy" : "and conditions of our policy",
+   "Please accept terms and conditions" : "Please accept terms and conditions"
 }

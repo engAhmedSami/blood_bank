@@ -17,6 +17,11 @@ abstract class TextStyles {
     fontSize: 13,
     fontFamily: 'MPLUSRounded1c',
   );
+  static const TextStyle semiBold14 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 14,
+    fontFamily: 'MPLUSRounded1c',
+  );
 
   static const TextStyle regular13 = TextStyle(
     fontWeight: FontWeight.normal,
@@ -92,6 +97,11 @@ abstract class TextStyles {
   static const TextStyle regular17 = TextStyle(
     fontWeight: FontWeight.normal,
     fontSize: 17,
+    fontFamily: 'MPLUSRounded1c',
+  );
+  static const TextStyle medium40 = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 40,
     fontFamily: 'MPLUSRounded1c',
   );
 }

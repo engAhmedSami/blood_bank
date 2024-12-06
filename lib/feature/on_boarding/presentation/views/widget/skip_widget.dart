@@ -88,20 +88,23 @@ class SkipWidget extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        GestureDetector(
-          onTap: () {
-            pageController.animateToPage(3,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInOut);
-          },
-          child: Opacity(
-            opacity: 0.5,
-            child: Text(
-              'Skip'.tr(context),
-              style: TextStyles.bold19.copyWith(color: Colors.grey.shade900),
-            ),
-          ),
-        ),
+        currentPage == 2
+            ? const SizedBox()
+            : GestureDetector(
+                onTap: () {
+                  pageController.animateToPage(3,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut);
+                },
+                child: Opacity(
+                  opacity: 0.3,
+                  child: Text(
+                    'Skip'.tr(context),
+                    style:
+                        TextStyles.bold19.copyWith(color: Colors.grey.shade900),
+                  ),
+                ),
+              ),
       ],
     );
   }

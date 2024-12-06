@@ -16,7 +16,7 @@
     "Start": "ابدأ",
     "Create your account": "إنشاء حسابك",
     "Register": "سجل الآن لإنشاء حساب جديد",
-    "Already have an account": "لديك حساب بالفعل",
+    "Already have an account": " لديك حساب بالفعل؟",
     "Name": "الاسم",
     "Email": "البريد الإلكتروني",
     "Password": "كلمة المرور",
@@ -28,9 +28,14 @@
     "Welcome Back": "مرحبًا بعودتك!",
     "Let’s login for explore continues": "دعنا نسجل الدخول لمواصلة الاستكشاف.",
     "Forgot Password": "نسيت كلمة المرور",
-    "Don't have an account": "ليس لديك حساب",
+    "Don't have an account": "ليس لديك حساب؟",
     "Remember me": "تذكرني",
     "Enter Eamil": "يرجى إدخال بريدك الإلكتروني. سنرسل لك رابطًا لإعادة تعيين كلمة المرور.",
     "Send code": "إرسال الرمز",
-    "Go Back To?": "العودة إلى؟"
+    "Go Back To?": "العودة إلى؟",
+    "or continue with": "أو تابع باستخدام",
+    "By creating an account, you agree to": "بإنشائك حسابًا، فإنك توافق على",
+    "the terms": "الشروط",
+    "and conditions of our policy": "والأحكام الخاصة بسياسة الخصوصية",
+    "Please accept terms and conditions": "يرجى قبول الشروط والأحكام"
 }

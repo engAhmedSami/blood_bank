@@ -38,14 +38,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           SizedBox(
             height: preferredSize.height,
           ),
-          Align(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 20),
-              child: Text(
-                title,
-                style: TextStyles.bold23,
-              ),
+          Positioned(
+            top: 100,
+            left: 75,
+            child: Text(
+              title,
+              style: TextStyles.medium40.copyWith(color: Colors.white),
             ),
           ),
         ],
@@ -54,5 +52,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(210);
+  Size get preferredSize => const Size.fromHeight(205);
 }

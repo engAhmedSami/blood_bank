@@ -2,8 +2,8 @@ import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:flutter/material.dart';
 
-class CustomBotton extends StatelessWidget {
-  const CustomBotton(
+class CustomButton extends StatelessWidget {
+  const CustomButton(
       {super.key,
       required this.onPressed,
       required this.text,

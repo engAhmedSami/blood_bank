@@ -14,13 +14,13 @@ class Assets {
   /// assets/images/arrow_right.svg
   static const String imagesArrowRight = "assets/images/arrow_right.svg";
 
-  /// Assets for imagesDeviconGoogle
-  /// assets/images/devicon_google.svg
-  static const String imagesDeviconGoogle = "assets/images/devicon_google.svg";
+  /// Assets for imagesFacebook
+  /// assets/images/facebook.svg
+  static const String imagesFacebook = "assets/images/facebook.svg";
 
-  /// Assets for imagesLogosFacebook
-  /// assets/images/logos_facebook.svg
-  static const String imagesLogosFacebook = "assets/images/logos_facebook.svg";
+  /// Assets for imagesGoogel
+  /// assets/images/googel.svg
+  static const String imagesGoogel = "assets/images/googel.svg";
 
   /// Assets for imagesOnBordingOnBordingFour
   /// assets/images/on_bording/on_bording_four.svg
