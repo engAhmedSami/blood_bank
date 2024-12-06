@@ -1,7 +1,7 @@
-import 'dart:developer';
-
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
+import 'package:blood_bank/core/utils/page_rout_builder.dart';
+import 'package:blood_bank/feature/on_boarding/presentation/views/chooes_to_signup_or_login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -63,7 +63,11 @@ Widget buildNavigationBar(
         child: currentPage == 2
             ? ElevatedButton(
                 onPressed: () {
-                  log("Start button pressed");
+                  Navigator.of(context).pushReplacement(
+                    buildPageRoute(
+                      ChooesToSignupOrLoginView(),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryColor,

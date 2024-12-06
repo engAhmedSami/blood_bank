@@ -2,9 +2,17 @@
 class Assets {
   Assets._();
   
+  /// Assets for imagesAppBar
+  /// assets/images/app_bar.svg
+  static const String imagesAppBar = "assets/images/app_bar.svg";
+
   /// Assets for imagesArrowRight
   /// assets/images/arrow_right.svg
   static const String imagesArrowRight = "assets/images/arrow_right.svg";
+
+  /// Assets for imagesOnBordingOnBordingFour
+  /// assets/images/on_bording/on_bording_four.svg
+  static const String imagesOnBordingOnBordingFour = "assets/images/on_bording/on_bording_four.svg";
 
   /// Assets for imagesOnBordingOnBordingOne
   /// assets/images/on_bording/on_bording_one.svg

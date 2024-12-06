@@ -1,4 +1,7 @@
+import 'package:blood_bank/core/utils/app_text_style.dart';
+import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -18,12 +21,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       height: preferredSize.height,
       child: Stack(
         children: [
-          // SvgPicture.asset(
-          //   // Assets.imagesCurve,
-          //   // fit: BoxFit.cover,
-          //   // width: MediaQuery.of(context).size.width,
-          //   height: preferredSize.height,
-          // ),
+          SvgPicture.asset(
+            Assets.imagesAppBar,
+            fit: BoxFit.cover,
+            width: MediaQuery.of(context).size.width,
+            height: preferredSize.height,
+          ),
           Positioned(
             top: 50,
             left: 16,
@@ -35,13 +38,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           SizedBox(
             height: preferredSize.height,
           ),
-          const Align(
+          Align(
             alignment: Alignment.center,
             child: Padding(
               padding: EdgeInsets.only(bottom: 20),
-              // child: Text(title,
-              //     style: AppStyles.styleMedium32(context)
-              //         .copyWith(color: Colors.white)),
+              child: Text(
+                title,
+                style: TextStyles.bold23,
+              ),
             ),
           ),
         ],

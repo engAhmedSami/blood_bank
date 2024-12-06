@@ -7,11 +7,11 @@ class PageViewItem extends StatelessWidget {
     super.key,
     required this.subtitle,
     required this.image,
-    required this.tital,
+    required this.titel,
   });
 
   final String image;
-  final String tital;
+  final String titel;
   final String subtitle;
 
   @override
@@ -32,7 +32,7 @@ class PageViewItem extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  tital,
+                  titel,
                   style: TextStyles.bold23,
                   textAlign: TextAlign.center,
                 ),
