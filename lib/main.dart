@@ -23,6 +23,7 @@ class BloodBank extends StatelessWidget {
       child: BlocBuilder<LocaleCubit, ChangeLocaleState>(
         builder: (context, state) {
           return MaterialApp(
+            theme: ThemeData(fontFamily: 'iwanzaza'),
             locale: state.locale,
             supportedLocales: const [Locale('en'), Locale('ar')],
             localizationsDelegates: const [
@@ -47,10 +48,5 @@ class BloodBank extends StatelessWidget {
         },
       ),
     );
-    // MaterialApp(
-    //   theme: ThemeData(fontFamily: 'MPLUSRounded1c'),
-    //   debugShowCheckedModeBanner: false,
-    //   home: const SplashView(),
-    // );
   }
 }

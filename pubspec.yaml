@@ -58,7 +58,7 @@ flutter:
   assets:
     - assets/images/splash/
     - assets/images/on_bording/
-    - assets/
+    - assets/fonts/
     - assets/images/
     - assets/lang/en.json
     - assets/lang/ar.json
@@ -71,14 +71,19 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-fonts:
-  - family: MPLUSRounded1c
+  fonts:
+  - family: iwanzaza
     fonts:
-      - asset: assets/fonts/MPLUSRounded1c-Regular.ttf
-      - asset: assets/fonts/MPLUSRounded1c-Medium.ttf
+      - asset: assets/fonts/iwanzaza-Regular.otf
         weight: 500
-      - asset: assets/fonts/MPLUSRounded1c-Bold.ttf
+      - asset: assets/fonts/iwanzaza-Medium.otf
+        weight: 600
+      - asset: assets/fonts/iwanzaza-Light.otf
+        weight: 400
+      - asset: assets/fonts/iwanzaza-Black.otf
         weight: 700
+      - asset: assets/fonts/iwanzaza-Bold.otf
+        weight: 900
 # For details regarding fonts from package dependencies,
 # see https://flutter.dev/to/font-from-package
 flutter_assets:
