@@ -1,11 +1,24 @@
+import 'package:blood_bank/constants.dart';
+import 'package:blood_bank/core/services/custom_block_observer.dart';
+import 'package:blood_bank/core/services/get_it_service.dart';
 import 'package:blood_bank/feature/localization/cubit/locale_cubit.dart';
 import 'package:blood_bank/feature/splash/presentation/views/splash_view.dart';
+import 'package:blood_bank/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'feature/localization/app_localizations.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
+  setupGetit();
+  Bloc.observer = CustomBlockObserver();
   runApp(const BloodBank());
 }
 

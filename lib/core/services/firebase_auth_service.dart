@@ -1,0 +1,215 @@
+import 'dart:developer';
+import 'package:blood_bank/core/errors/exceptions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+class FirebaseAuthService {
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+  /// Creates a new user with email and password and sends email verification.
+  Future<User> createUserWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      await credential.user!.sendEmailVerification();
+      return credential.user!;
+    } on FirebaseAuthException catch (e) {
+      log('Exception in createUserWithEmailAndPassword: ${e.toString()}');
+      if (e.code == 'weak-password') {
+        throw CustomExceptions(
+          message: 'The password is too weak.',
+        );
+      } else if (e.code == 'email-already-in-use') {
+        throw CustomExceptions(
+          message: 'The email address is already in use.',
+        );
+      } else if (e.code == 'invalid-email') {
+        throw CustomExceptions(
+          message: 'Invalid email format.',
+        );
+      } else if (e.code == 'network-request-failed') {
+        throw CustomExceptions(
+          message: 'No internet connection. Please try again later.',
+        );
+      } else {
+        throw CustomExceptions(
+          message: 'An unexpected error occurred.',
+        );
+      }
+    } catch (e) {
+      log('Exception in createUserWithEmailAndPassword: ${e.toString()}');
+      throw CustomExceptions(
+        message: 'An unexpected error occurred.',
+      );
+    }
+  }
+
+  /// Signs in a user using email and password.
+  Future<User> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      if (credential.user != null && !credential.user!.emailVerified) {
+        await firebaseAuth.signOut();
+        throw CustomExceptions(
+          message: 'Email not verified. Please check your inbox.',
+        );
+      }
+
+      return credential.user!;
+    } on FirebaseAuthException catch (e) {
+      log('Exception in signInWithEmailAndPassword: ${e.toString()}');
+      if (e.code == 'user-not-found') {
+        throw CustomExceptions(
+          message: 'User not found.',
+        );
+      } else if (e.code == 'wrong-password') {
+        throw CustomExceptions(
+          message: 'Incorrect password.',
+        );
+      } else if (e.code == 'network-request-failed') {
+        throw CustomExceptions(
+          message: 'No internet connection. Please try again later.',
+        );
+      } else {
+        throw CustomExceptions(
+          message: 'An unexpected error occurred.',
+        );
+      }
+    } catch (e) {
+      log('Exception in signInWithEmailAndPassword: ${e.toString()}');
+      throw CustomExceptions(
+        message: 'An unexpected error occurred.',
+      );
+    }
+  }
+
+  /// Signs in a user with Google.
+  Future<User> signInWithGoogle() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    try {
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      return (await FirebaseAuth.instance.signInWithCredential(credential))
+          .user!;
+    } on FirebaseAuthException catch (e) {
+      log('Exception in signInWithGoogle: ${e.toString()}');
+      if (e.code == 'account-exists-with-different-credential') {
+        throw CustomExceptions(
+          message: 'Account already exists with different credentials.',
+        );
+      } else {
+        throw CustomExceptions(
+          message: 'An unexpected error occurred.',
+        );
+      }
+    } catch (e) {
+      log('Exception in signInWithGoogle: ${e.toString()}');
+      throw CustomExceptions(
+        message: 'An unexpected error occurred.',
+      );
+    }
+  }
+
+  /// Signs in a user with Facebook.
+  Future<User> signInWithFacebook() async {
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+    try {
+      final OAuthCredential facebookAuthCredential =
+          FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+
+      return (await FirebaseAuth.instance
+              .signInWithCredential(facebookAuthCredential))
+          .user!;
+    } on FirebaseAuthException catch (e) {
+      log('Exception in signInWithFacebook: ${e.toString()}');
+      if (e.code == 'account-exists-with-different-credential') {
+        throw CustomExceptions(
+          message: 'Account already exists with different credentials.',
+        );
+      } else {
+        throw CustomExceptions(
+          message: 'An unexpected error occurred.',
+        );
+      }
+    } catch (e) {
+      log('Exception in signInWithFacebook: ${e.toString()}');
+      throw CustomExceptions(
+        message: 'An unexpected error occurred.',
+      );
+    }
+  }
+
+  /// Sends a password reset email to a user.
+  Future<void> sendPasswordResetLink({required String email}) async {
+    try {
+      await firebaseAuth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      log('Exception in sendPasswordResetLink: ${e.toString()}');
+      if (e.code == 'invalid-email') {
+        throw CustomExceptions(
+          message: 'Invalid email format.',
+        );
+      } else {
+        throw CustomExceptions(
+          message: e.message ?? 'An unexpected error occurred.',
+        );
+      }
+    } catch (e) {
+      log('Exception in sendPasswordResetLink: ${e.toString()}');
+      throw CustomExceptions(
+        message: 'An unexpected error occurred.',
+      );
+    }
+  }
+
+  /// Signs out the user from all sessions and providers.
+  Future<void> signOut() async {
+    await firebaseAuth.signOut();
+    await GoogleSignIn().signOut();
+    await FacebookAuth.instance.logOut();
+  }
+
+  /// Deletes the current logged-in user.
+  Future<void> deleteUser() async {
+    try {
+      if (firebaseAuth.currentUser != null) {
+        await firebaseAuth.currentUser!.delete();
+      } else {
+        throw CustomExceptions(
+          message: 'No user currently logged in.',
+        );
+      }
+    } catch (e) {
+      log('Exception in deleteUser: ${e.toString()}');
+      throw CustomExceptions(
+        message: 'Failed to delete user.',
+      );
+    }
+  }
+
+  /// Checks if a user is already logged in.
+  bool isLoggedIn() {
+    return firebaseAuth.currentUser != null;
+  }
+}

@@ -29,7 +29,7 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: TextStyles.regular13.copyWith(color: Colors.grey),
+      style: TextStyles.semiBold14,
       controller: controller,
       obscureText: obobscureText,
       onSaved: onSaved,

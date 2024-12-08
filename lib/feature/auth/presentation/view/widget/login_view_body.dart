@@ -6,6 +6,7 @@ import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/core/widget/custom_name.dart';
 import 'package:blood_bank/core/widget/custom_text_field.dart';
 import 'package:blood_bank/core/widget/under_line.dart';
+import 'package:blood_bank/feature/auth/presentation/manager/signin_cubit/signin_cubit.dart';
 import 'package:blood_bank/feature/auth/presentation/view/forgot_password_view.dart';
 import 'package:blood_bank/feature/auth/presentation/view/widget/dont_have_an_account_widget.dart';
 import 'package:blood_bank/feature/auth/presentation/view/widget/or_divider.dart';
@@ -13,6 +14,7 @@ import 'package:blood_bank/feature/auth/presentation/view/widget/password_field.
 import 'package:blood_bank/feature/auth/presentation/view/widget/remember_me.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'social_login_button.dart';
 
 class LoginViewBody extends StatefulWidget {
@@ -105,7 +107,17 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 ],
               ),
               const SizedBox(height: 32),
-              CustomButton(onPressed: () {}, text: "login".tr(context)),
+              CustomButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      formKey.currentState!.save();
+                      context.read<SigninCubit>().signIn(
+                            email,
+                            password,
+                          );
+                    }
+                  },
+                  text: "login".tr(context)),
               const SizedBox(height: 16),
               const DontHaveAnAccountWidget(),
               const SizedBox(height: 12),
@@ -115,7 +127,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SocialLoginButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<SigninCubit>().signInWithGoogle();
+                    },
                     image: Assets.imagesGoogel,
                   ),
                   const SizedBox(width: 24),

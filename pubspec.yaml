@@ -28,18 +28,28 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  cloud_firestore: ^5.5.1
   cupertino_icons: ^1.0.8
+  dartz: ^0.10.1
+  firebase_auth: ^5.3.4
+  firebase_core: ^3.8.1
+  firebase_storage: ^12.3.7
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.1
+  flutter_bloc: ^8.1.6
+  flutter_facebook_auth: ^7.1.1
   flutter_launcher_icons: ^0.14.1
   flutter_localization: ^0.2.3
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^2.0.16
+  get_it: ^8.0.2
+  google_sign_in: ^6.2.2
   jumping_dot: ^0.0.7
+  modal_progress_hud_nsn: ^0.5.1
   shared_preferences: ^2.3.3
   smooth_page_indicator: ^1.2.0+3
+  supabase_flutter: ^2.8.1
   top_snackbar_flutter: ^3.1.0
 dev_dependencies:
   flutter_lints: ^4.0.0
@@ -72,18 +82,18 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-  - family: iwanzaza
-    fonts:
-      - asset: assets/fonts/iwanzaza-Regular.otf
-        weight: 500
-      - asset: assets/fonts/iwanzaza-Medium.otf
-        weight: 600
-      - asset: assets/fonts/iwanzaza-Light.otf
-        weight: 400
-      - asset: assets/fonts/iwanzaza-Black.otf
-        weight: 700
-      - asset: assets/fonts/iwanzaza-Bold.otf
-        weight: 900
+    - family: iwanzaza
+      fonts:
+        - asset: assets/fonts/iwanzaza-Regular.otf
+          weight: 500
+        - asset: assets/fonts/iwanzaza-Medium.otf
+          weight: 600
+        - asset: assets/fonts/iwanzaza-Light.otf
+          weight: 400
+        - asset: assets/fonts/iwanzaza-Black.otf
+          weight: 700
+        - asset: assets/fonts/iwanzaza-Bold.otf
+          weight: 900
 # For details regarding fonts from package dependencies,
 # see https://flutter.dev/to/font-from-package
 flutter_assets:

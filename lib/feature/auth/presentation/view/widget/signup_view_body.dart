@@ -4,11 +4,13 @@ import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/core/widget/custom_name.dart';
 import 'package:blood_bank/core/widget/custom_text_field.dart';
+import 'package:blood_bank/feature/auth/presentation/manager/signup_cubit/signup_cubit.dart';
 import 'package:blood_bank/feature/auth/presentation/view/widget/have_an_account_widget.dart';
 import 'package:blood_bank/feature/auth/presentation/view/widget/password_field.dart';
 import 'package:blood_bank/feature/auth/presentation/view/widget/terms_and_condition.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignupViewBody extends StatefulWidget {
   const SignupViewBody({super.key});
@@ -149,7 +151,15 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                       if (!isTermsAccepted) {
                         failuerTopSnackBar(context,
                             'Please accept terms and conditions'.tr(context));
-                      } else {}
+                      } else {
+                        await context
+                            .read<SignupCubit>()
+                            .createUserWithEmailAndPassword(
+                              email,
+                              password,
+                              name,
+                            );
+                      }
                     }
                   },
                   text: "sign_up".tr(context)),
