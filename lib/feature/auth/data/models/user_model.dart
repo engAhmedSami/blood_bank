@@ -9,6 +9,7 @@ class UserModel extends UserEntity {
   final String location;
   final String contactNumber;
   final String photoUrl;
+  final String userState;
 
   UserModel({
     required super.name,
@@ -21,6 +22,7 @@ class UserModel extends UserEntity {
     required this.location,
     required this.contactNumber,
     required this.photoUrl,
+    required this.userState,
   });
 
   /// مُعامل لتحويل بيانات FirebaseUser إلى UserModel
@@ -36,6 +38,7 @@ class UserModel extends UserEntity {
       location: '',
       contactNumber: '',
       photoUrl: user.photoURL ?? '',
+      userState: '',
     );
   }
 
@@ -52,6 +55,7 @@ class UserModel extends UserEntity {
       location: json['location'] ?? '',
       contactNumber: json['contactNumber'] ?? '',
       photoUrl: json['photoUrl'] ?? '',
+      userState: json['userState'] ?? '',
     );
   }
 
@@ -69,6 +73,7 @@ class UserModel extends UserEntity {
       'location': location,
       'contactNumber': contactNumber,
       'photoUrl': photoUrl,
+      'userState': userState,
     };
   }
 
@@ -85,6 +90,7 @@ class UserModel extends UserEntity {
       location: '',
       contactNumber: '',
       photoUrl: '',
+      userState: '',
     );
   }
 }

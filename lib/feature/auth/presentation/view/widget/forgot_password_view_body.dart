@@ -2,8 +2,10 @@ import 'package:blood_bank/constants.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/core/widget/custom_text_field.dart';
+import 'package:blood_bank/feature/auth/presentation/manager/signin_cubit/signin_cubit.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ForgotPasswordViewBody extends StatefulWidget {
   const ForgotPasswordViewBody({super.key});
@@ -41,7 +43,13 @@ class _ForgotPasswordViewBodyState extends State<ForgotPasswordViewBody> {
               controller: emailController,
             ),
             const SizedBox(height: 24),
-            CustomButton(onPressed: () {}, text: 'Send code'.tr(context)),
+            CustomButton(
+                onPressed: () {
+                  context
+                      .read<SigninCubit>()
+                      .sendPasswordResetLink(emailController.text);
+                },
+                text: 'Send code'.tr(context)),
           ],
         ),
       ),

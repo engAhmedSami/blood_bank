@@ -10,6 +10,7 @@ import 'package:blood_bank/core/utils/backend_endpoint.dart';
 import 'package:blood_bank/feature/auth/data/models/user_model.dart';
 import 'package:blood_bank/feature/auth/domain/entites/user_entity.dart';
 import 'package:blood_bank/feature/auth/domain/repos/auth_repo.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -142,14 +143,19 @@ class AuthRepoImpl extends AuthRepo {
   @override
   Future<Either<Failures, void>> sendPasswordResetLink(String email) async {
     try {
-      await firebaseAuthService.sendPasswordResetLink(email: email);
-      return right(null);
-    } on CustomExceptions catch (e) {
-      log('FirebaseAuthException in AuthRepoImpl.sendPasswordResetLink :${e.toString()}');
+      // تحقق من وجود البريد الإلكتروني
+      final emailExists = await isEmailExists(email);
+      if (!emailExists) {
+        return left(ServerFailure('Email not found. Please register first.'));
+      }
 
-      return left(ServerFailure(e.message));
+      // إرسال رابط إعادة تعيين كلمة المرور
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      return right(null);
+    } on FirebaseAuthException catch (e) {
+      return left(ServerFailure(e.message ?? 'Invalid email address.'));
     } catch (e) {
-      log('Exception in AuthRepoImpl.sendPasswordResetLink :${e.toString()}');
+      log('Error in sendPasswordResetLink: ${e.toString()}');
       return left(ServerFailure('An error occurred. Please try again later.'));
     }
   }
@@ -173,5 +179,12 @@ class AuthRepoImpl extends AuthRepo {
   Future<void> saveUserData({required UserEntity user}) async {
     var jsonData = jsonEncode(UserModel.fromEntity(user).toMap());
     await Prefs.setString(kUserData, jsonData);
+  }
+
+  Future<bool> isEmailExists(String email) async {
+    final usersCollection = FirebaseFirestore.instance.collection('users');
+    final querySnapshot =
+        await usersCollection.where('email', isEqualTo: email).get();
+    return querySnapshot.docs.isNotEmpty;
   }
 }
