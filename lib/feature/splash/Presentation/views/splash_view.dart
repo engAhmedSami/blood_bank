@@ -89,7 +89,7 @@ class SplashViewState extends State<SplashView> with TickerProviderStateMixin {
               const CustomBottomNavBar(),
             ),
           );
-        } else {
+        } else if (!isLoggedIn) {
           Navigator.of(context).pushReplacement(
             buildPageRoute(
               const ChooesToSignupOrLoginView(),
