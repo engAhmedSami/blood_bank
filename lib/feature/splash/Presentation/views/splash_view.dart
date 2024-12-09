@@ -3,6 +3,7 @@ import 'package:blood_bank/core/services/firebase_auth_service.dart';
 import 'package:blood_bank/core/services/shared_preferences_sengleton.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/page_rout_builder.dart';
+import 'package:blood_bank/feature/home/presentation/views/custom_bottom_nav_bar.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:blood_bank/feature/on_boarding/presentation/views/chooes_to_signup_or_login_view.dart';
 import 'package:blood_bank/feature/on_boarding/presentation/views/on_boarding_view.dart';
@@ -75,19 +76,19 @@ class SplashViewState extends State<SplashView> with TickerProviderStateMixin {
     excuteNaviagtion();
   }
 
-  void excuteNaviagtion() {
-    // ignore: unused_local_variable
-    bool isOnBoardingViewSeen = Prefs.getBool(kIsOnBoardingViewSeen);
+  void excuteNaviagtion() async {
+    bool? isOnBoardingViewSeen = await Prefs.getBool(kIsOnBoardingViewSeen);
+    bool isLoggedIn = FirebaseAuthService().isLoggedIn();
+
     Future.delayed(const Duration(seconds: 3), () {
-      if (isOnBoardingViewSeen) {
-        var isLoggedIn = FirebaseAuthService().isLoggedIn();
-        if (!mounted) return;
+      if (!mounted) return;
+      if (isOnBoardingViewSeen == true) {
         if (isLoggedIn) {
-          // Navigator.of(context).pushReplacement(
-          //   buildPageRoute(
-          //     const OnBoardingView(),
-          //   ),
-          // );
+          Navigator.of(context).pushReplacement(
+            buildPageRoute(
+              const CustomBottomNavBar(),
+            ),
+          );
         } else {
           Navigator.of(context).pushReplacement(
             buildPageRoute(
@@ -96,7 +97,6 @@ class SplashViewState extends State<SplashView> with TickerProviderStateMixin {
           );
         }
       } else {
-        if (!mounted) return;
         Navigator.of(context).pushReplacement(
           buildPageRoute(
             const OnBoardingView(),

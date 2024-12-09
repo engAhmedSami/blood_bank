@@ -2,6 +2,10 @@
 class Assets {
   Assets._();
   
+  /// Assets for imagesAdd
+  /// assets/images/add.svg
+  static const String imagesAdd = "assets/images/add.svg";
+
   /// Assets for imagesAppBar
   /// assets/images/app_bar.svg
   static const String imagesAppBar = "assets/images/app_bar.svg";
@@ -14,6 +18,10 @@ class Assets {
   /// assets/images/arrow_right.svg
   static const String imagesArrowRight = "assets/images/arrow_right.svg";
 
+  /// Assets for imagesDoner
+  /// assets/images/doner.svg
+  static const String imagesDoner = "assets/images/doner.svg";
+
   /// Assets for imagesFacebook
   /// assets/images/facebook.svg
   static const String imagesFacebook = "assets/images/facebook.svg";
@@ -21,6 +29,14 @@ class Assets {
   /// Assets for imagesGoogel
   /// assets/images/googel.svg
   static const String imagesGoogel = "assets/images/googel.svg";
+
+  /// Assets for imagesHome
+  /// assets/images/home.svg
+  static const String imagesHome = "assets/images/home.svg";
+
+  /// Assets for imagesNeed
+  /// assets/images/need.svg
+  static const String imagesNeed = "assets/images/need.svg";
 
   /// Assets for imagesOnBordingOnBordingFour
   /// assets/images/on_bording/on_bording_four.svg
@@ -37,6 +53,10 @@ class Assets {
   /// Assets for imagesOnBordingOnBordingTwo
   /// assets/images/on_bording/on_bording_two.svg
   static const String imagesOnBordingOnBordingTwo = "assets/images/on_bording/on_bording_two.svg";
+
+  /// Assets for imagesProfile
+  /// assets/images/profile.svg
+  static const String imagesProfile = "assets/images/profile.svg";
 
   /// Assets for imagesSplashAppLogo
   /// assets/images/splash/app_logo.png

@@ -56,7 +56,7 @@ class BloodBank extends StatelessWidget {
               return supportedLocales.first;
             },
             debugShowCheckedModeBanner: false,
-            home: const SplashView(),
+            home: SplashView(),
           );
         },
       ),

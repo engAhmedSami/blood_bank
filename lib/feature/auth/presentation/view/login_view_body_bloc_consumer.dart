@@ -1,7 +1,9 @@
 import 'package:blood_bank/core/helper_function/failuer_top_snak_bar.dart';
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/core/utils/custom_progrss_hud.dart';
+import 'package:blood_bank/core/utils/page_rout_builder.dart';
 import 'package:blood_bank/feature/auth/presentation/manager/signin_cubit/signin_cubit.dart';
+import 'package:blood_bank/feature/auth/presentation/view/donor_or_need.dart';
 import 'package:blood_bank/feature/auth/presentation/view/widget/login_view_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,6 +21,11 @@ class LoginViewBodyBlocConsumer extends StatelessWidget {
           succesTopSnackBar(
             context,
             'Signin Successfully',
+          );
+          Navigator.of(context).pushReplacement(
+            buildPageRoute(
+              const DonorOrNeed(),
+            ),
           );
         }
         if (state is SigninFailure) {
