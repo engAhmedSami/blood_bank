@@ -1,13 +1,16 @@
+import 'package:blood_bank/constants.dart';
+import 'package:blood_bank/core/services/firebase_auth_service.dart';
+import 'package:blood_bank/core/services/shared_preferences_sengleton.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/page_rout_builder.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
+import 'package:blood_bank/feature/on_boarding/presentation/views/chooes_to_signup_or_login_view.dart';
 import 'package:blood_bank/feature/on_boarding/presentation/views/on_boarding_view.dart';
 import 'package:blood_bank/feature/splash/presentation/views/widget/big_drop_animation.dart';
 import 'package:blood_bank/feature/splash/presentation/views/widget/blood_drops_animation.dart';
 import 'package:blood_bank/feature/splash/presentation/views/widget/center_logo_animation.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
-
 import 'package:jumping_dot/jumping_dot.dart';
 
 class SplashView extends StatefulWidget {
@@ -22,7 +25,6 @@ class SplashViewState extends State<SplashView> with TickerProviderStateMixin {
   late AnimationController _bigDropMoveController;
   late AnimationController _logoController;
   late AnimationController _fadeController;
-
   late Animation<double> _bigDropYAnimation;
   late Animation<double> _logoScaleAnimation;
   late Animation<double> _fadeAnimation;
@@ -70,18 +72,38 @@ class SplashViewState extends State<SplashView> with TickerProviderStateMixin {
     );
 
     _startAnimations();
-    _startNavigation();
+    excuteNaviagtion();
   }
 
-  Future<void> _startNavigation() async {
-    // انتظار انتهاء الرسوم المتحركة
-    await Future.delayed(const Duration(seconds: 8));
-    if (!mounted) return;
-    Navigator.of(context).pushReplacement(
-      buildPageRoute(
-        OnBoardingView(),
-      ),
-    );
+  void excuteNaviagtion() {
+    // ignore: unused_local_variable
+    bool isOnBoardingViewSeen = Prefs.getBool(kIsOnBoardingViewSeen);
+    Future.delayed(const Duration(seconds: 3), () {
+      if (isOnBoardingViewSeen) {
+        var isLoggedIn = FirebaseAuthService().isLoggedIn();
+        if (!mounted) return;
+        if (isLoggedIn) {
+          // Navigator.of(context).pushReplacement(
+          //   buildPageRoute(
+          //     const OnBoardingView(),
+          //   ),
+          // );
+        } else {
+          Navigator.of(context).pushReplacement(
+            buildPageRoute(
+              const ChooesToSignupOrLoginView(),
+            ),
+          );
+        }
+      } else {
+        if (!mounted) return;
+        Navigator.of(context).pushReplacement(
+          buildPageRoute(
+            const OnBoardingView(),
+          ),
+        );
+      }
+    });
   }
 
   Future<void> _startAnimations() async {

@@ -1,3 +1,5 @@
+import 'package:blood_bank/constants.dart';
+import 'package:blood_bank/core/services/shared_preferences_sengleton.dart';
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/page_rout_builder.dart';
@@ -84,6 +86,7 @@ Widget buildNavigationBar(
               )
             : TextButton(
                 onPressed: () {
+                  Prefs.setBool(kIsOnBoardingViewSeen, true);
                   pageController.nextPage(
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
