@@ -13,7 +13,6 @@ import 'package:blood_bank/feature/auth/domain/repos/auth_repo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepoImpl extends AuthRepo {
   final FirebaseAuthService firebaseAuthService;
@@ -27,18 +26,30 @@ class AuthRepoImpl extends AuthRepo {
   @override
   Future<Either<Failures, UserEntity>> createUserWithEmailAndPassword(
       String email, String password, String name) async {
+    User? user;
+
     try {
       var user = await firebaseAuthService.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      final userEntity = UserModel.fromFirebaseUser(user);
+      var userEntity = UserEntity(
+        name: name,
+        email: email,
+        uId: user.uid,
+      );
 
       await addUserData(user: userEntity);
+      await saveUserData(user: userEntity);
+
       return right(userEntity);
     } on CustomExceptions catch (e) {
+      await deleteUser(user);
+
       return left(ServerFailure(e.message));
     } catch (e) {
+      await deleteUser(user);
+
       log(
         'Exception in AuthRepoImpl.createUserWithEmailAndPassword :${e.toString()}',
       );
@@ -83,43 +94,74 @@ class AuthRepoImpl extends AuthRepo {
 
   @override
   Future<Either<Failures, UserEntity>> signInWithGoogle() async {
+    User? user;
     try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      if (googleUser == null) {
-        return left(ServerFailure('failed to sign in with google'));
-      }
+      user = await firebaseAuthService.signInWithGoogle();
 
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
-
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
+      var userEntity = UserModel.fromFirebaseUser(user);
+      var isUserExist = await databaseService.checkIfDatatExists(
+        path: BackendEndpoint.isUserExists,
+        docuementId: user.uid,
       );
-
-      final userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-
-      final user = userCredential.user;
-
-      if (user != null) {
-        // تخزين البيانات في Firebase
-        final userEntity = UserModel.fromFirebaseUser(user);
-        await addUserData(user: userEntity);
-        return right(userEntity);
+      if (isUserExist) {
+        await getUserData(uid: user.uid);
+        await saveUserData(user: userEntity);
       } else {
-        return left(ServerFailure(
-          'Failed to sign in with Google',
-        ));
+        await addUserData(user: userEntity);
       }
-    } on FirebaseAuthException catch (e) {
-      return left(ServerFailure(e.message ?? 'Something went wrong'));
+      return right(
+        userEntity,
+      );
     } catch (e) {
-      return left(ServerFailure(
-        'An error occurred. Please try again later.',
-      ));
+      await deleteUser(user);
+      log(
+        'Exception in AuthRepoImpl.signInWithGoogle :${e.toString()}',
+      );
+      return left(
+        ServerFailure(
+          'An error occurred. Please try again later.',
+        ),
+      );
     }
   }
+  // Future<Either<Failures, UserEntity>> signInWithGoogle() async {
+  //   try {
+  //     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  //     if (googleUser == null) {
+  //       return left(ServerFailure('failed to sign in with google'));
+  //     }
+
+  //     final GoogleSignInAuthentication googleAuth =
+  //         await googleUser.authentication;
+
+  //     final credential = GoogleAuthProvider.credential(
+  //       accessToken: googleAuth.accessToken,
+  //       idToken: googleAuth.idToken,
+  //     );
+
+  //     final userCredential =
+  //         await FirebaseAuth.instance.signInWithCredential(credential);
+
+  //     final user = userCredential.user;
+
+  //     if (user != null) {
+  //       // تخزين البيانات في Firebase
+  //       final userEntity = UserModel.fromFirebaseUser(user);
+  //       await addUserData(user: userEntity);
+  //       return right(userEntity);
+  //     } else {
+  //       return left(ServerFailure(
+  //         'Failed to sign in with Google',
+  //       ));
+  //     }
+  //   } on FirebaseAuthException catch (e) {
+  //     return left(ServerFailure(e.message ?? 'Something went wrong'));
+  //   } catch (e) {
+  //     return left(ServerFailure(
+  //       'An error occurred. Please try again later.',
+  //     ));
+  //   }
+  // }
 
   @override
   Future<Either<Failures, UserEntity>> signInWithFacebook() async {
@@ -179,6 +221,7 @@ class AuthRepoImpl extends AuthRepo {
   Future<void> saveUserData({required UserEntity user}) async {
     var jsonData = jsonEncode(UserModel.fromEntity(user).toMap());
     await Prefs.setString(kUserData, jsonData);
+    log('User data saved successfully. UserData: $jsonData');
   }
 
   Future<bool> isEmailExists(String email) async {

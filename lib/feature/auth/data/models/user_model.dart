@@ -8,7 +8,7 @@ class UserModel extends UserEntity {
   final String diseaseName;
   final String location;
   final String contactNumber;
-  final String photoUrl;
+  final String? photoUrl;
   final String userState;
 
   UserModel({

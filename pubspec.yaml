@@ -45,8 +45,10 @@ dependencies:
   flutter_svg: ^2.0.16
   get_it: ^8.0.2
   google_sign_in: ^6.2.2
+  image_picker: ^1.1.2
   jumping_dot: ^0.0.7
   modal_progress_hud_nsn: ^0.5.1
+  path: 
   shared_preferences: ^2.3.3
   smooth_page_indicator: ^1.2.0+3
   stylish_bottom_bar: ^1.1.0

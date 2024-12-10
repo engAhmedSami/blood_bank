@@ -25,8 +25,10 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff800000),
       extendBody: true,
-      bottomNavigationBar: SizedBox(
+      bottomNavigationBar: Container(
+        color: Colors.white,
         height: 80,
         child: StylishBottomBar(
           borderRadius: BorderRadius.only(

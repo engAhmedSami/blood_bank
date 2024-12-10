@@ -10,9 +10,10 @@ import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/feature/auth/presentation/view/widget/preference_button.dart';
 import 'package:blood_bank/feature/home/presentation/views/custom_bottom_nav_bar.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
-import 'package:blood_bank/core/services/shared_preferences_sengleton.dart'; // Prefs import
+import 'package:blood_bank/core/services/shared_preferences_sengleton.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
 
 class DonorOrNeed extends StatefulWidget {
   const DonorOrNeed({super.key});
@@ -49,6 +50,11 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
     }
   }
 
+  Future<void> _saveSelectionToPrefs(String option) async {
+    selectedOption = option;
+    setState(() {}); // تحديث الواجهة
+  }
+
   Future<void> saveUserState() async {
     if (selectedOption != null) {
       setState(() {
@@ -66,6 +72,17 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
               'userState': selectedOption,
             },
           );
+
+          // قراءة البيانات الحالية من Prefs
+          final currentUserData = Prefs.getString(kUserData);
+          Map<String, dynamic> userData = {};
+          if (currentUserData != null && currentUserData.isNotEmpty) {
+            userData = jsonDecode(currentUserData);
+          }
+
+          // تحديث بيانات userState في Prefs
+          userData['userState'] = selectedOption;
+          Prefs.setString(kUserData, jsonEncode(userData));
 
           // حفظ حالة الاختيار باستخدام Prefs
           Prefs.setBool(kIsUserStateSelected, true);
@@ -149,9 +166,7 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
                       label: "Need",
                       isSelected: selectedOption == "Need",
                       onPressed: () {
-                        setState(() {
-                          selectedOption = "Need";
-                        });
+                        _saveSelectionToPrefs("Need");
                       },
                     ),
                     const SizedBox(width: 40),
@@ -160,9 +175,7 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
                       label: "Donor",
                       isSelected: selectedOption == "Donor",
                       onPressed: () {
-                        setState(() {
-                          selectedOption = "Donor";
-                        });
+                        _saveSelectionToPrefs("Donor");
                       },
                     ),
                   ],
