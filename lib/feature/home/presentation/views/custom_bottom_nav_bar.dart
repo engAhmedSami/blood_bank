@@ -1,5 +1,6 @@
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
+import 'package:blood_bank/feature/home/presentation/views/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -25,82 +26,94 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      bottomNavigationBar: StylishBottomBar(
-        option: DotBarOptions(
-          dotStyle: DotStyle.tile,
-          gradient: const LinearGradient(
-            colors: [
-              Colors.deepPurple,
-              Colors.pink,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+      bottomNavigationBar: SizedBox(
+        height: 80,
+        child: StylishBottomBar(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
           ),
-        ),
-        items: [
-          BottomBarItem(
-            icon: SvgPicture.asset(
-              Assets.imagesHome,
-              colorFilter: const ColorFilter.mode(
-                Colors.grey,
-                BlendMode.srcIn,
-              ),
+          option: DotBarOptions(
+            dotStyle: DotStyle.tile,
+            gradient: const LinearGradient(
+              colors: [
+                Colors.deepPurple,
+                Colors.pink,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
-            selectedIcon: SvgPicture.asset(Assets.imagesHome),
-            selectedColor: AppColors.primaryColor,
-            title: const Text('Home'),
           ),
-          BottomBarItem(
+          items: [
+            BottomBarItem(
               icon: SvgPicture.asset(
-                Assets.imagesDoner,
+                Assets.imagesHome,
+                colorFilter: const ColorFilter.mode(
+                  Colors.grey,
+                  BlendMode.srcIn,
+                ),
+              ),
+              selectedIcon: SvgPicture.asset(Assets.imagesHome),
+              selectedColor: AppColors.primaryColor,
+              title: const Text('Home'),
+            ),
+            BottomBarItem(
+              icon: SvgPicture.asset(
+                Assets.imagesNeed,
                 colorFilter: const ColorFilter.mode(
                   Colors.grey,
                   BlendMode.srcIn,
                 ),
                 height: 30,
               ),
-              selectedIcon: SvgPicture.asset(Assets.imagesDoner, height: 30),
-              selectedColor: AppColors.primaryColor,
-              title: const Text('Doner')),
-          BottomBarItem(
-            icon: SvgPicture.asset(
-              Assets.imagesNeed,
-              colorFilter: const ColorFilter.mode(
-                Colors.grey,
-                BlendMode.srcIn,
+              selectedIcon: SvgPicture.asset(
+                Assets.imagesNeed,
+                height: 30,
               ),
-              height: 30,
+              selectedColor: AppColors.primaryColor,
+              title: const Text('Need'),
             ),
-            selectedIcon: SvgPicture.asset(
-              Assets.imagesNeed,
-              height: 30,
-            ),
-            selectedColor: AppColors.primaryColor,
-            title: const Text('Need'),
-          ),
-          BottomBarItem(
-              icon: SvgPicture.asset(
-                Assets.imagesProfile,
-                colorFilter: const ColorFilter.mode(
-                  Colors.grey,
-                  BlendMode.srcIn,
+            BottomBarItem(
+                icon: SvgPicture.asset(
+                  Assets.imagesDoner,
+                  colorFilter: const ColorFilter.mode(
+                    Colors.grey,
+                    BlendMode.srcIn,
+                  ),
+                  height: 30,
                 ),
-              ),
-              selectedIcon: SvgPicture.asset(Assets.imagesProfile),
-              selectedColor: AppColors.primaryColor,
-              title: const Text('Profile')),
-        ],
-        hasNotch: true,
-        fabLocation: StylishBarFabLocation.center,
-        currentIndex: selected,
-        notchStyle: NotchStyle.circle,
-        onTap: (index) {
-          if (index == selected) return;
-          controller.jumpToPage(index);
-          setState(() {
-            selected = index;
-          });
-        },
+                selectedIcon: SvgPicture.asset(Assets.imagesDoner, height: 30),
+                selectedColor: AppColors.primaryColor,
+                title: const Text('Doner')),
+            BottomBarItem(
+                icon: SvgPicture.asset(
+                  Assets.imagesProfile,
+                  colorFilter: const ColorFilter.mode(
+                    Colors.grey,
+                    BlendMode.srcIn,
+                  ),
+                  height: 30,
+                ),
+                selectedIcon: SvgPicture.asset(
+                  Assets.imagesProfile,
+                  height: 30,
+                ),
+                selectedColor: AppColors.primaryColor,
+                title: const Text('Profile')),
+          ],
+          hasNotch: true,
+          fabLocation: StylishBarFabLocation.center,
+          currentIndex: selected,
+          notchStyle: NotchStyle.circle,
+          onTap: (index) {
+            if (index != selected) {
+              setState(() {
+                selected = index;
+              });
+              controller.jumpToPage(index); // Navigate only on tap
+            }
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,
@@ -113,11 +126,13 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       body: SafeArea(
         child: PageView(
           controller: controller,
+          physics:
+              const NeverScrollableScrollPhysics(), // Disable swipe gesture
           children: const [
             Center(child: Text('Home')),
             Center(child: Text('Doner')),
             Center(child: Text('Need')),
-            Center(child: Text('Profile')),
+            ProfileView(),
           ],
         ),
       ),
