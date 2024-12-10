@@ -66,6 +66,8 @@ Widget buildNavigationBar(
         child: currentPage == 2
             ? ElevatedButton(
                 onPressed: () {
+                  Prefs.setBool(kIsOnBoardingViewSeen, true);
+
                   Navigator.of(context).pushReplacement(
                     buildPageRoute(
                       ChooesToSignupOrLoginView(),
@@ -86,7 +88,6 @@ Widget buildNavigationBar(
               )
             : TextButton(
                 onPressed: () {
-                  Prefs.setBool(kIsOnBoardingViewSeen, true);
                   pageController.nextPage(
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeInOut,

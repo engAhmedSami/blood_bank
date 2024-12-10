@@ -1,6 +1,8 @@
 import 'package:blood_bank/core/helper_function/failuer_top_snak_bar.dart';
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
+import 'package:blood_bank/core/utils/page_rout_builder.dart';
 import 'package:blood_bank/feature/auth/presentation/manager/signup_cubit/signup_cubit.dart';
+import 'package:blood_bank/feature/auth/presentation/view/verfied_email_view.dart';
 import 'package:blood_bank/feature/auth/presentation/view/widget/signup_view_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +23,11 @@ class SignupViewBodyBlockConsumer extends StatelessWidget {
             'Account created successfully, verify your account  ',
           );
         }
+        Navigator.of(context).pushReplacement(
+          buildPageRoute(
+            const VerfiedEmailView(),
+          ),
+        );
 
         if (state is SignupFailure) {
           failuerTopSnackBar(

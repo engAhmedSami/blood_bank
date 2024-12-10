@@ -76,12 +76,10 @@ class SplashViewState extends State<SplashView> with TickerProviderStateMixin {
     excuteNaviagtion();
   }
 
-  void excuteNaviagtion() async {
-    bool? isOnBoardingViewSeen = await Prefs.getBool(kIsOnBoardingViewSeen);
+  void excuteNaviagtion() {
+    bool isOnBoardingViewSeen = Prefs.getBool(kIsOnBoardingViewSeen);
     bool isLoggedIn = FirebaseAuthService().isLoggedIn();
-
-    Future.delayed(const Duration(seconds: 3), () {
-      if (!mounted) return;
+    Future.delayed(const Duration(seconds: 7), () {
       if (isOnBoardingViewSeen == true) {
         if (isLoggedIn) {
           Navigator.of(context).pushReplacement(
