@@ -187,7 +187,6 @@ class FirebaseAuthService {
   Future<void> signOut() async {
     await firebaseAuth.signOut();
     await GoogleSignIn().signOut();
-    await FacebookAuth.instance.logOut();
   }
 
   /// Deletes the current logged-in user.

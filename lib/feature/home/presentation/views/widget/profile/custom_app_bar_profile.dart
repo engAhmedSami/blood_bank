@@ -51,7 +51,7 @@ class CustomProfileAppBar extends StatelessWidget
         ),
         Positioned(
           top: 20,
-          left: MediaQuery.of(context).size.width / 2.2 - 40,
+          left: MediaQuery.of(context).size.width / 2.1 - 40,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

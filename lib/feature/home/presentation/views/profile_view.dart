@@ -1,11 +1,11 @@
 import 'package:blood_bank/core/helper_function/get_user.dart';
+import 'package:blood_bank/feature/home/presentation/views/widget/profile/logout_button.dart';
 import 'package:flutter/material.dart';
 import 'package:blood_bank/feature/auth/data/models/user_model.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/profile/big_info_card.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/profile/custom_app_bar_profile.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/profile/settings_item.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/profile/settings_switch.dart';
-import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/constants.dart';
 
 class ProfileView extends StatelessWidget {
@@ -49,25 +49,24 @@ class ProfileView extends StatelessWidget {
                 child: ListView(
                   padding: EdgeInsets.symmetric(horizontal: kHorizintalPadding),
                   physics: const BouncingScrollPhysics(),
-                  children: const [
-                    SettingsSwitch(title: 'Available To Donate', value: true),
-                    SettingsSwitch(title: 'Notification', value: true),
-                    SettingsSwitch(title: 'Allow Tracking', value: true),
+                  children: [
+                    SettingsSwitch(
+                      title: 'Available To Donate',
+                      keyName: 'available_to_donate',
+                    ),
+                    SettingsSwitch(
+                      title: 'Notification',
+                      keyName: 'notification',
+                    ),
+                    SettingsSwitch(
+                      title: 'Allow Tracking',
+                      keyName: 'allow_tracking',
+                    ),
                     SettingsItem(title: 'Manage Address'),
                     SettingsItem(title: 'History'),
                     SettingsItem(title: 'Contact Details'),
                     SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Icon(Icons.logout, color: AppColors.primaryColor),
-                        SizedBox(width: 10),
-                        Text(
-                          'Logout',
-                          style: TextStyle(
-                              color: AppColors.primaryColor, fontSize: 16),
-                        ),
-                      ],
-                    ),
+                    LogoutFeature()
                   ],
                 ),
               ),

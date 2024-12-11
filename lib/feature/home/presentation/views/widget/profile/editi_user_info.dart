@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:blood_bank/constants.dart';
 import 'package:blood_bank/core/services/shared_preferences_sengleton.dart';
+import 'package:blood_bank/core/utils/custom_progrss_hud.dart';
+import 'package:blood_bank/core/widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -182,87 +184,87 @@ class _UserProfilePageState extends State<UserProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('User Profile')),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Form(
-                key: _formKey,
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: _pickImage,
-                        child: CircleAvatar(
-                          radius: 50,
-                          backgroundImage: _selectedImage != null
-                              ? FileImage(_selectedImage!)
-                              : (_uploadedImageUrl != null
-                                  ? NetworkImage(_uploadedImageUrl!)
-                                  : null) as ImageProvider?,
-                          child: _selectedImage == null &&
-                                  _uploadedImageUrl == null
-                              ? const Icon(Icons.camera_alt, size: 50)
-                              : null,
-                        ),
+        appBar: CustomAppBar(
+          title: 'Edit Profile',
+          leadingIcon: Icons.arrow_back_ios_new_rounded,
+        ),
+        body: CustomProgrssHud(
+          isLoading: _isLoading,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: kHorizintalPadding),
+            child: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: _pickImage,
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundImage: _selectedImage != null
+                            ? FileImage(_selectedImage!)
+                            : (_uploadedImageUrl != null
+                                ? NetworkImage(_uploadedImageUrl!)
+                                : null) as ImageProvider?,
+                        child:
+                            _selectedImage == null && _uploadedImageUrl == null
+                                ? const Icon(Icons.camera_alt, size: 50)
+                                : null,
                       ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _nameController,
-                        decoration: const InputDecoration(labelText: 'Name'),
-                        validator: (value) =>
-                            value!.isEmpty ? 'Please enter a name' : null,
-                      ),
-                      TextFormField(
-                        controller: _ageController,
-                        decoration: const InputDecoration(labelText: 'Age'),
-                        keyboardType: TextInputType.number,
-                        validator: (value) =>
-                            value!.isEmpty ? 'Please enter age' : null,
-                      ),
-                      TextFormField(
-                        controller: _bloodTypeController,
-                        decoration:
-                            const InputDecoration(labelText: 'Blood Type'),
-                        validator: (value) =>
-                            value!.isEmpty ? 'Please enter blood type' : null,
-                      ),
-                      TextFormField(
-                        controller: _contactNumberController,
-                        decoration:
-                            const InputDecoration(labelText: 'Contact Number'),
-                        keyboardType: TextInputType.phone,
-                        validator: (value) => value!.isEmpty
-                            ? 'Please enter contact number'
-                            : null,
-                      ),
-                      TextFormField(
-                        controller: _locationController,
-                        decoration:
-                            const InputDecoration(labelText: 'Location'),
-                        validator: (value) =>
-                            value!.isEmpty ? 'Please enter location' : null,
-                      ),
-                      TextFormField(
-                        controller: _userStateController,
-                        decoration:
-                            const InputDecoration(labelText: 'Doner or Need'),
-                        validator: (value) => value!.isEmpty
-                            ? 'Please enter Doner or Need'
-                            : null,
-                      ),
-                      const SizedBox(height: 16),
-                      CustomButton(
-                        onPressed: _submitForm,
-                        text: 'Update Profile',
-                      ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(labelText: 'Name'),
+                      validator: (value) =>
+                          value!.isEmpty ? 'Please enter a name' : null,
+                    ),
+                    TextFormField(
+                      controller: _ageController,
+                      decoration: const InputDecoration(labelText: 'Age'),
+                      keyboardType: TextInputType.number,
+                      validator: (value) =>
+                          value!.isEmpty ? 'Please enter age' : null,
+                    ),
+                    TextFormField(
+                      controller: _bloodTypeController,
+                      decoration:
+                          const InputDecoration(labelText: 'Blood Type'),
+                      validator: (value) =>
+                          value!.isEmpty ? 'Please enter blood type' : null,
+                    ),
+                    TextFormField(
+                      controller: _contactNumberController,
+                      decoration:
+                          const InputDecoration(labelText: 'Contact Number'),
+                      keyboardType: TextInputType.phone,
+                      validator: (value) =>
+                          value!.isEmpty ? 'Please enter contact number' : null,
+                    ),
+                    TextFormField(
+                      controller: _locationController,
+                      decoration: const InputDecoration(labelText: 'Location'),
+                      validator: (value) =>
+                          value!.isEmpty ? 'Please enter location' : null,
+                    ),
+                    TextFormField(
+                      controller: _userStateController,
+                      decoration:
+                          const InputDecoration(labelText: 'Doner or Need'),
+                      validator: (value) =>
+                          value!.isEmpty ? 'Please enter Doner or Need' : null,
+                    ),
+                    const SizedBox(height: 16),
+                    CustomButton(
+                      onPressed: _submitForm,
+                      text: 'Update Profile',
+                    ),
+                  ],
                 ),
               ),
             ),
-    );
+          ),
+        ));
   }
 }
