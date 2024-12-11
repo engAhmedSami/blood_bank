@@ -9,8 +9,8 @@ import 'package:blood_bank/core/widget/custom_app_bar.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/feature/auth/presentation/view/widget/preference_button.dart';
 import 'package:blood_bank/feature/home/presentation/views/custom_bottom_nav_bar.dart';
-import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:blood_bank/core/services/shared_preferences_sengleton.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -35,17 +35,27 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
   }
 
   Future<void> _checkIfUserStateExists() async {
-    bool isUserStateSelected = Prefs.getBool(kIsUserStateSelected);
-    if (isUserStateSelected) {
-      // إذا تم اختيار الحالة مسبقًا، الانتقال مباشرة للصفحة الرئيسية
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.of(context).pushReplacement(
-          buildPageRoute(const CustomBottomNavBar()),
-        );
-      });
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      // جلب حالة المستخدم بناءً على uid
+      bool isUserStateSelected =
+          Prefs.getBool('${user.uid}_$kIsUserStateSelected');
+      if (isUserStateSelected) {
+        // إذا تم اختيار الحالة مسبقًا، الانتقال مباشرة للصفحة الرئيسية
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.of(context).pushReplacement(
+            buildPageRoute(const CustomBottomNavBar()),
+          );
+        });
+      } else {
+        setState(() {
+          isLoading = false; // إنهاء حالة التحميل عند التحقق
+        });
+      }
     } else {
       setState(() {
-        isLoading = false; // إنهاء حالة التحميل عند التحقق
+        isLoading = false; // إنهاء حالة التحميل إذا لم يتم تسجيل دخول المستخدم
       });
     }
   }
@@ -76,7 +86,7 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
           // قراءة البيانات الحالية من Prefs
           final currentUserData = Prefs.getString(kUserData);
           Map<String, dynamic> userData = {};
-          if (currentUserData != null && currentUserData.isNotEmpty) {
+          if (currentUserData.isNotEmpty) {
             userData = jsonDecode(currentUserData);
           }
 
@@ -84,8 +94,8 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
           userData['userState'] = selectedOption;
           Prefs.setString(kUserData, jsonEncode(userData));
 
-          // حفظ حالة الاختيار باستخدام Prefs
-          Prefs.setBool(kIsUserStateSelected, true);
+          // حفظ حالة الاختيار باستخدام Prefs مع uid
+          Prefs.setBool('${user.uid}_$kIsUserStateSelected', true);
 
           if (!mounted) return;
 
