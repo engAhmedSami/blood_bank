@@ -1,5 +1,6 @@
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
+import 'package:blood_bank/feature/home/presentation/views/widget/home/home_view.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -131,7 +132,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
           physics:
               const NeverScrollableScrollPhysics(), // Disable swipe gesture
           children: const [
-            Center(child: Text('Home')),
+            HomeView(),
             Center(child: Text('Doner')),
             Center(child: Text('Need')),
             ProfileView(),
