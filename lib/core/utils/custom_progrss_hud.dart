@@ -23,8 +23,9 @@ class CustomProgrssHud extends StatelessWidget {
             valueColor: AlwaysStoppedAnimation<Color>(
               AppColors.primaryColor, // لون متحرك
             ),
-            backgroundColor:
-                AppColors.orangeColor.withOpacity(0.3), // لون الخلفية
+            backgroundColor: AppColors.orangeColor.withValues(
+              alpha: 0.5,
+            ), // لون الخلفية
           ),
         ),
         child: child,
