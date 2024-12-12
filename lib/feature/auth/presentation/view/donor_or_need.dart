@@ -160,6 +160,7 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: kHorizintalPadding),
             child: Column(
+              spacing: 1,
               children: [
                 const SizedBox(height: 90),
                 Text(
