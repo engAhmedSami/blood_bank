@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class SettingsItem extends StatelessWidget {
   final String title;
   final void Function()? onTap;
+  final IconData? icon;
 
   const SettingsItem({
     super.key,
     required this.title,
     this.onTap,
+    this.icon,
   });
 
   @override
@@ -18,7 +20,7 @@ class SettingsItem extends StatelessWidget {
         title,
         style: const TextStyle(fontSize: 16),
       ),
-      trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+      trailing: Icon(icon, size: 18),
       onTap: onTap,
     );
   }
