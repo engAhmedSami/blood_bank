@@ -22,6 +22,8 @@ class SplashView extends StatefulWidget {
 }
 
 class SplashViewState extends State<SplashView> with TickerProviderStateMixin {
+  // ------   ---   ---   ---   ---   ---   ---   ---   ---   ---
+  // Animations  for the drop animation
   late AnimationController _dropsController;
   late AnimationController _bigDropMoveController;
   late AnimationController _logoController;
@@ -29,7 +31,7 @@ class SplashViewState extends State<SplashView> with TickerProviderStateMixin {
   late Animation<double> _bigDropYAnimation;
   late Animation<double> _logoScaleAnimation;
   late Animation<double> _fadeAnimation;
-
+// ------   ---   ---   ---   ---   ---   ---   ---   ---   ---
   List<double> _dropsXPositions = [];
   List<double> _dropsStartTimes = [];
 
@@ -120,6 +122,29 @@ class SplashViewState extends State<SplashView> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  Widget buildLoadingIndicator() {
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("loading".tr(context),
+              style: TextStyles.bold19.copyWith(color: Colors.white)),
+          const SizedBox(width: 5),
+          Transform.translate(
+            offset: const Offset(0, 5),
+            child: JumpingDots(
+              color: Colors.white,
+              verticalOffset: 6,
+              animationDuration: const Duration(milliseconds: 200),
+              radius: 6,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,29 +171,6 @@ class SplashViewState extends State<SplashView> with TickerProviderStateMixin {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 25.0),
               child: buildLoadingIndicator(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildLoadingIndicator() {
-    return FadeTransition(
-      opacity: _fadeAnimation,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("loading".tr(context),
-              style: TextStyles.bold19.copyWith(color: Colors.white)),
-          const SizedBox(width: 5),
-          Transform.translate(
-            offset: const Offset(0, 5),
-            child: JumpingDots(
-              color: Colors.white,
-              verticalOffset: 6,
-              animationDuration: const Duration(milliseconds: 200),
-              radius: 6,
             ),
           ),
         ],
