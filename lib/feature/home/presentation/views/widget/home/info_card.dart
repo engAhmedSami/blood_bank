@@ -20,7 +20,7 @@ class Infocard extends StatelessWidget {
       margin: const EdgeInsets.only(right: 20), // مسافة بين البطاقات
       padding: const EdgeInsets.all(16), // مسافة داخلية متماثلة
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.primaryColor,
         border: Border.all(
           color: AppColors.primaryColor.withValues(alpha: 0.3),
           width: 1.5,
