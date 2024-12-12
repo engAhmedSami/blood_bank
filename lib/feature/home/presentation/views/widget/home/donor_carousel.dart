@@ -7,7 +7,7 @@ class DonorCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 125, // Set the height of the carousel
+      height: 135, // Set the height of the carousel
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 14),
