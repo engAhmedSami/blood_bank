@@ -1,8 +1,8 @@
+import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class Infocard extends StatelessWidget {
   final String title;
-
   final String imageUrl;
   final VoidCallback onButtonTap;
 
@@ -18,20 +18,22 @@ class Infocard extends StatelessWidget {
     return Container(
       width: 280, // عرض البطاقة
       margin: const EdgeInsets.only(right: 20), // مسافة بين البطاقات
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16), // مسافة داخلية متماثلة
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: AppColors.primaryColor.withValues(alpha: 0.3),
+          width: 1.5,
+          strokeAlign: BorderSide.strokeAlignInside,
+          style: BorderStyle.solid,
+        ),
+        borderRadius: BorderRadius.circular(22), // الحواف دائرية
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(
-              // استخدم withValues بدلاً من withOpacity
-
-              alpha: 0.2,
-            ),
-            blurRadius: 8,
-            spreadRadius: 5,
-            offset: const Offset(0, 4), // الشادو للأسفل
+            color: Colors.grey.shade500,
+            blurRadius: 5,
+            spreadRadius: 0.5,
+            offset: const Offset(0, 5),
           ),
         ],
       ),
@@ -46,8 +48,9 @@ class Infocard extends StatelessWidget {
               color: Colors.black,
             ),
           ),
+          const Spacer(), // إضافة مسافة مرنة بين النص والصورة
           Align(
-            alignment: Alignment.bottomRight,
+            alignment: Alignment.centerRight,
             child: Image.network(
               imageUrl,
               height: 50,
