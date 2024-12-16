@@ -1,12 +1,13 @@
 import 'package:blood_bank/core/utils/app_colors.dart';
+import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:flutter/material.dart';
 
-class Infocard extends StatelessWidget {
+class InfoCard extends StatelessWidget {
   final String title;
   final String imageUrl;
   final VoidCallback onButtonTap;
 
-  const Infocard({
+  const InfoCard({
     super.key,
     required this.title,
     required this.imageUrl,
@@ -16,18 +17,15 @@ class Infocard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 280, // عرض البطاقة
-      margin: const EdgeInsets.only(right: 20), // مسافة بين البطاقات
-      padding: const EdgeInsets.all(16), // مسافة داخلية متماثلة
+      width: 280,
+      margin: const EdgeInsets.only(right: 20),
       decoration: BoxDecoration(
-        color: AppColors.primaryColor,
+        color: Colors.white,
         border: Border.all(
-          color: AppColors.primaryColor.withValues(alpha: 0.3),
+          color: AppColors.primaryColor.withValues(alpha: 0.4),
           width: 1.5,
-          strokeAlign: BorderSide.strokeAlignInside,
-          style: BorderStyle.solid,
         ),
-        borderRadius: BorderRadius.circular(22), // الحواف دائرية
+        borderRadius: BorderRadius.circular(22),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.shade500,
@@ -37,25 +35,45 @@ class Infocard extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(22),
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                Colors.black.withValues(alpha: 0.4),
+                BlendMode.darken,
+              ),
+              child: Image.network(
+                imageUrl,
+                height: 180,
+                width: double.infinity,
+                fit: BoxFit.fill,
+              ),
             ),
           ),
-          const Spacer(), // إضافة مسافة مرنة بين النص والصورة
-          Align(
-            alignment: Alignment.centerRight,
-            child: Image.network(
-              imageUrl,
-              height: 50,
-              width: 50,
-              fit: BoxFit.cover,
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.black.withValues(alpha: 0.4),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(22),
+                  bottomRight: Radius.circular(22),
+                ),
+              ),
+              child: Text(
+                title,
+                style: TextStyles.bold16.copyWith(
+                  color: AppColors.secondaryColor,
+                  height: 1.4,
+                ),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
         ],

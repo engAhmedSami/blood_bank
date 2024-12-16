@@ -7,14 +7,14 @@ class DonorCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 140, // Set the height of the carousel
+      height: 180,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 14),
-        itemCount: 5, // Number of cards (can be updated based on API)
+        itemCount: 5,
         itemBuilder: (context, index) {
-          return Infocard(
-            title: 'You can become a Blood Donor in',
+          return InfoCard(
+            title: 'You can donate to this person',
             imageUrl:
                 'https://lh3.googleusercontent.com/a/ACg8ocJrQqMm_FXSVxci5LR35YMRo--Wd3IZcvUkBzcTTBW0vSe7ZxKK=s96-c',
             onButtonTap: () {
