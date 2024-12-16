@@ -1,7 +1,7 @@
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
-import 'package:blood_bank/feature/home/presentation/views/widget/home/home_view.dart';
-import 'package:blood_bank/feature/home/presentation/views/widget/profile/profile_view.dart';
+import 'package:blood_bank/feature/home/presentation/home_view.dart';
+import 'package:blood_bank/feature/home/presentation/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
