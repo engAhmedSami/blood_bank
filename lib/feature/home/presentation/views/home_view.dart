@@ -15,19 +15,19 @@ class HomeView extends StatelessWidget {
         children: [
           const UserHandler(),
           const Positioned(
-            top: 120,
+            top: 115,
             left: 0,
             right: 0,
             child: DonorCarousel(),
           ),
           const Positioned(
-            top: 300,
+            top: 290,
             left: 0,
             right: 0,
             child: CustomCardItems(),
           ),
           Positioned(
-            top: 410,
+            top: 405,
             left: 0,
             right: 0,
             child: BloodNeededWidget(),

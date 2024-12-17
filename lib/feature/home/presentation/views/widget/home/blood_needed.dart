@@ -1,3 +1,4 @@
+import 'package:blood_bank/constants.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/home/blood_drop.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +12,8 @@ class BloodNeededWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12.0),
-      margin: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.all(10),
+      margin: EdgeInsets.symmetric(horizontal: kHorizintalPadding),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade400),
         borderRadius: BorderRadius.circular(8.0),
@@ -26,7 +27,7 @@ class BloodNeededWidget extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: List.generate(bloodTypes.length, (index) {
               return BloodDropWidget(
                 bloodType: bloodTypes[index],
