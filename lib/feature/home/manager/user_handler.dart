@@ -10,30 +10,35 @@ class UserHandler extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<UserModel>(
-      stream: getUserStream(), // اشتراك في التحديثات المباشرة لبيانات المستخدم
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
+    return Column(
+      children: [
+        StreamBuilder<UserModel>(
+          stream:
+              getUserStream(), // اشتراك في التحديثات المباشرة لبيانات المستخدم
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-        if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        }
+            if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
 
-        if (!snapshot.hasData) {
-          return const Center(child: Text('No user data available'));
-        }
+            if (!snapshot.hasData) {
+              return const Center(child: Text('No user data available'));
+            }
 
-        final user = snapshot.data!;
+            final user = snapshot.data!;
 
-        return HomeHeader(
-          name: user.name,
-          photoUrl: user.photoUrl,
-          userState: user.userState,
-          bloodType: user.bloodType,
-        );
-      },
+            return HomeHeader(
+              name: user.name,
+              photoUrl: user.photoUrl,
+              userState: user.userState,
+              bloodType: user.bloodType,
+            );
+          },
+        ),
+      ],
     );
   }
 }

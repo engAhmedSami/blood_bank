@@ -42,7 +42,7 @@ class DonorCarousel extends StatelessWidget {
           } else if (state is HealthSuccess) {
             final articles = state.articles;
             return SizedBox(
-              height: 180,
+              height: 160,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 14),

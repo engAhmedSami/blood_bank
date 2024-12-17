@@ -56,7 +56,8 @@ class ArticleDetailsPage extends StatelessWidget {
               child: Column(children: [
                 Text(
                   title,
-                  style: TextStyles.semiBold19,
+                  style: TextStyles.semiBold19
+                      .copyWith(color: AppColors.primaryColor),
                 ),
                 const SizedBox(height: 12),
                 if (description != null)

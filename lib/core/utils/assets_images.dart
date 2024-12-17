@@ -2,6 +2,10 @@
 class Assets {
   Assets._();
   
+  /// Assets for imagesAbovehalfdrop
+  /// assets/images/abovehalfdrop.svg
+  static const String imagesAbovehalfdrop = "assets/images/abovehalfdrop.svg";
+
   /// Assets for imagesAdd
   /// assets/images/add.svg
   static const String imagesAdd = "assets/images/add.svg";
@@ -38,13 +42,25 @@ class Assets {
   /// assets/images/doner.svg
   static const String imagesDoner = "assets/images/doner.svg";
 
+  /// Assets for imagesEmptydrop
+  /// assets/images/emptydrop.svg
+  static const String imagesEmptydrop = "assets/images/emptydrop.svg";
+
   /// Assets for imagesFacebook
   /// assets/images/facebook.svg
   static const String imagesFacebook = "assets/images/facebook.svg";
 
+  /// Assets for imagesFulldrop
+  /// assets/images/fulldrop.svg
+  static const String imagesFulldrop = "assets/images/fulldrop.svg";
+
   /// Assets for imagesGoogel
   /// assets/images/googel.svg
   static const String imagesGoogel = "assets/images/googel.svg";
+
+  /// Assets for imagesHalfdrop
+  /// assets/images/halfdrop.svg
+  static const String imagesHalfdrop = "assets/images/halfdrop.svg";
 
   /// Assets for imagesHome
   /// assets/images/home.svg
@@ -85,6 +101,10 @@ class Assets {
   /// Assets for imagesProfile
   /// assets/images/profile.svg
   static const String imagesProfile = "assets/images/profile.svg";
+
+  /// Assets for imagesQuerterdrop
+  /// assets/images/querterdrop.svg
+  static const String imagesQuerterdrop = "assets/images/querterdrop.svg";
 
   /// Assets for imagesRequest
   /// assets/images/request.svg
