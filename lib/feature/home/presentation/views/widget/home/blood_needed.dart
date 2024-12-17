@@ -1,3 +1,4 @@
+import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/home/blood_drop.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class BloodNeededWidget extends StatelessWidget {
         children: [
           const Text(
             'Blood Needed',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyles.semiBold16,
           ),
           const SizedBox(height: 12),
           Row(

@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class BloodDropWidget extends StatelessWidget {
   final String bloodType;
-  final double fillPercentage; // 0.0, 0.25, 0.5, 1.0
+  final double fillPercentage;
 
   const BloodDropWidget({
     super.key,
@@ -30,7 +30,7 @@ class BloodDropWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        getImagePath(), // Directly use the SvgPicture widget here
+        getImagePath(),
         const SizedBox(height: 4),
         Text(
           bloodType,
