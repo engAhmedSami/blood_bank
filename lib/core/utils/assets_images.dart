@@ -50,6 +50,10 @@ class Assets {
   /// assets/images/home.svg
   static const String imagesHome = "assets/images/home.svg";
 
+  /// Assets for imagesInstructions
+  /// assets/images/instructions.svg
+  static const String imagesInstructions = "assets/images/instructions.svg";
+
   /// Assets for imagesLifesaved
   /// assets/images/lifesaved.svg
   static const String imagesLifesaved = "assets/images/lifesaved.svg";
@@ -81,6 +85,14 @@ class Assets {
   /// Assets for imagesProfile
   /// assets/images/profile.svg
   static const String imagesProfile = "assets/images/profile.svg";
+
+  /// Assets for imagesRequest
+  /// assets/images/request.svg
+  static const String imagesRequest = "assets/images/request.svg";
+
+  /// Assets for imagesSearch
+  /// assets/images/search.svg
+  static const String imagesSearch = "assets/images/search.svg";
 
   /// Assets for imagesSplashAppLogo
   /// assets/images/splash/app_logo.png

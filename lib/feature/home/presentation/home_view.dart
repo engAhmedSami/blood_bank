@@ -1,4 +1,7 @@
+import 'package:blood_bank/constants.dart';
 import 'package:blood_bank/core/helper_function/get_user.dart';
+import 'package:blood_bank/core/utils/assets_images.dart';
+import 'package:blood_bank/feature/home/presentation/views/widget/home/custom_card.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/home/donor_carousel.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/home/home_header.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +52,35 @@ class HomeView extends StatelessWidget {
             right: 0,
             child: const DonorCarousel(),
           ),
+          Positioned(
+            top: 330,
+            left: 0,
+            right: 0,
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: kHorizintalPadding),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  spacing: 25,
+                  children: [
+                    CustomCard(
+                      title: 'Find Donors',
+                      imagePath: Assets.imagesSearch,
+                      onTap: () {},
+                    ),
+                    CustomCard(
+                      title: 'Request for blood',
+                      imagePath: Assets.imagesRequest,
+                      onTap: () {},
+                    ),
+                    CustomCard(
+                      title: 'Find Donors',
+                      imagePath: Assets.imagesInstructions,
+                      onTap: () {},
+                    ),
+                  ]),
+            ),
+          )
         ],
       ),
     );
