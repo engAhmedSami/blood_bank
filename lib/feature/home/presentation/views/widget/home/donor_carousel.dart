@@ -50,11 +50,15 @@ class DonorCarousel extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final article = articles[index];
                   return InfoCard(
+                    content: article.content,
                     url: article.url,
                     description: article.description,
                     title: article.title,
-                    imageUrl: article.urlToImage ??
-                        'https://eha.gov.eg/media/dkxbtnza/health_photo-min.jpeg?anchor=center&mode=crop&width=441&height=221&rnd=133536003516770000',
+                    image: article.image ??
+                        'https://fallback-image.com/default.jpg',
+                    publishedAt: article.publishedAt,
+                    sourceName: article.sourceName,
+                    sourceUrl: article.sourceUrl,
                   );
                 },
               ),

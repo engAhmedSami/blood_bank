@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 
 class HealthRequest {
   final Dio dio;
-  final String apiKey = 'fc9acce33fa2408697231299f6a574b2';
+  final String apiKey = '0458895a45f8c3f3c2cac14bad712856';
 
   HealthRequest(
     this.dio,
@@ -13,7 +13,7 @@ class HealthRequest {
   Future<List<HealthModel>> news({required String category}) async {
     try {
       final String url =
-          'https://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=$apiKey';
+          'https://gnews.io/api/v4/top-headlines?country=us&category=health&apikey=$apiKey';
 
       Response response = await dio.get(url);
 
@@ -21,7 +21,7 @@ class HealthRequest {
         Map<String, dynamic> jsonData = response.data;
         List<dynamic> articles = jsonData['articles'];
 
-        List<HealthModel> dataList =
+        final List<HealthModel> dataList =
             articles.map((article) => HealthModel.fromJson(article)).toList();
 
         return dataList;

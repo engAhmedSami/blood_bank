@@ -1,36 +1,47 @@
-import 'package:blood_bank/core/utils/app_colors.dart';
-import 'package:blood_bank/core/utils/app_text_style.dart';
-
+import 'package:blood_bank/core/utils/page_rout_builder.dart';
+import 'package:blood_bank/feature/home/presentation/views/widget/home/health_article_details.dart';
 import 'package:flutter/material.dart';
 
 class InfoCard extends StatelessWidget {
   final String title;
-  final String imageUrl;
+  final String image;
   final String? description;
+  final String? content;
   final String? url;
+  final String? publishedAt;
+  final String? sourceName;
+  final String? sourceUrl;
 
   const InfoCard({
     super.key,
     required this.title,
-    required this.imageUrl,
+    required this.image,
     this.description,
+    this.content,
     this.url,
+    this.publishedAt,
+    this.sourceName,
+    this.sourceUrl,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.of(context).push(
-        //   buildPageRoute(
-        //     ArticleDetailsPage(
-        //       title: title,
-        //       description: description,
-        //       imageUrl: imageUrl,
-        //       url: url,
-        //     ),
-        //   ),
-        // );
+        Navigator.of(context).push(
+          buildPageRoute(
+            ArticleDetailsPage(
+              title: title,
+              description: description,
+              content: content,
+              url: url,
+              imageUrl: image,
+              publishedAt: publishedAt,
+              sourceName: sourceName,
+              sourceUrl: sourceUrl,
+            ),
+          ),
+        );
       },
       child: Container(
         width: 280,
@@ -38,7 +49,7 @@ class InfoCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(
-            color: AppColors.primaryColor.withValues(alpha: 0.4),
+            color: Colors.grey.withValues(alpha: 0.4),
             width: 1.5,
           ),
           borderRadius: BorderRadius.circular(22),
@@ -55,17 +66,11 @@ class InfoCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(22),
-              child: ColorFiltered(
-                colorFilter: ColorFilter.mode(
-                  Colors.black.withValues(alpha: 0.4),
-                  BlendMode.darken,
-                ),
-                child: Image.network(
-                  imageUrl,
-                  height: 180,
-                  width: double.infinity,
-                  fit: BoxFit.fill,
-                ),
+              child: Image.network(
+                image,
+                height: 180,
+                width: double.infinity,
+                fit: BoxFit.cover,
               ),
             ),
             Positioned(
@@ -75,7 +80,7 @@ class InfoCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.4),
+                  color: Colors.black.withValues(alpha: 0.6),
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(22),
                     bottomRight: Radius.circular(22),
@@ -83,11 +88,12 @@ class InfoCard extends StatelessWidget {
                 ),
                 child: Text(
                   title,
-                  style: TextStyles.bold16.copyWith(
-                    color: AppColors.secondaryColor,
-                    height: 1.4,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
                   ),
-                  maxLines: 3,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
