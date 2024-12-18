@@ -253,6 +253,7 @@ class DonerRequestState extends State<DonerRequest> {
                 text: 'Add Request',
                 onPressed: _submitRequest,
               ),
+              const SizedBox(height: 16),
             ],
           ),
         ),
