@@ -17,8 +17,6 @@ class HomeView extends StatelessWidget {
           SliverAppBar(
             expandedHeight: 290,
             backgroundColor: Colors.white,
-            floating: false,
-            pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               background: Stack(
                 children: const [
