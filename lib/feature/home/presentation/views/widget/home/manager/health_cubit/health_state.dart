@@ -1,4 +1,4 @@
-import 'package:blood_bank/feature/home/manager/models/health_model.dart';
+import 'package:blood_bank/feature/home/presentation/views/widget/home/manager/models/health_model.dart';
 
 abstract class HealthState {}
 

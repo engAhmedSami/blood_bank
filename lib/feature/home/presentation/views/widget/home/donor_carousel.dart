@@ -1,7 +1,7 @@
 import 'package:blood_bank/core/services/health_request.dart';
 import 'package:blood_bank/core/utils/app_colors.dart';
-import 'package:blood_bank/feature/home/manager/health_cubit/health_cubit.dart';
-import 'package:blood_bank/feature/home/manager/health_cubit/health_state.dart';
+import 'package:blood_bank/feature/home/presentation/views/widget/home/manager/health_cubit/health_cubit.dart';
+import 'package:blood_bank/feature/home/presentation/views/widget/home/manager/health_cubit/health_state.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/home/info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
