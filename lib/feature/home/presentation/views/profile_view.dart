@@ -108,7 +108,7 @@ class ProfileView extends StatelessWidget {
                 return BigInfoCard(
                   savedLives: '3 life saved',
                   bloodGroup: '${user.bloodType} Group',
-                  nextDonationDate: 'Next Donation',
+                  nextDonationDate: 'Next Donation Date',
                 );
               },
             ),

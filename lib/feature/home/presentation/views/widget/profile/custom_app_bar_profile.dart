@@ -24,11 +24,11 @@ class CustomProfileAppBar extends StatefulWidget
   State<CustomProfileAppBar> createState() => _CustomProfileAppBarState();
 
   @override
-  Size get preferredSize => const Size.fromHeight(220); // ارتفاع AppBar
+  Size get preferredSize => const Size.fromHeight(220);
 }
 
 class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
-  final GlobalKey _editButtonKey = GlobalKey(); // مفتاح التركيز على الزر
+  final GlobalKey _editButtonKey = GlobalKey();
   late TutorialCoachMark tutorialCoachMark;
 
   @override
@@ -42,20 +42,19 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
     final user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-      // استخدم uid كمفتاح للتحقق من حالة التعليمات لهذا المستخدم
       final tutorialKey = '${user.uid}_isFirstTimeCustomProfileAppBar';
       bool isFirstTime = prefs.getBool(tutorialKey) ?? true;
 
       if (isFirstTime) {
         _showTutorial();
-        await prefs.setBool(tutorialKey, false); // حفظ الحالة للمستخدم
+        await prefs.setBool(tutorialKey, false);
       }
     }
   }
 
   void _showTutorial() {
     tutorialCoachMark = TutorialCoachMark(
-      targets: _createTargets(), // إنشاء أهداف التوجيه
+      targets: _createTargets(),
       textSkip: "SKIP",
       hideSkip: false,
       onFinish: () {
@@ -70,7 +69,7 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
   List<TargetFocus> _createTargets() {
     return [
       TargetFocus(
-        keyTarget: _editButtonKey, // الزر الذي نريد التركيز عليه
+        keyTarget: _editButtonKey,
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
@@ -103,6 +102,7 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
@@ -124,7 +124,7 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
           top: 30,
           right: 10,
           child: IconButton(
-            key: _editButtonKey, // ربط المفتاح بالزر
+            key: _editButtonKey, // Attach key to button
             icon: SvgPicture.asset(Assets.imagesChangeuserinfo),
             onPressed: () {
               Navigator.of(context).push(
@@ -137,8 +137,10 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
         ),
         Positioned(
           top: 20,
-          left: MediaQuery.of(context).size.width / 2.1 - 40,
+          left: 0,
+          right: 0,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
