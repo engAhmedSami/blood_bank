@@ -22,12 +22,12 @@ class CustomCardItems extends StatelessWidget {
               onTap: () {},
             ),
             CustomCard(
-              title: 'Request for blood',
+              title: 'Request                       for blood',
               imagePath: Assets.imagesRequest,
               onTap: () {},
             ),
             CustomCard(
-              title: 'Find Donors',
+              title: 'Blood Instructions',
               imagePath: Assets.imagesInstructions,
               onTap: () {},
             ),

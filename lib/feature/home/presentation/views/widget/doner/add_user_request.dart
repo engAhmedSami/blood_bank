@@ -1,6 +1,6 @@
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
-import 'package:blood_bank/core/widget/custom_text_field.dart';
+import 'package:blood_bank/core/widget/custom_request_text_field.dart';
 import 'package:blood_bank/feature/home/domain/entities/doner_request_entity.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/doner/manger/add_product_cubit/add_doner_request_cubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,6 +34,8 @@ class DonerRequestState extends State<DonerRequest> {
   num contact = 0;
   num units = 0;
   num idCard = 0;
+  String hospitalName = '';
+  num distance = 0;
 
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
@@ -104,21 +106,23 @@ class DonerRequestState extends State<DonerRequest> {
       }
 
       DonerRequestEntity request = DonerRequestEntity(
-        name: name,
-        age: age,
-        bloodType: bloodType,
-        donationType: donationType,
-        gender: gender,
-        idCard: idCard,
-        lastDonationDate: lastDonationDate,
-        nextDonationDate: nextDonationDate,
-        medicalConditions: medicalConditions,
-        units: units,
-        contact: contact,
-        address: address,
-        notes: notes,
-        uId: _user.uid,
-      );
+          name: name,
+          age: age,
+          bloodType: bloodType,
+          donationType: donationType,
+          gender: gender,
+          idCard: idCard,
+          lastDonationDate: lastDonationDate,
+          nextDonationDate: nextDonationDate,
+          medicalConditions: medicalConditions,
+          units: units,
+          contact: contact,
+          address: address,
+          notes: notes,
+          uId: _user.uid,
+          hospitalName: hospitalName,
+          distance: distance,
+          photoUrl: _user.photoURL);
 
       context.read<AddDonerRequestCubit>().addRequest(request);
 
@@ -142,7 +146,7 @@ class DonerRequestState extends State<DonerRequest> {
           child: Column(
             spacing: 10,
             children: [
-              CustomTextFormField(
+              CustomRequestTextField(
                 hintText: 'Name',
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter your name' : null,
@@ -150,7 +154,7 @@ class DonerRequestState extends State<DonerRequest> {
                   name = value!;
                 },
               ),
-              CustomTextFormField(
+              CustomRequestTextField(
                 textInputType: TextInputType.number,
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter your age' : null,
@@ -162,7 +166,7 @@ class DonerRequestState extends State<DonerRequest> {
               bloodTypeDropDown(),
               donationTypeDropDown(),
               genderDropDown(),
-              CustomTextFormField(
+              CustomRequestTextField(
                 hintText: 'National ID',
                 textInputType: TextInputType.number,
                 validator: (value) =>
@@ -189,14 +193,14 @@ class DonerRequestState extends State<DonerRequest> {
                   });
                 },
               ),
-              CustomTextFormField(
+              CustomRequestTextField(
                 hintText: 'Medical Conditions',
                 maxLines: 3,
                 onSaved: (value) {
                   medicalConditions = value!;
                 },
               ),
-              CustomTextFormField(
+              CustomRequestTextField(
                 hintText: 'Units',
                 textInputType: TextInputType.number,
                 validator: (value) =>
@@ -205,7 +209,7 @@ class DonerRequestState extends State<DonerRequest> {
                   units = num.parse(value!);
                 },
               ),
-              CustomTextFormField(
+              CustomRequestTextField(
                 hintText: 'Contact Number',
                 textInputType: TextInputType.phone,
                 validator: (value) =>
@@ -214,7 +218,7 @@ class DonerRequestState extends State<DonerRequest> {
                   contact = num.parse(value!);
                 },
               ),
-              CustomTextFormField(
+              CustomRequestTextField(
                 hintText: 'Address',
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter address' : null,
@@ -222,13 +226,28 @@ class DonerRequestState extends State<DonerRequest> {
                   address = value!;
                 },
               ),
-              CustomTextFormField(
+              CustomRequestTextField(
                 hintText: 'Notes',
                 maxLines: 3,
                 onSaved: (value) {
                   notes = value!;
                 },
               ),
+              CustomRequestTextField(
+                hintText: 'Hospital Name',
+                validator: (value) =>
+                    value!.isEmpty ? 'Please enter hospital name' : null,
+                onSaved: (value) {
+                  hospitalName = value!;
+                },
+              ),
+              CustomRequestTextField(
+                  hintText: 'Distance',
+                  validator: (value) =>
+                      value!.isEmpty ? 'Please enter doctor name' : null,
+                  onSaved: (value) {
+                    distance = num.parse(value!);
+                  }),
               const SizedBox(height: 16),
               CustomButton(
                 text: 'Add Request',
@@ -246,7 +265,7 @@ class DonerRequestState extends State<DonerRequest> {
     required DateTime? selectedDate,
     required Function(DateTime) onDateSelected,
   }) {
-    return CustomTextFormField(
+    return CustomRequestTextField(
       controller: TextEditingController(
         text: selectedDate != null
             ? selectedDate.toLocal().toString().split(' ')[0]

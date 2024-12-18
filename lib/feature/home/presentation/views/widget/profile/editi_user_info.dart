@@ -92,8 +92,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
         _contactNumberController.text = data['contactNumber'] ?? '';
         _locationController.text = data['location'] ?? '';
         _uploadedImageUrl = data['photoUrl'];
-        _selectedBloodType = data['bloodType'];
-        _selectedUserState = data['userState'];
+        _selectedBloodType =
+            _bloodTypes.contains(data['bloodType']) ? data['bloodType'] : null;
+        _selectedUserState =
+            _userStates.contains(data['userState']) ? data['userState'] : null;
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -232,7 +234,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           value!.isEmpty ? 'Please enter age' : null,
                     ),
                     DropdownButtonFormField<String>(
-                      value: _selectedBloodType,
+                      value: _bloodTypes.contains(_selectedBloodType)
+                          ? _selectedBloodType
+                          : null,
                       items: _bloodTypes
                           .map((type) =>
                               DropdownMenuItem(value: type, child: Text(type)))
@@ -260,7 +264,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           value!.isEmpty ? 'Please enter location' : null,
                     ),
                     DropdownButtonFormField<String>(
-                      value: _selectedUserState,
+                      value: _userStates.contains(_selectedUserState)
+                          ? _selectedUserState
+                          : null,
                       items: _userStates
                           .map((state) => DropdownMenuItem(
                               value: state, child: Text(state)))

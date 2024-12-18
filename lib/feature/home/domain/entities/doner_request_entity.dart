@@ -13,6 +13,9 @@ class DonerRequestEntity {
   final num units;
   final String gender;
   final String uId;
+  final String hospitalName;
+  final num distance;
+  final String? photoUrl;
 
   DonerRequestEntity({
     required this.name,
@@ -29,5 +32,8 @@ class DonerRequestEntity {
     required this.notes,
     required this.units,
     required this.gender,
+    required this.hospitalName,
+    required this.distance,
+    required this.photoUrl,
   });
 }

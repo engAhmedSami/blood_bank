@@ -13,8 +13,7 @@ class UserHandler extends StatelessWidget {
     return Column(
       children: [
         StreamBuilder<UserModel>(
-          stream:
-              getUserStream(), // اشتراك في التحديثات المباشرة لبيانات المستخدم
+          stream: getUserStream(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());

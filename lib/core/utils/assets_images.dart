@@ -26,6 +26,10 @@ class Assets {
   /// assets/images/blood.svg
   static const String imagesBlood = "assets/images/blood.svg";
 
+  /// Assets for imagesBlooddrop
+  /// assets/images/blooddrop.svg
+  static const String imagesBlooddrop = "assets/images/blooddrop.svg";
+
   /// Assets for imagesChangeuserinfo
   /// assets/images/changeuserinfo.svg
   static const String imagesChangeuserinfo = "assets/images/changeuserinfo.svg";

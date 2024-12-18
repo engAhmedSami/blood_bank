@@ -78,6 +78,11 @@ abstract class TextStyles {
     fontSize: 11,
     fontFamily: 'iwanzaza',
   );
+  static const TextStyle semiBold12 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 12,
+    fontFamily: 'iwanzaza',
+  );
 
   static const TextStyle medium15 = TextStyle(
     fontWeight: FontWeight.w500,

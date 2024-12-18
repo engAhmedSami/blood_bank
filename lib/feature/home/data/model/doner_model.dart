@@ -15,6 +15,9 @@ class DonerModel {
   final num units;
   final String gender;
   final String uId;
+  final String hospitalName;
+  final num distance;
+  final String photoUrl;
 
   DonerModel({
     required this.name,
@@ -31,6 +34,9 @@ class DonerModel {
     required this.notes,
     required this.units,
     required this.gender,
+    required this.hospitalName,
+    required this.distance,
+    required this.photoUrl,
   });
   factory DonerModel.fromEntity(DonerRequestEntity addRequestInputEntity) {
     return DonerModel(
@@ -48,6 +54,9 @@ class DonerModel {
       units: addRequestInputEntity.units,
       gender: addRequestInputEntity.gender,
       uId: addRequestInputEntity.uId,
+      hospitalName: addRequestInputEntity.hospitalName,
+      distance: addRequestInputEntity.distance,
+      photoUrl: addRequestInputEntity.photoUrl ?? '',
     );
   }
   toJson() {
@@ -65,7 +74,10 @@ class DonerModel {
       'notes': notes,
       'units': units,
       'gender': gender,
-      'uId': uId
+      'uId': uId,
+      'hospitalName': hospitalName,
+      'distance': distance,
+      'photoUrl': photoUrl
     };
   }
 }
