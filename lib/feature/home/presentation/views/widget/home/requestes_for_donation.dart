@@ -22,7 +22,6 @@ class RequestsForDonation extends StatelessWidget {
 
         final requests = snapshot.data?.docs ?? [];
 
-        // Reverse the requests to show the latest one first
         final reversedRequests = requests.reversed.toList();
 
         if (reversedRequests.isEmpty) {
@@ -48,10 +47,8 @@ class RequestsForDonation extends StatelessWidget {
                 ],
               ),
             ),
-
-            // ListView
             SizedBox(
-              height: 350, // Control height as per need
+              height: 350,
               child: ListView.builder(
                 itemCount:
                     reversedRequests.length >= 3 ? 3 : reversedRequests.length,
@@ -125,9 +122,7 @@ class RequestsForDonation extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                                width:
-                                    12), // Space between blood type and distance
+                            const SizedBox(width: 12),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
