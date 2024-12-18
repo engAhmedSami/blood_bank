@@ -1,8 +1,12 @@
-import 'dart:developer';
-
 import 'package:blood_bank/core/utils/app_text_style.dart';
+import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/core/widget/custom_text_field.dart';
+import 'package:blood_bank/feature/home/domain/entities/doner_request_entity.dart';
+import 'package:blood_bank/feature/home/presentation/views/widget/doner/manger/add_product_cubit/add_doner_request_cubit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DonerRequest extends StatefulWidget {
   const DonerRequest({super.key});
@@ -13,23 +17,25 @@ class DonerRequest extends StatefulWidget {
 
 class DonerRequestState extends State<DonerRequest> {
   final _formKey = GlobalKey<FormState>();
+  final User? _user = FirebaseAuth.instance.currentUser;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
-  final TextEditingController _contactController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _notesController = TextEditingController();
-  final TextEditingController _unitsController = TextEditingController();
-  final TextEditingController _idCardController = TextEditingController();
-  final TextEditingController _medicalConditionsController =
-      TextEditingController();
+  // Variables initialized with default values
+  String name = '';
+  String address = '';
+  String notes = '';
+  String medicalConditions = '';
+  String bloodType = 'A+';
+  String donationType = 'Whole Blood';
+  String gender = 'Male';
+  DateTime? lastDonationDate;
+  DateTime? nextDonationDate;
+  num age = 0;
+  num contact = 0;
+  num units = 0;
+  num idCard = 0;
 
-  DateTime? _lastDonationDate;
-  DateTime? _nextDonationDate;
-
-  String? _selectedBloodType;
-  String? _selectedDonationType;
-  String? _selectedGender;
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   final List<String> _bloodTypes = [
     'A+',
@@ -48,7 +54,83 @@ class DonerRequestState extends State<DonerRequest> {
     'Platelets',
   ];
 
-  final List<String> _genders = ['Male', 'Female']; // Gender options
+  final List<String> _genders = ['Male', 'Female'];
+
+  // Check if the user has an existing request and validate next donation date
+  Future<bool> _canSubmitNewRequest(String userId) async {
+    final querySnapshot = await _firestore
+        .collection('donerRequest')
+        .where('uId', isEqualTo: userId)
+        .get();
+
+    if (querySnapshot.docs.isEmpty) {
+      return true;
+    }
+
+    // Check nextDonationDate in the existing request
+    final existingRequest = querySnapshot.docs.first.data();
+    final Timestamp? nextDonationTimestamp =
+        existingRequest['nextDonationDate'] as Timestamp?;
+    if (nextDonationTimestamp != null) {
+      final DateTime nextDonationDate = nextDonationTimestamp.toDate();
+      if (DateTime.now().isBefore(nextDonationDate)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+                'You can submit a new request after ${nextDonationDate.toLocal().toString().split(' ')[0]}.'),
+          ),
+        );
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  // Submit the request
+  void _submitRequest() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      if (_user == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('User not authenticated')),
+        );
+        return;
+      }
+      final canSubmit = await _canSubmitNewRequest(_user.uid);
+      if (!canSubmit) {
+        return;
+      }
+
+      DonerRequestEntity request = DonerRequestEntity(
+        name: name,
+        age: age,
+        bloodType: bloodType,
+        donationType: donationType,
+        gender: gender,
+        idCard: idCard,
+        lastDonationDate: lastDonationDate,
+        nextDonationDate: nextDonationDate,
+        medicalConditions: medicalConditions,
+        units: units,
+        contact: contact,
+        address: address,
+        notes: notes,
+        uId: _user.uid,
+      );
+
+      context.read<AddDonerRequestCubit>().addRequest(request);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Request submitted successfully!')),
+      );
+    } else {
+      setState(() {
+        autovalidateMode = AutovalidateMode.always;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,110 +143,102 @@ class DonerRequestState extends State<DonerRequest> {
             spacing: 10,
             children: [
               CustomTextFormField(
-                controller: _nameController,
                 hintText: 'Name',
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter your name' : null,
+                onSaved: (value) {
+                  name = value!;
+                },
               ),
               CustomTextFormField(
-                controller: _ageController,
                 textInputType: TextInputType.number,
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter your age' : null,
                 hintText: 'Age',
+                onSaved: (value) {
+                  age = num.parse(value!);
+                },
               ),
               bloodTypeDropDown(),
               donationTypeDropDown(),
-              genderDropDown(), // New dropdown for gender
+              genderDropDown(),
               CustomTextFormField(
-                controller: _idCardController,
                 hintText: 'National ID',
                 textInputType: TextInputType.number,
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter your ID card number' : null,
+                onSaved: (value) {
+                  idCard = num.parse(value!);
+                },
               ),
               datePickerField(
                 label: 'Last Donation Date',
-                selectedDate: _lastDonationDate,
+                selectedDate: lastDonationDate,
                 onDateSelected: (date) {
                   setState(() {
-                    _lastDonationDate = date;
+                    lastDonationDate = date;
                   });
                 },
               ),
               datePickerField(
                 label: 'Next Donation Date',
-                selectedDate: _nextDonationDate,
+                selectedDate: nextDonationDate,
                 onDateSelected: (date) {
                   setState(() {
-                    _nextDonationDate = date;
+                    nextDonationDate = date;
                   });
                 },
               ),
               CustomTextFormField(
-                controller: _medicalConditionsController,
                 hintText: 'Medical Conditions',
                 maxLines: 3,
+                onSaved: (value) {
+                  medicalConditions = value!;
+                },
               ),
               CustomTextFormField(
-                controller: _unitsController,
                 hintText: 'Units',
                 textInputType: TextInputType.number,
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter required units' : null,
+                onSaved: (value) {
+                  units = num.parse(value!);
+                },
               ),
               CustomTextFormField(
-                controller: _contactController,
                 hintText: 'Contact Number',
                 textInputType: TextInputType.phone,
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter contact number' : null,
+                onSaved: (value) {
+                  contact = num.parse(value!);
+                },
               ),
               CustomTextFormField(
-                controller: _addressController,
                 hintText: 'Address',
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter address' : null,
+                onSaved: (value) {
+                  address = value!;
+                },
               ),
               CustomTextFormField(
-                controller: _notesController,
                 hintText: 'Notes',
                 maxLines: 3,
+                onSaved: (value) {
+                  notes = value!;
+                },
               ),
-              SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _submitForm,
-                child: Text('Submit Request'),
+              const SizedBox(height: 16),
+              CustomButton(
+                text: 'Add Request',
+                onPressed: _submitRequest,
               ),
             ],
           ),
         ),
       ),
     );
-  }
-
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      // Handle form submission
-      final data = {
-        'name': _nameController.text,
-        'age': _ageController.text,
-        'bloodType': _selectedBloodType,
-        'donationType': _selectedDonationType,
-        'idCard': _idCardController.text,
-        'lastDonationDate': _lastDonationDate?.toIso8601String(),
-        'nextDonationDate': _nextDonationDate?.toIso8601String(),
-        'medicalConditions': _medicalConditionsController.text,
-        'contact': _contactController.text,
-        'address': _addressController.text,
-        'notes': _notesController.text,
-        'units': _unitsController.text,
-        'gender': _selectedGender,
-      };
-
-      // Perform form submission logic here
-      log(data.toString());
-    }
   }
 
   Widget datePickerField({
@@ -197,7 +271,7 @@ class DonerRequestState extends State<DonerRequest> {
 
   DropdownButtonFormField<String> bloodTypeDropDown() {
     return DropdownButtonFormField<String>(
-      value: _selectedBloodType,
+      value: bloodType,
       items: _bloodTypes
           .map((type) => DropdownMenuItem(
                 value: type,
@@ -205,7 +279,7 @@ class DonerRequestState extends State<DonerRequest> {
               ))
           .toList(),
       onChanged: (value) => setState(() {
-        _selectedBloodType = value;
+        bloodType = value!;
       }),
       decoration: InputDecoration(
         hintText: 'Select Blood Type',
@@ -220,7 +294,7 @@ class DonerRequestState extends State<DonerRequest> {
 
   DropdownButtonFormField<String> donationTypeDropDown() {
     return DropdownButtonFormField<String>(
-      value: _selectedDonationType,
+      value: donationType,
       items: _donationTypes
           .map((type) => DropdownMenuItem(
                 value: type,
@@ -228,7 +302,7 @@ class DonerRequestState extends State<DonerRequest> {
               ))
           .toList(),
       onChanged: (value) => setState(() {
-        _selectedDonationType = value;
+        donationType = value!;
       }),
       decoration: InputDecoration(
         hintText: 'Select Donation Type',
@@ -244,7 +318,7 @@ class DonerRequestState extends State<DonerRequest> {
 
   DropdownButtonFormField<String> genderDropDown() {
     return DropdownButtonFormField<String>(
-      value: _selectedGender,
+      value: gender,
       items: _genders
           .map((gender) => DropdownMenuItem(
                 value: gender,
@@ -252,7 +326,7 @@ class DonerRequestState extends State<DonerRequest> {
               ))
           .toList(),
       onChanged: (value) => setState(() {
-        _selectedGender = value;
+        gender = value!;
       }),
       decoration: InputDecoration(
         hintText: 'Select Gender',

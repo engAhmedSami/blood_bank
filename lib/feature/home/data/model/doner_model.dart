@@ -5,19 +5,21 @@ class DonerModel {
   final num age;
   final String bloodType;
   final String donationType;
-  final String idCard;
+  final num idCard;
   final DateTime? lastDonationDate;
   final DateTime? nextDonationDate;
   final String medicalConditions;
   final num contact;
   final String address;
   final String notes;
-  final String units;
+  final num units;
   final String gender;
+  final String uId;
 
   DonerModel({
     required this.name,
     required this.age,
+    required this.uId,
     required this.bloodType,
     required this.donationType,
     required this.idCard,
@@ -45,6 +47,7 @@ class DonerModel {
       notes: addRequestInputEntity.notes,
       units: addRequestInputEntity.units,
       gender: addRequestInputEntity.gender,
+      uId: addRequestInputEntity.uId,
     );
   }
   toJson() {
@@ -62,6 +65,7 @@ class DonerModel {
       'notes': notes,
       'units': units,
       'gender': gender,
+      'uId': uId
     };
   }
 }
