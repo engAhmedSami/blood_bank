@@ -22,17 +22,29 @@ class _UserProfilePageState extends State<UserProfilePage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
-  final TextEditingController _bloodTypeController = TextEditingController();
   final TextEditingController _contactNumberController =
       TextEditingController();
   final TextEditingController _locationController = TextEditingController();
-  final TextEditingController _userStateController = TextEditingController();
 
   File? _selectedImage;
   String? _uploadedImageUrl;
   bool _isLoading = false;
 
   String? _userId;
+  String? _selectedBloodType;
+  String? _selectedUserState;
+
+  final List<String> _bloodTypes = [
+    'A+',
+    'A-',
+    'B+',
+    'B-',
+    'O+',
+    'O-',
+    'AB+',
+    'AB-'
+  ];
+  final List<String> _userStates = ['Donor', 'Need'];
 
   @override
   void initState() {
@@ -77,11 +89,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
         final data = doc.data()!;
         _nameController.text = data['name'] ?? '';
         _ageController.text = data['age'] ?? '';
-        _bloodTypeController.text = data['bloodType'] ?? '';
         _contactNumberController.text = data['contactNumber'] ?? '';
         _locationController.text = data['location'] ?? '';
         _uploadedImageUrl = data['photoUrl'];
-        _userStateController.text = data['userState'] ?? '';
+        _selectedBloodType = data['bloodType'];
+        _selectedUserState = data['userState'];
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -131,15 +143,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
       final updatedData = {
         if (_nameController.text.isNotEmpty) 'name': _nameController.text,
         if (_ageController.text.isNotEmpty) 'age': _ageController.text,
-        if (_bloodTypeController.text.isNotEmpty)
-          'bloodType': _bloodTypeController.text,
+        if (_selectedBloodType != null) 'bloodType': _selectedBloodType,
         if (_contactNumberController.text.isNotEmpty)
           'contactNumber': _contactNumberController.text,
         if (_locationController.text.isNotEmpty)
           'location': _locationController.text,
         if (_uploadedImageUrl != null) 'photoUrl': _uploadedImageUrl,
-        if (_userStateController.text.isNotEmpty)
-          'userState': _userStateController.text,
+        if (_selectedUserState != null) 'userState': _selectedUserState,
       };
 
       try {
@@ -150,18 +160,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
           final docExists = (await userRef.get()).exists;
 
           if (docExists) {
-            await userRef.update(updatedData); // تحديث الحقول فقط
+            await userRef.update(updatedData);
           } else {
-            await userRef
-                .set(updatedData); // إنشاء مستند جديد إذا لم يكن موجودًا
+            await userRef.set(updatedData);
           }
 
-          // تحديث البيانات في SharedPreferences
-          final currentUserData = {
-            ...updatedData,
-            'uId': _userId,
-          };
-
+          final currentUserData = {...updatedData, 'uId': _userId};
           Prefs.setString(kUserData, jsonEncode(currentUserData));
 
           ScaffoldMessenger.of(context).showSnackBar(
@@ -227,12 +231,19 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       validator: (value) =>
                           value!.isEmpty ? 'Please enter age' : null,
                     ),
-                    TextFormField(
-                      controller: _bloodTypeController,
+                    DropdownButtonFormField<String>(
+                      value: _selectedBloodType,
+                      items: _bloodTypes
+                          .map((type) =>
+                              DropdownMenuItem(value: type, child: Text(type)))
+                          .toList(),
+                      onChanged: (value) => setState(() {
+                        _selectedBloodType = value;
+                      }),
                       decoration:
                           const InputDecoration(labelText: 'Blood Type'),
                       validator: (value) =>
-                          value!.isEmpty ? 'Please enter blood type' : null,
+                          value == null ? 'Please select blood type' : null,
                     ),
                     TextFormField(
                       controller: _contactNumberController,
@@ -248,12 +259,19 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       validator: (value) =>
                           value!.isEmpty ? 'Please enter location' : null,
                     ),
-                    TextFormField(
-                      controller: _userStateController,
+                    DropdownButtonFormField<String>(
+                      value: _selectedUserState,
+                      items: _userStates
+                          .map((state) => DropdownMenuItem(
+                              value: state, child: Text(state)))
+                          .toList(),
+                      onChanged: (value) => setState(() {
+                        _selectedUserState = value;
+                      }),
                       decoration:
-                          const InputDecoration(labelText: 'Doner or Need'),
+                          const InputDecoration(labelText: 'Donor or Need'),
                       validator: (value) =>
-                          value!.isEmpty ? 'Please enter Doner or Need' : null,
+                          value == null ? 'Please select a state' : null,
                     ),
                     const SizedBox(height: 16),
                     CustomButton(
