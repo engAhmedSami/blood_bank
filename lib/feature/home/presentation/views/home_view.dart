@@ -15,6 +15,10 @@ class HomeView extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
+            pinned: true,
+            floating: true,
+            snap: true,
             expandedHeight: 290,
             backgroundColor: Colors.white,
             flexibleSpace: FlexibleSpaceBar(
