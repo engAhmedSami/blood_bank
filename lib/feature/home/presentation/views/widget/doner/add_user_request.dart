@@ -183,6 +183,7 @@ class DonerRequestState extends State<DonerRequest> {
                     lastDonationDate = date;
                   });
                 },
+                isNextDonationDate: false,
               ),
               datePickerField(
                 label: 'Next Donation Date',
@@ -192,6 +193,7 @@ class DonerRequestState extends State<DonerRequest> {
                     nextDonationDate = date;
                   });
                 },
+                isNextDonationDate: true,
               ),
               CustomRequestTextField(
                 hintText: 'Medical Conditions',
@@ -265,6 +267,7 @@ class DonerRequestState extends State<DonerRequest> {
     required String label,
     required DateTime? selectedDate,
     required Function(DateTime) onDateSelected,
+    required bool isNextDonationDate,
   }) {
     return CustomRequestTextField(
       controller: TextEditingController(
@@ -279,8 +282,10 @@ class DonerRequestState extends State<DonerRequest> {
         final date = await showDatePicker(
           context: context,
           initialDate: DateTime.now(),
-          firstDate: DateTime(2000),
-          lastDate: DateTime.now().add(const Duration(days: 365)),
+          firstDate: isNextDonationDate ? DateTime.now() : DateTime(2000),
+          lastDate: isNextDonationDate
+              ? DateTime.now().add(const Duration(days: 365 * 11))
+              : DateTime.now(),
         );
         if (date != null) {
           onDateSelected(date);
