@@ -4,15 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SecondaryCustomButton extends StatelessWidget {
-  // Constructor with required properties for callback and text
   const SecondaryCustomButton({
     super.key,
     required this.onPressed,
     required this.text,
+    this.image,
   });
 
   final VoidCallback onPressed;
   final String text;
+  final Image? image;
 
   @override
   Widget build(BuildContext context) {

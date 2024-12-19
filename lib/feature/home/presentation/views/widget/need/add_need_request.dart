@@ -99,6 +99,7 @@ class NeedRequestState extends State<NeedRequest> {
         address: address,
         uId: _user.uid,
         hospitalName: hospitalName,
+        dateTime: DateTime.now(),
       );
 
       context.read<AddNeederRequestCubit>().addNeederRequest(request);

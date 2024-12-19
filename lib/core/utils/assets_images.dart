@@ -38,6 +38,10 @@ class Assets {
   /// assets/images/chat.svg
   static const String imagesChat = "assets/images/chat.svg";
 
+  /// Assets for imagesCircle
+  /// assets/images/circle.svg
+  static const String imagesCircle = "assets/images/circle.svg";
+
   /// Assets for imagesConfirmed
   /// assets/images/Confirmed.svg
   static const String imagesConfirmed = "assets/images/Confirmed.svg";
@@ -70,6 +74,10 @@ class Assets {
   /// assets/images/home.svg
   static const String imagesHome = "assets/images/home.svg";
 
+  /// Assets for imagesHospital
+  /// assets/images/hospital.svg
+  static const String imagesHospital = "assets/images/hospital.svg";
+
   /// Assets for imagesInstructions
   /// assets/images/instructions.svg
   static const String imagesInstructions = "assets/images/instructions.svg";
@@ -77,6 +85,10 @@ class Assets {
   /// Assets for imagesLifesaved
   /// assets/images/lifesaved.svg
   static const String imagesLifesaved = "assets/images/lifesaved.svg";
+
+  /// Assets for imagesNblood
+  /// assets/images/nblood.svg
+  static const String imagesNblood = "assets/images/nblood.svg";
 
   /// Assets for imagesNeed
   /// assets/images/need.svg
@@ -89,6 +101,14 @@ class Assets {
   /// Assets for imagesNotfication
   /// assets/images/notfication.svg
   static const String imagesNotfication = "assets/images/notfication.svg";
+
+  /// Assets for imagesNotifcationTwo
+  /// assets/images/notifcation_two.svg
+  static const String imagesNotifcationTwo = "assets/images/notifcation_two.svg";
+
+  /// Assets for imagesOcloc
+  /// assets/images/ocloc.svg
+  static const String imagesOcloc = "assets/images/ocloc.svg";
 
   /// Assets for imagesOnBordingOnBordingFour
   /// assets/images/on_bording/on_bording_four.svg
