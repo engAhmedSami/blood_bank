@@ -1,4 +1,6 @@
 import 'package:blood_bank/core/utils/app_text_style.dart';
+import 'package:blood_bank/core/utils/page_rout_builder.dart';
+import 'package:blood_bank/feature/notification/notifications_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
@@ -85,7 +87,13 @@ class HomeHeader extends StatelessWidget {
                 width: 24,
                 height: 24,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  buildPageRoute(
+                    const NotificationsPage(),
+                  ),
+                );
+              },
             ),
           ),
         ],

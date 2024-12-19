@@ -1,13 +1,14 @@
-import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
+import 'package:blood_bank/feature/notification/notification_detail_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await NotificationService.instance.setupFlutterNotifications();
-  await NotificationService.instance.showNotification(message);
-}
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:googleapis_auth/auth_io.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 
 class NotificationService {
   NotificationService._();
@@ -17,18 +18,31 @@ class NotificationService {
   final _localNotifications = FlutterLocalNotificationsPlugin();
   bool _isFlutterLocalNotificationsInitialized = false;
 
-  Future<void> initialize() async {
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // Variable to prevent duplicate listener registration
+  bool _isMessageListenerAdded = false;
 
-    // Request permission
+  // List to store notifications for the UI
+  final List<Map<String, String>> _notifications = [];
+
+  List<Map<String, String>> get notifications => _notifications;
+
+  Future<void> initialize(BuildContext context) async {
     await _requestPermission();
+    await setupFlutterNotifications(context);
 
-    // Setup message handlers
-    await _setupMessageHandlers();
+    // Ensure the listener is registered only once
+    if (!_isMessageListenerAdded) {
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        _handleMessage(message, context);
+      });
+      _isMessageListenerAdded = true;
+    }
 
-    // Get FCM token
     final token = await _messaging.getToken();
     log('FCM Token: $token');
+    if (token != null) {
+      await saveUserToken(token);
+    }
   }
 
   Future<void> _requestPermission() async {
@@ -37,16 +51,12 @@ class NotificationService {
       badge: true,
       sound: true,
     );
-
     log('Permission status: ${settings.authorizationStatus}');
   }
 
-  Future<void> setupFlutterNotifications() async {
-    if (_isFlutterLocalNotificationsInitialized) {
-      return;
-    }
+  Future<void> setupFlutterNotifications(BuildContext context) async {
+    if (_isFlutterLocalNotificationsInitialized) return;
 
-    // Android setup
     const channel = AndroidNotificationChannel(
       'high_importance_channel',
       'High Importance Notifications',
@@ -62,29 +72,137 @@ class NotificationService {
     const initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    // iOS setup
     final initializationSettingsDarwin = DarwinInitializationSettings();
-
     final initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsDarwin,
     );
 
-    // Flutter notification setup
     await _localNotifications.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: (details) {
         log('Notification clicked with payload: ${details.payload}');
+        if (details.payload != null) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                  NotificationDetailPage(payload: details.payload!),
+            ),
+          );
+        }
       },
     );
 
     _isFlutterLocalNotificationsInitialized = true;
   }
 
-  Future<void> showNotification(RemoteMessage message) async {
-    RemoteNotification? notification = message.notification;
-    AndroidNotification? android = message.notification?.android;
-    if (notification != null && android != null) {
+  Future<void> saveUserToken(String token) async {
+    final firestore = FirebaseFirestore.instance;
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+
+    if (userId != null) {
+      // Check for duplicate tokens
+      final existingDoc =
+          await firestore.collection('userTokens').doc(userId).get();
+
+      if (existingDoc.exists && existingDoc['token'] == token) {
+        log('Token already exists. Skipping save.');
+        return;
+      }
+
+      await firestore.collection('userTokens').doc(userId).set({
+        'token': token,
+        'userId': userId,
+      });
+    }
+  }
+
+  Future<void> sendNotificationToAllUsers({
+    required String title,
+    required String body,
+    required Map<String, String> data,
+  }) async {
+    final firestore = FirebaseFirestore.instance;
+    final tokensSnapshot = await firestore.collection('userTokens').get();
+
+    if (tokensSnapshot.docs.isNotEmpty) {
+      final tokens = tokensSnapshot.docs
+          .map((doc) => doc['token'])
+          .toSet(); // Avoid duplicate tokens
+      for (final token in tokens) {
+        await _sendNotificationViaRestApi(token, title, body, data);
+      }
+    }
+  }
+
+  Future<void> _sendNotificationViaRestApi(
+    String token,
+    String title,
+    String body,
+    Map<String, String> data,
+  ) async {
+    final accessToken = await getAccessToken();
+
+    const serverUrl =
+        'https://fcm.googleapis.com/v1/projects/news-app-478cb/messages:send';
+
+    final message = {
+      "message": {
+        "token": token,
+        "notification": {
+          "title": title,
+          "body": body,
+        },
+        "data": data,
+      }
+    };
+
+    final response = await http.post(
+      Uri.parse(serverUrl),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $accessToken',
+      },
+      body: jsonEncode(message),
+    );
+
+    if (response.statusCode == 200) {
+      log('Notification sent successfully: ${response.body}');
+    } else {
+      log('Failed to send notification: ${response.body}');
+    }
+  }
+
+  Future<String> getAccessToken() async {
+    final serviceAccountCredentials =
+        await rootBundle.loadString('assets/service_account_file.json');
+
+    final serviceAccountCredentialsJson =
+        json.decode(serviceAccountCredentials);
+
+    final credentials =
+        ServiceAccountCredentials.fromJson(serviceAccountCredentialsJson);
+
+    final client = await clientViaServiceAccount(
+      credentials,
+      ['https://www.googleapis.com/auth/firebase.messaging'],
+    );
+
+    final accessToken = client.credentials.accessToken.data;
+    return accessToken;
+  }
+
+  Future<void> _handleMessage(
+      RemoteMessage message, BuildContext context) async {
+    final notification = message.notification;
+    if (notification != null) {
+      _notifications.add({
+        'title': notification.title ?? 'No title',
+        'body': notification.body ?? 'No body',
+      });
+
+      log('Notification received: ${notification.title}, ${notification.body}');
+
       await _localNotifications.show(
         notification.hashCode,
         notification.title,
@@ -99,7 +217,7 @@ class NotificationService {
             priority: Priority.high,
             icon: '@mipmap/ic_launcher',
           ),
-          iOS: const DarwinNotificationDetails(
+          iOS: DarwinNotificationDetails(
             presentAlert: true,
             presentBadge: true,
             presentSound: true,
@@ -107,28 +225,6 @@ class NotificationService {
         ),
         payload: message.data.toString(),
       );
-    }
-  }
-
-  Future<void> _setupMessageHandlers() async {
-    // Foreground message
-    FirebaseMessaging.onMessage.listen((message) {
-      showNotification(message);
-    });
-
-    // Background message
-    FirebaseMessaging.onMessageOpenedApp.listen(_handleBackgroundMessage);
-
-    // Opened app
-    final initialMessage = await _messaging.getInitialMessage();
-    if (initialMessage != null) {
-      _handleBackgroundMessage(initialMessage);
-    }
-  }
-
-  void _handleBackgroundMessage(RemoteMessage message) {
-    if (message.data['type'] == 'chat') {
-      // Open chat screen
     }
   }
 }

@@ -41,7 +41,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   flutter_facebook_auth: ^7.1.1
   flutter_launcher_icons: ^0.14.1
-  flutter_local_notifications: 
+  flutter_local_notifications: null
   flutter_localization: ^0.2.3
   flutter_localizations:
     sdk: flutter
@@ -87,6 +87,8 @@ flutter:
     - assets/images/
     - assets/lang/en.json
     - assets/lang/ar.json
+    - assets/service_account_file.json
+    
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see
