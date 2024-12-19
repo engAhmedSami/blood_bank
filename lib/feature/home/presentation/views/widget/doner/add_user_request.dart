@@ -58,7 +58,6 @@ class DonerRequestState extends State<DonerRequest> {
 
   final List<String> _genders = ['Male', 'Female'];
 
-  // Check if the user has an existing request and validate next donation date
   Future<bool> _canSubmitNewRequest(String userId) async {
     final querySnapshot = await _firestore
         .collection('donerRequest')
@@ -66,30 +65,59 @@ class DonerRequestState extends State<DonerRequest> {
         .get();
 
     if (querySnapshot.docs.isEmpty) {
-      return true;
+      return true; // لا توجد طلبات سابقة
     }
 
-    // Check nextDonationDate in the existing request
     final existingRequest = querySnapshot.docs.first.data();
+    final Timestamp? lastRequestTimestamp =
+        existingRequest['lastRequestDate'] as Timestamp?;
     final Timestamp? nextDonationTimestamp =
         existingRequest['nextDonationDate'] as Timestamp?;
+
+    final DateTime now = DateTime.now();
+    DateTime? nextDonationDate;
+
     if (nextDonationTimestamp != null) {
-      final DateTime nextDonationDate = nextDonationTimestamp.toDate();
-      if (DateTime.now().isBefore(nextDonationDate)) {
+      nextDonationDate = nextDonationTimestamp.toDate();
+    }
+
+    if (lastRequestTimestamp != null) {
+      final DateTime lastRequestDate = lastRequestTimestamp.toDate();
+      if (lastRequestDate.year == now.year &&
+          lastRequestDate.month == now.month &&
+          lastRequestDate.day == now.day) {
+        String additionalMessage = '';
+        if (nextDonationDate != null && now.isBefore(nextDonationDate)) {
+          additionalMessage =
+              '\nAnd your next eligible request date is ${nextDonationDate.toLocal().toString().split(' ')[0]}.';
+        }
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-                'You can submit a new request after ${nextDonationDate.toLocal().toString().split(' ')[0]}.'),
+              'You have already submitted a request $additionalMessage',
+            ),
           ),
         );
         return false;
       }
     }
 
-    return true;
+    // إذا كان التاريخ الحالي قبل `nextDonationDate`
+    if (nextDonationDate != null && now.isBefore(nextDonationDate)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'You can submit a new request after ${nextDonationDate.toLocal().toString().split(' ')[0]}.',
+          ),
+        ),
+      );
+      return false;
+    }
+
+    return true; // السماح بإنشاء طلب جديد
   }
 
-  // Submit the request
   void _submitRequest() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -106,23 +134,25 @@ class DonerRequestState extends State<DonerRequest> {
       }
 
       DonerRequestEntity request = DonerRequestEntity(
-          name: name,
-          age: age,
-          bloodType: bloodType,
-          donationType: donationType,
-          gender: gender,
-          idCard: idCard,
-          lastDonationDate: lastDonationDate,
-          nextDonationDate: nextDonationDate,
-          medicalConditions: medicalConditions,
-          units: units,
-          contact: contact,
-          address: address,
-          notes: notes,
-          uId: _user.uid,
-          hospitalName: hospitalName,
-          distance: distance,
-          photoUrl: _user.photoURL);
+        name: name,
+        age: age,
+        bloodType: bloodType,
+        donationType: donationType,
+        gender: gender,
+        idCard: idCard,
+        lastDonationDate: lastDonationDate,
+        nextDonationDate: nextDonationDate,
+        medicalConditions: medicalConditions,
+        units: units,
+        contact: contact,
+        address: address,
+        notes: notes,
+        uId: _user.uid,
+        hospitalName: hospitalName,
+        distance: distance,
+        photoUrl: _user.photoURL,
+        lastRequestDate: DateTime.now(),
+      );
 
       context.read<AddDonerRequestCubit>().addRequest(request);
 

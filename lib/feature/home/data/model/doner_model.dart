@@ -8,6 +8,7 @@ class DonerModel {
   final num idCard;
   final DateTime? lastDonationDate;
   final DateTime? nextDonationDate;
+  final DateTime? lastRequestDate;
   final String medicalConditions;
   final num contact;
   final String address;
@@ -37,6 +38,7 @@ class DonerModel {
     required this.hospitalName,
     required this.distance,
     required this.photoUrl,
+    this.lastRequestDate,
   });
   factory DonerModel.fromEntity(DonerRequestEntity addRequestInputEntity) {
     return DonerModel(
@@ -57,6 +59,7 @@ class DonerModel {
       hospitalName: addRequestInputEntity.hospitalName,
       distance: addRequestInputEntity.distance,
       photoUrl: addRequestInputEntity.photoUrl ?? '',
+      lastRequestDate: addRequestInputEntity.lastRequestDate,
     );
   }
   toJson() {
@@ -77,7 +80,8 @@ class DonerModel {
       'uId': uId,
       'hospitalName': hospitalName,
       'distance': distance,
-      'photoUrl': photoUrl
+      'photoUrl': photoUrl,
+      'lastRequestDate': lastRequestDate
     };
   }
 }

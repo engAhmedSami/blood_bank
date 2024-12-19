@@ -6,6 +6,7 @@ class DonerRequestEntity {
   final num idCard;
   final DateTime? lastDonationDate;
   final DateTime? nextDonationDate;
+  final DateTime? lastRequestDate;
   final String medicalConditions;
   final num contact;
   final String address;
@@ -35,5 +36,6 @@ class DonerRequestEntity {
     required this.hospitalName,
     required this.distance,
     required this.photoUrl,
+    this.lastRequestDate,
   });
 }
