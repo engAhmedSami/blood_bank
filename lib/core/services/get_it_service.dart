@@ -6,7 +6,9 @@ import 'package:blood_bank/core/services/storage_service.dart';
 import 'package:blood_bank/feature/auth/data/repos/auth_repo_impl.dart';
 import 'package:blood_bank/feature/auth/domain/repos/auth_repo.dart';
 import 'package:blood_bank/feature/home/data/repos/doner_repo_impl.dart';
+import 'package:blood_bank/feature/home/data/repos/needer_repo_impl.dart';
 import 'package:blood_bank/feature/home/domain/repos/doner_repo.dart';
+import 'package:blood_bank/feature/home/domain/repos/needer_repo.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
@@ -23,6 +25,9 @@ void setupGetit() {
     ),
   );
   getIt.registerSingleton<DonerRepo>(DonerRepoImpl(
+    getIt.get<DatabaseService>(),
+  ));
+  getIt.registerSingleton<NeederRepo>(NeederRepoImpl(
     getIt.get<DatabaseService>(),
   ));
 }
