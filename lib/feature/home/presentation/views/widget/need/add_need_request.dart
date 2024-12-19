@@ -23,19 +23,14 @@ class NeedRequestState extends State<NeedRequest> {
   // Variables initialized with default values
   String patientName = '';
   String address = '';
-  String notes = '';
   String medicalConditions = '';
   String bloodType = 'A+';
   String donationType = 'Whole Blood';
   String gender = 'Male';
-  DateTime? lastDonationDate;
-  DateTime? nextDonationDate;
   num age = 0;
   num contact = 0;
-  num units = 0;
   num idCard = 0;
   String hospitalName = '';
-  num distance = 0;
 
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
@@ -60,62 +55,21 @@ class NeedRequestState extends State<NeedRequest> {
 
   Future<bool> _canSubmitNewRequest(String userId) async {
     final querySnapshot = await _firestore
-        .collection('donerRequest')
+        .collection('neederRequest')
         .where('uId', isEqualTo: userId)
         .get();
 
-    if (querySnapshot.docs.isEmpty) {
-      return true; // لا توجد طلبات سابقة
-    }
-
-    final existingRequest = querySnapshot.docs.first.data();
-    final Timestamp? lastRequestTimestamp =
-        existingRequest['lastRequestDate'] as Timestamp?;
-    final Timestamp? nextDonationTimestamp =
-        existingRequest['nextDonationDate'] as Timestamp?;
-
-    final DateTime now = DateTime.now();
-    DateTime? nextDonationDate;
-
-    if (nextDonationTimestamp != null) {
-      nextDonationDate = nextDonationTimestamp.toDate();
-    }
-
-    if (lastRequestTimestamp != null) {
-      final DateTime lastRequestDate = lastRequestTimestamp.toDate();
-      if (lastRequestDate.year == now.year &&
-          lastRequestDate.month == now.month &&
-          lastRequestDate.day == now.day) {
-        String additionalMessage = '';
-        if (nextDonationDate != null && now.isBefore(nextDonationDate)) {
-          additionalMessage =
-              '\nAnd your next eligible request date is ${nextDonationDate.toLocal().toString().split(' ')[0]}.';
-        }
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'You have already submitted a request $additionalMessage',
-            ),
-          ),
-        );
-        return false;
-      }
-    }
-
-    // إذا كان التاريخ الحالي قبل `nextDonationDate`
-    if (nextDonationDate != null && now.isBefore(nextDonationDate)) {
+    if (querySnapshot.docs.isNotEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'You can submit a new request after ${nextDonationDate.toLocal().toString().split(' ')[0]}.',
-          ),
+              'You have an active request. Please complete it before submitting a new one.'),
         ),
       );
       return false;
     }
 
-    return true; // السماح بإنشاء طلب جديد
+    return true;
   }
 
   void _submitRequest() async {
@@ -170,9 +124,9 @@ class NeedRequestState extends State<NeedRequest> {
             spacing: 10,
             children: [
               CustomRequestTextField(
-                hintText: 'Name',
+                hintText: 'PatientName',
                 validator: (value) =>
-                    value!.isEmpty ? 'Please enter your name' : null,
+                    value!.isEmpty ? 'Please enter your patientName' : null,
                 onSaved: (value) {
                   patientName = value!;
                 },
@@ -198,40 +152,11 @@ class NeedRequestState extends State<NeedRequest> {
                   idCard = num.parse(value!);
                 },
               ),
-              datePickerField(
-                label: 'Last Donation Date',
-                selectedDate: lastDonationDate,
-                onDateSelected: (date) {
-                  setState(() {
-                    lastDonationDate = date;
-                  });
-                },
-                isNextDonationDate: false,
-              ),
-              datePickerField(
-                label: 'Next Donation Date',
-                selectedDate: nextDonationDate,
-                onDateSelected: (date) {
-                  setState(() {
-                    nextDonationDate = date;
-                  });
-                },
-                isNextDonationDate: true,
-              ),
               CustomRequestTextField(
                 hintText: 'Medical Conditions',
                 maxLines: 3,
                 onSaved: (value) {
                   medicalConditions = value!;
-                },
-              ),
-              CustomRequestTextField(
-                hintText: 'Units',
-                textInputType: TextInputType.number,
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter required units' : null,
-                onSaved: (value) {
-                  units = num.parse(value!);
                 },
               ),
               CustomRequestTextField(
@@ -252,13 +177,6 @@ class NeedRequestState extends State<NeedRequest> {
                 },
               ),
               CustomRequestTextField(
-                hintText: 'Notes',
-                maxLines: 3,
-                onSaved: (value) {
-                  notes = value!;
-                },
-              ),
-              CustomRequestTextField(
                 hintText: 'Hospital Name',
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter hospital name' : null,
@@ -266,13 +184,6 @@ class NeedRequestState extends State<NeedRequest> {
                   hospitalName = value!;
                 },
               ),
-              CustomRequestTextField(
-                  hintText: 'Distance',
-                  validator: (value) =>
-                      value!.isEmpty ? 'Please enter doctor name' : null,
-                  onSaved: (value) {
-                    distance = num.parse(value!);
-                  }),
               const SizedBox(height: 16),
               CustomButton(
                 text: 'Add Request',
