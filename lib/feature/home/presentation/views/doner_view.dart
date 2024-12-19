@@ -18,7 +18,7 @@ class DonerView extends StatelessWidget {
         backgroundColor: AppColors.backgroundColor,
         title: Text(
           'Donation Request',
-          style: TextStyles.semiBold24.copyWith(color: Colors.white),
+          style: TextStyles.semiBold19.copyWith(color: Colors.white),
         ),
         centerTitle: true,
       ),

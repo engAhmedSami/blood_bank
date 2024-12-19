@@ -29,8 +29,8 @@ class BloodRequestCard extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.4),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
+              blurRadius: 6,
+              offset: const Offset(0, 6),
             ),
           ],
         ),
@@ -102,7 +102,6 @@ class BloodRequestCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            // Accept and Decline buttons
             Row(
               children: [
                 Expanded(

@@ -18,7 +18,7 @@ class NeedView extends StatelessWidget {
         backgroundColor: AppColors.backgroundColor,
         title: Text(
           'Blood Needed',
-          style: TextStyles.semiBold24.copyWith(color: Colors.white),
+          style: TextStyles.semiBold19.copyWith(color: Colors.white),
         ),
         centerTitle: true,
       ),

@@ -19,8 +19,6 @@ class NeedRequestState extends State<NeedRequest> {
   final _formKey = GlobalKey<FormState>();
   final User? _user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  // Variables initialized with default values
   String patientName = '';
   String address = '';
   String medicalConditions = '';
