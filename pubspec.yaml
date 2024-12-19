@@ -41,12 +41,16 @@ dependencies:
   flutter_bloc: ^8.1.6
   flutter_facebook_auth: ^7.1.1
   flutter_launcher_icons: ^0.14.1
+  flutter_local_notifications: 
   flutter_localization: ^0.2.3
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^2.0.16
   get_it: ^8.0.2
   google_sign_in: ^6.2.2
+  googleapis: ^13.2.0
+  googleapis_auth: ^1.6.0
+  http: ^1.2.2
   image_picker: ^1.1.2
   intl: null
   jumping_dot: ^0.0.7

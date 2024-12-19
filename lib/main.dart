@@ -2,6 +2,7 @@ import 'package:blood_bank/core/services/custom_block_observer.dart';
 import 'package:blood_bank/core/services/get_it_service.dart';
 import 'package:blood_bank/core/services/shared_preferences_sengleton.dart';
 import 'package:blood_bank/feature/localization/cubit/locale_cubit.dart';
+import 'package:blood_bank/feature/notification/notification_service.dart';
 import 'package:blood_bank/feature/splash/presentation/views/splash_view.dart';
 import 'package:blood_bank/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,6 +16,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await NotificationService.instance.initialize();
+
   // await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
   await Prefs.init();
   setupGetit();
