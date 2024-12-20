@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:blood_bank/feature/notification/notification_detail_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:http/http.dart' as http;
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class NotificationService {
   NotificationService._();
@@ -17,20 +17,15 @@ class NotificationService {
   final _messaging = FirebaseMessaging.instance;
   final _localNotifications = FlutterLocalNotificationsPlugin();
   bool _isFlutterLocalNotificationsInitialized = false;
-
-  // Variable to prevent duplicate listener registration
   bool _isMessageListenerAdded = false;
 
-  // List to store notifications for the UI
   final List<Map<String, String>> _notifications = [];
-
   List<Map<String, String>> get notifications => _notifications;
 
   Future<void> initialize(BuildContext context) async {
     await _requestPermission();
     await setupFlutterNotifications(context);
 
-    // Ensure the listener is registered only once
     if (!_isMessageListenerAdded) {
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         _handleMessage(message, context);
@@ -101,7 +96,6 @@ class NotificationService {
     final userId = FirebaseAuth.instance.currentUser?.uid;
 
     if (userId != null) {
-      // Check for duplicate tokens
       final existingDoc =
           await firestore.collection('userTokens').doc(userId).get();
 
@@ -126,9 +120,7 @@ class NotificationService {
     final tokensSnapshot = await firestore.collection('userTokens').get();
 
     if (tokensSnapshot.docs.isNotEmpty) {
-      final tokens = tokensSnapshot.docs
-          .map((doc) => doc['token'])
-          .toSet(); // Avoid duplicate tokens
+      final tokens = tokensSnapshot.docs.map((doc) => doc['token']).toSet();
       for (final token in tokens) {
         await _sendNotificationViaRestApi(token, title, body, data);
       }
@@ -188,8 +180,7 @@ class NotificationService {
       ['https://www.googleapis.com/auth/firebase.messaging'],
     );
 
-    final accessToken = client.credentials.accessToken.data;
-    return accessToken;
+    return client.credentials.accessToken.data;
   }
 
   Future<void> _handleMessage(
@@ -199,9 +190,11 @@ class NotificationService {
       _notifications.add({
         'title': notification.title ?? 'No title',
         'body': notification.body ?? 'No body',
+        'user_name': message.data['user_name'] ?? 'Unknown',
+        'user_email': message.data['user_email'] ?? 'Unknown',
+        'photoUrl': message.data['photoUrl'] ?? '',
+        'timestamp': DateTime.now().toIso8601String(),
       });
-
-      log('Notification received: ${notification.title}, ${notification.body}');
 
       await _localNotifications.show(
         notification.hashCode,
