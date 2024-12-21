@@ -53,14 +53,14 @@ class InfoCard extends StatelessWidget {
             width: 1.5,
           ),
           borderRadius: BorderRadius.circular(22),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade500,
-              blurRadius: 5,
-              spreadRadius: 0.5,
-              offset: const Offset(0, 5),
-            ),
-          ],
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.grey.shade500,
+          //     blurRadius: 5,
+          //     spreadRadius: 0.5,
+          //     offset: const Offset(0, 5),
+          //   ),
+          // ],
         ),
         child: Stack(
           children: [
