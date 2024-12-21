@@ -29,8 +29,10 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cloud_firestore: ^5.5.1
+  connectivity_plus: ^6.1.1
   cupertino_icons: ^1.0.8
   dartz: ^0.10.1
+  database_repository: ^2.0.1
   dio: ^5.7.0
   firebase_auth: null
   firebase_core: null
@@ -56,11 +58,14 @@ dependencies:
   jumping_dot: ^0.0.7
   modal_progress_hud_nsn: ^0.5.1
   path: null
+  path_provider: ^2.1.5
   provider: ^6.1.2
   rxdart: ^0.28.0
   shared_preferences: ^2.3.3
   skeletonizer: ^1.4.2
   smooth_page_indicator: ^1.2.0+3
+  sqflite: ^2.4.1
+  sqflite_common_ffi: null
   stylish_bottom_bar: ^1.1.0
   supabase_flutter: ^2.8.1
   top_snackbar_flutter: ^3.1.0
@@ -88,7 +93,7 @@ flutter:
     - assets/lang/en.json
     - assets/lang/ar.json
     - assets/service_account_file.json
-    
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see

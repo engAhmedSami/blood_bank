@@ -14,32 +14,35 @@ class CustomCardItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kHorizintalPadding),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          spacing: 25,
-          children: [
-            CustomCard(
-              title: 'Find Donors',
-              imagePath: Assets.imagesSearch,
-              onTap: () {},
-            ),
-            CustomCard(
-              title: 'Request                       for blood',
-              imagePath: Assets.imagesRequest,
-              onTap: () {
-                Navigator.of(context).push(
-                  buildPageRoute(
-                    const BloodRequestScreen(),
-                  ),
-                );
-              },
-            ),
-            CustomCard(
-              title: 'Blood Instructions',
-              imagePath: Assets.imagesInstructions,
-              onTap: () {},
-            ),
-          ]),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            spacing: 25,
+            children: [
+              CustomCard(
+                title: 'Find Donors',
+                imagePath: Assets.imagesSearch,
+                onTap: () {},
+              ),
+              CustomCard(
+                title: 'Request                       for blood',
+                imagePath: Assets.imagesRequest,
+                onTap: () {
+                  Navigator.of(context).push(
+                    buildPageRoute(
+                      const BloodRequestScreen(),
+                    ),
+                  );
+                },
+              ),
+              CustomCard(
+                title: 'Blood Instructions',
+                imagePath: Assets.imagesInstructions,
+                onTap: () {},
+              ),
+            ]),
+      ),
     );
   }
 }

@@ -19,6 +19,7 @@ class HealthModel {
     required this.sourceUrl,
   });
 
+  // Convert JSON to HealthModel instance
   factory HealthModel.fromJson(Map<String, dynamic> json) {
     return HealthModel(
       image: json['image'],
@@ -29,6 +30,34 @@ class HealthModel {
       publishedAt: json['publishedAt'],
       sourceName: json['source']?['name'],
       sourceUrl: json['source']?['url'],
+    );
+  }
+
+  // Convert HealthModel instance to Map (for saving into a database)
+  Map<String, dynamic> toMap() {
+    return {
+      'image': image,
+      'title': title,
+      'description': description,
+      'url': url,
+      'content': content,
+      'publishedAt': publishedAt,
+      'sourceName': sourceName,
+      'sourceUrl': sourceUrl,
+    };
+  }
+
+  // Convert Map to HealthModel instance
+  factory HealthModel.fromMap(Map<String, dynamic> map) {
+    return HealthModel(
+      image: map['image'],
+      title: map['title'],
+      description: map['description'],
+      url: map['url'],
+      content: map['content'],
+      publishedAt: map['publishedAt'],
+      sourceName: map['sourceName'],
+      sourceUrl: map['sourceUrl'],
     );
   }
 }
