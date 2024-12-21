@@ -66,6 +66,7 @@
 //     );
 //   }
 // }
+import 'package:blood_bank/core/services/SQlHelperHealthRequest.dart';
 import 'package:blood_bank/core/services/custom_block_observer.dart';
 import 'package:blood_bank/core/services/get_it_service.dart';
 import 'package:blood_bank/core/services/shared_preferences_sengleton.dart';
@@ -88,6 +89,8 @@ void main() async {
   await Prefs.init();
   setupGetit();
   Bloc.observer = CustomBlockObserver();
+
+  await SQlHelperHealthRequest().database;
 
   runApp(const BloodBank());
 }
