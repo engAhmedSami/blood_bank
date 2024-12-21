@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cloud_firestore: ^5.5.1
+  connectivity_plus: ^6.1.1
   cupertino_icons: ^1.0.8
   dartz: ^0.10.1
   database_repository: ^2.0.1
@@ -56,7 +57,7 @@ dependencies:
   intl: null
   jumping_dot: ^0.0.7
   modal_progress_hud_nsn: ^0.5.1
-  path: 
+  path: null
   path_provider: ^2.1.5
   provider: ^6.1.2
   rxdart: ^0.28.0

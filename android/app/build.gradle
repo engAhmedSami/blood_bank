@@ -24,6 +24,7 @@ android {
     }
 
     defaultConfig {
+        multiDexEnabled true
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.example.blood_bank"
         // You can update the following values to match your application needs.
@@ -31,8 +32,9 @@ android {
         minSdk = 24
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
-        versionName = flutter.versionName
-        multiDexEnabled true
+        versionName = flutter.versionName         
+        minSdkVersion 23
+
     }
 
     buildTypes {
