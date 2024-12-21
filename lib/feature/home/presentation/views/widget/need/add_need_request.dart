@@ -1,6 +1,7 @@
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/core/widget/custom_request_text_field.dart';
+import 'package:blood_bank/core/widget/governorate_drop_down.dart';
 import 'package:blood_bank/feature/home/domain/entities/needer_request_entity.dart';
 import 'package:blood_bank/feature/home/presentation/manger/add_need_request_cubit/add_need_request_cubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,11 +21,11 @@ class NeedRequestState extends State<NeedRequest> {
   final User? _user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   String patientName = '';
-  String address = '';
+  String? address;
   String medicalConditions = '';
-  String bloodType = 'A+';
-  String donationType = 'Whole Blood';
-  String gender = 'Male';
+  String? bloodType;
+  String? donationType;
+  String? gender;
   num age = 0;
   num contact = 0;
   num idCard = 0;
@@ -88,13 +89,13 @@ class NeedRequestState extends State<NeedRequest> {
       NeederRequestEntity request = NeederRequestEntity(
         patientName: patientName,
         age: age,
-        bloodType: bloodType,
-        donationType: donationType,
-        gender: gender,
+        bloodType: bloodType ?? '',
+        donationType: donationType ?? '',
+        gender: gender ?? '',
         idCard: idCard,
         medicalConditions: medicalConditions,
         contact: contact,
-        address: address,
+        address: address ?? '',
         uId: _user.uid,
         hospitalName: hospitalName,
         dateTime: DateTime.now(),
@@ -167,12 +168,12 @@ class NeedRequestState extends State<NeedRequest> {
                   contact = num.parse(value!);
                 },
               ),
-              CustomRequestTextField(
-                hintText: 'Address',
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter address' : null,
-                onSaved: (value) {
-                  address = value!;
+              GovernorateDropdown(
+                selectedGovernorate: address,
+                onChanged: (value) {
+                  setState(() {
+                    address = value;
+                  });
                 },
               ),
               CustomRequestTextField(
@@ -202,27 +203,56 @@ class NeedRequestState extends State<NeedRequest> {
     required Function(DateTime) onDateSelected,
     required bool isNextDonationDate,
   }) {
-    return CustomRequestTextField(
-      controller: TextEditingController(
-        text: selectedDate != null
-            ? selectedDate.toLocal().toString().split(' ')[0]
-            : '',
-      ),
-      hintText: label,
-      suffixIcon: const Icon(Icons.calendar_today),
-      readOnly: true,
-      onTap: () async {
-        final date = await showDatePicker(
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: isNextDonationDate ? DateTime.now() : DateTime(2000),
-          lastDate: isNextDonationDate
-              ? DateTime.now().add(const Duration(days: 365 * 11))
-              : DateTime.now(),
-        );
-        if (date != null) {
-          onDateSelected(date);
+    return FormField<DateTime>(
+      initialValue: selectedDate,
+      validator: (value) {
+        if (value == null) {
+          return 'Please select a date'; // Validation message
         }
+        return null; // Return null if the date is selected
+      },
+      builder: (formFieldState) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomRequestTextField(
+              controller: TextEditingController(
+                text: selectedDate != null
+                    ? selectedDate.toLocal().toString().split(' ')[0]
+                    : '',
+              ),
+              hintText: label,
+              suffixIcon: const Icon(Icons.calendar_today),
+              readOnly: true,
+              onTap: () async {
+                final date = await showDatePicker(
+                  context: context,
+                  initialDate: selectedDate ?? DateTime.now(),
+                  firstDate:
+                      isNextDonationDate ? DateTime.now() : DateTime(2000),
+                  lastDate: isNextDonationDate
+                      ? DateTime.now().add(const Duration(days: 365 * 11))
+                      : DateTime.now(),
+                );
+                if (date != null) {
+                  onDateSelected(date);
+                  formFieldState.didChange(date); // Update the FormField value
+                }
+              },
+            ),
+            if (formFieldState.hasError) // Check if there's an error
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0),
+                child: Text(
+                  formFieldState.errorText!,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+          ],
+        );
       },
     );
   }

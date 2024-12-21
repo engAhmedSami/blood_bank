@@ -14,6 +14,7 @@ class CustomTextFormField extends StatelessWidget {
     this.validator,
     this.prefixIcon,
     this.onSubmitted,
+    this.onChanged,
   });
 
   final String hintText;
@@ -25,12 +26,13 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
   final void Function(String)? onSubmitted; // Added this parameter
-
+  final void Function(String)? onChanged; // Added this parameter
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       style: TextStyles.semiBold14,
       controller: controller,
+      onChanged: onChanged,
       obscureText: obobscureText,
       onSaved: onSaved,
       validator: validator,

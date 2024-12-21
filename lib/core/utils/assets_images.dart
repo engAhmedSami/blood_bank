@@ -58,6 +58,10 @@ class Assets {
   /// assets/images/facebook.svg
   static const String imagesFacebook = "assets/images/facebook.svg";
 
+  /// Assets for imagesFinddoners
+  /// assets/images/finddoners.svg
+  static const String imagesFinddoners = "assets/images/finddoners.svg";
+
   /// Assets for imagesFulldrop
   /// assets/images/fulldrop.svg
   static const String imagesFulldrop = "assets/images/fulldrop.svg";

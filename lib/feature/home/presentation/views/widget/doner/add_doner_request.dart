@@ -1,6 +1,7 @@
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/core/widget/custom_request_text_field.dart';
+import 'package:blood_bank/core/widget/governorate_drop_down.dart';
 import 'package:blood_bank/feature/home/domain/entities/doner_request_entity.dart';
 import 'package:blood_bank/feature/home/presentation/manger/add_doner_request_cubit/add_doner_request_cubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,12 +23,12 @@ class DonerRequestState extends State<DonerRequest> {
 
   // Variables initialized with default values
   String name = '';
-  String address = '';
+  String? address;
   String notes = '';
   String medicalConditions = '';
-  String bloodType = 'A+';
-  String donationType = 'Whole Blood';
-  String gender = 'Male';
+  String? bloodType;
+  String? donationType;
+  String? gender;
   DateTime? lastDonationDate;
   DateTime? nextDonationDate;
   num age = 0;
@@ -65,7 +66,7 @@ class DonerRequestState extends State<DonerRequest> {
         .get();
 
     if (querySnapshot.docs.isEmpty) {
-      return true; // لا توجد طلبات سابقة
+      return true; // No previous requests found
     }
 
     final existingRequest = querySnapshot.docs.first.data();
@@ -103,7 +104,7 @@ class DonerRequestState extends State<DonerRequest> {
       }
     }
 
-    // إذا كان التاريخ الحالي قبل `nextDonationDate`
+    // If current date is before `nextDonationDate`
     if (nextDonationDate != null && now.isBefore(nextDonationDate)) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -115,7 +116,7 @@ class DonerRequestState extends State<DonerRequest> {
       return false;
     }
 
-    return true; // السماح بإنشاء طلب جديد
+    return true; // Allow submitting a new request
   }
 
   void _submitRequest() async {
@@ -136,16 +137,16 @@ class DonerRequestState extends State<DonerRequest> {
       DonerRequestEntity request = DonerRequestEntity(
         name: name,
         age: age,
-        bloodType: bloodType,
-        donationType: donationType,
-        gender: gender,
+        bloodType: bloodType ?? '',
+        donationType: donationType ?? '',
+        gender: gender ?? '',
         idCard: idCard,
         lastDonationDate: lastDonationDate,
         nextDonationDate: nextDonationDate,
         medicalConditions: medicalConditions,
         units: units,
         contact: contact,
-        address: address,
+        address: address ?? '',
         notes: notes,
         uId: _user.uid,
         hospitalName: hospitalName,
@@ -173,6 +174,7 @@ class DonerRequestState extends State<DonerRequest> {
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
+          autovalidateMode: autovalidateMode,
           child: Column(
             spacing: 10,
             children: [
@@ -197,10 +199,10 @@ class DonerRequestState extends State<DonerRequest> {
               donationTypeDropDown(),
               genderDropDown(),
               CustomRequestTextField(
-                hintText: 'National ID',
+                hintText: 'National ID Number',
                 textInputType: TextInputType.number,
                 validator: (value) =>
-                    value!.isEmpty ? 'Please enter your ID card number' : null,
+                    value!.isEmpty ? 'Please enter your ID number' : null,
                 onSaved: (value) {
                   idCard = num.parse(value!);
                 },
@@ -233,10 +235,10 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
-                hintText: 'Units',
+                hintText: 'Units Required',
                 textInputType: TextInputType.number,
                 validator: (value) =>
-                    value!.isEmpty ? 'Please enter required units' : null,
+                    value!.isEmpty ? 'Please enter the units required' : null,
                 onSaved: (value) {
                   units = num.parse(value!);
                 },
@@ -245,17 +247,17 @@ class DonerRequestState extends State<DonerRequest> {
                 hintText: 'Contact Number',
                 textInputType: TextInputType.phone,
                 validator: (value) =>
-                    value!.isEmpty ? 'Please enter contact number' : null,
+                    value!.isEmpty ? 'Please enter your contact number' : null,
                 onSaved: (value) {
                   contact = num.parse(value!);
                 },
               ),
-              CustomRequestTextField(
-                hintText: 'Address',
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter address' : null,
-                onSaved: (value) {
-                  address = value!;
+              GovernorateDropdown(
+                selectedGovernorate: address,
+                onChanged: (value) {
+                  setState(() {
+                    address = value;
+                  });
                 },
               ),
               CustomRequestTextField(
@@ -268,7 +270,7 @@ class DonerRequestState extends State<DonerRequest> {
               CustomRequestTextField(
                 hintText: 'Hospital Name',
                 validator: (value) =>
-                    value!.isEmpty ? 'Please enter hospital name' : null,
+                    value!.isEmpty ? 'Please enter the hospital name' : null,
                 onSaved: (value) {
                   hospitalName = value!;
                 },
@@ -276,13 +278,13 @@ class DonerRequestState extends State<DonerRequest> {
               CustomRequestTextField(
                   hintText: 'Distance',
                   validator: (value) =>
-                      value!.isEmpty ? 'Please enter doctor name' : null,
+                      value!.isEmpty ? 'Please enter the distance' : null,
                   onSaved: (value) {
                     distance = num.parse(value!);
                   }),
               const SizedBox(height: 16),
               CustomButton(
-                text: 'Add Request',
+                text: 'Submit Request',
                 onPressed: _submitRequest,
               ),
               const SizedBox(height: 16),
@@ -299,27 +301,56 @@ class DonerRequestState extends State<DonerRequest> {
     required Function(DateTime) onDateSelected,
     required bool isNextDonationDate,
   }) {
-    return CustomRequestTextField(
-      controller: TextEditingController(
-        text: selectedDate != null
-            ? selectedDate.toLocal().toString().split(' ')[0]
-            : '',
-      ),
-      hintText: label,
-      suffixIcon: const Icon(Icons.calendar_today),
-      readOnly: true,
-      onTap: () async {
-        final date = await showDatePicker(
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: isNextDonationDate ? DateTime.now() : DateTime(2000),
-          lastDate: isNextDonationDate
-              ? DateTime.now().add(const Duration(days: 365 * 11))
-              : DateTime.now(),
-        );
-        if (date != null) {
-          onDateSelected(date);
+    return FormField<DateTime>(
+      initialValue: selectedDate,
+      validator: (value) {
+        if (value == null) {
+          return 'Please select a date';
         }
+        return null;
+      },
+      builder: (formFieldState) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomRequestTextField(
+              controller: TextEditingController(
+                text: selectedDate != null
+                    ? selectedDate.toLocal().toString().split(' ')[0]
+                    : '',
+              ),
+              hintText: label,
+              suffixIcon: const Icon(Icons.calendar_today),
+              readOnly: true,
+              onTap: () async {
+                final date = await showDatePicker(
+                  context: context,
+                  initialDate: selectedDate ?? DateTime.now(),
+                  firstDate:
+                      isNextDonationDate ? DateTime.now() : DateTime(2000),
+                  lastDate: isNextDonationDate
+                      ? DateTime.now().add(const Duration(days: 365 * 11))
+                      : DateTime.now(),
+                );
+                if (date != null) {
+                  onDateSelected(date);
+                  formFieldState.didChange(date);
+                }
+              },
+            ),
+            if (formFieldState.hasError)
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0),
+                child: Text(
+                  formFieldState.errorText!,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+          ],
+        );
       },
     );
   }
@@ -377,7 +408,10 @@ class DonerRequestState extends State<DonerRequest> {
       items: _genders
           .map((gender) => DropdownMenuItem(
                 value: gender,
-                child: Text(gender, style: TextStyles.semiBold14),
+                child: Text(
+                  gender,
+                  style: TextStyles.semiBold14,
+                ),
               ))
           .toList(),
       onChanged: (value) => setState(() {
