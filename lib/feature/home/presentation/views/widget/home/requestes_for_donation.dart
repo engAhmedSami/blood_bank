@@ -1,5 +1,6 @@
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
+import 'package:blood_bank/core/widget/CoustomCircularProgressIndicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,7 +14,7 @@ class RequestsForDonation extends StatelessWidget {
       stream: FirebaseFirestore.instance.collection('donerRequest').snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CoustomCircularProgressIndicator());
         }
 
         if (snapshot.hasError) {
