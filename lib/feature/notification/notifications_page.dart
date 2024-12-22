@@ -1,110 +1,159 @@
+import 'package:blood_bank/feature/notification/notification_service.dart';
+import 'package:blood_bank/feature/notification/sql_helper_notification.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // استيراد مكتبة intl
-import 'notification_service.dart';
-import 'notification_detail_page.dart';
 
-class NotificationsPage extends StatelessWidget {
+class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final notifications = NotificationService.instance.notifications;
+  State<NotificationsPage> createState() => _NotificationsPageState();
+}
 
+class _NotificationsPageState extends State<NotificationsPage> {
+  late Future<List<Map<String, dynamic>>> _notificationsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadNotifications();
+  }
+
+  void _loadNotifications() {
+    _notificationsFuture = SQlHelperNotification().getNotifications();
+  }
+
+  Future<void> _deleteNotification(int id, int index) async {
+    await SQlHelperNotification().deleteNotification(id);
+    NotificationService.instance.notifications.removeAt(index);
+
+    // تحديث الشاشة فوراً
+    setState(() {
+      _loadNotifications();
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Notification deleted'),
+      ),
+    );
+  }
+
+  Future<void> _deleteAllNotifications() async {
+    await SQlHelperNotification().deleteAllNotifications();
+    NotificationService.instance.notifications.clear();
+
+    // تحديث الشاشة فوراً
+    setState(() {
+      _loadNotifications();
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('All notifications deleted'),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notifications'),
         backgroundColor: Colors.red,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: ListView.builder(
-        itemCount: notifications.length,
-        itemBuilder: (context, index) {
-          final notification = notifications[index];
-
-          return Column(
-            children: [
-              ListTile(
-                leading: CircleAvatar(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Image.network(
-                      notification['photoUrl']?.isNotEmpty == true
-                          ? notification['photoUrl']!
-                          : 'https://via.placeholder.com/150',
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Icon(
-                          Icons.account_circle,
-                          size: 50,
-                          color: Colors.grey,
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                title: Text(
-                  notification['title']!,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.black,
-                  ),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      notification['body']!,
-                      style: TextStyle(color: Colors.grey.shade600),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Requested by: ${notification['user_name']} (${notification['user_email']})',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey.shade800,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete_forever),
+            onPressed: () async {
+              final confirm = await showDialog<bool>(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text('Delete All Notifications'),
+                    content: const Text(
+                        'Are you sure you want to delete all notifications?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        child: const Text('Cancel'),
                       ),
-                    ),
-                  ],
-                ),
-                trailing: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      DateFormat('hh:mm a').format(DateTime.now()), // عرض الوقت
-                      style: TextStyle(color: Colors.grey.shade600),
-                    ),
-                    Text(
-                      DateFormat('d MMM, yyyy')
-                          .format(DateTime.now()), // عرض التاريخ
-                      style: TextStyle(color: Colors.grey.shade600),
-                    ),
-                  ],
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => NotificationDetailPage(
-                        payload:
-                            'Title: ${notification['title']}\nBody: ${notification['body']}\nRequested by: ${notification['user_name']} (${notification['user_email']})',
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, true),
+                        child: const Text('Delete'),
                       ),
-                    ),
+                    ],
                   );
                 },
-              ),
-              const Divider(
-                height: 1,
-                thickness: 1,
-                color: Colors.grey,
-              ),
-            ],
+              );
+
+              if (confirm == true) {
+                await _deleteAllNotifications();
+              }
+            },
+          ),
+        ],
+      ),
+      body: FutureBuilder(
+        future: _notificationsFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('No Notifications Found'));
+          }
+
+          final notifications = snapshot.data as List<Map<String, dynamic>>;
+
+          return ListView.builder(
+            itemCount: notifications.length,
+            itemBuilder: (context, index) {
+              final notification = notifications[index];
+
+              return ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    notification['photoUrl']?.isNotEmpty == true
+                        ? notification['photoUrl']
+                        : 'https://via.placeholder.com/150',
+                  ),
+                ),
+                title: Text(notification['title']),
+                subtitle: Text(notification['body']),
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete, color: Colors.red),
+                  onPressed: () async {
+                    final confirm = await showDialog<bool>(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Delete Notification'),
+                          content: const Text(
+                              'Are you sure you want to delete this notification?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, false),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, true),
+                              child: const Text('Delete'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+
+                    if (confirm == true) {
+                      await _deleteNotification(
+                        notification['id'] as int,
+                        index,
+                      );
+                    }
+                  },
+                ),
+              );
+            },
           );
         },
       ),

@@ -1,10 +1,7 @@
-// ignore_for_file: file_names
-
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:blood_bank/feature/localization/cubit/locale_cubit.dart';
 import 'package:blood_bank/feature/notification/notification_service.dart';
 import 'package:blood_bank/feature/splash/presentation/views/splash_view.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

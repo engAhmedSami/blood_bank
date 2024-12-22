@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:blood_bank/feature/notification/notification_detail_page.dart';
+import 'package:blood_bank/feature/notification/sql_helper_notification.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -19,9 +20,26 @@ class NotificationService {
   bool _isFlutterLocalNotificationsInitialized = false;
   bool _isMessageListenerAdded = false;
 
-  final List<Map<String, String>> _notifications = [];
-  List<Map<String, String>> get notifications => _notifications;
+  final List<Map<String, dynamic>> _notifications = [];
+  List<Map<String, dynamic>> get notifications => _notifications;
 
+  // Future<void> initialize(BuildContext context) async {
+  //   await _requestPermission();
+  //   await setupFlutterNotifications(context);
+
+  //   if (!_isMessageListenerAdded) {
+  //     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //       _handleMessage(message, context);
+  //     });
+  //     _isMessageListenerAdded = true;
+  //   }
+
+  //   final token = await _messaging.getToken();
+  //   log('FCM Token: $token');
+  //   if (token != null) {
+  //     await saveUserToken(token);
+  //   }
+  // }
   Future<void> initialize(BuildContext context) async {
     await _requestPermission();
     await setupFlutterNotifications(context);
@@ -32,6 +50,11 @@ class NotificationService {
       });
       _isMessageListenerAdded = true;
     }
+
+    // جلب الإشعارات المخزنة من قاعدة البيانات
+    final savedNotifications = await SQlHelperNotification().getNotifications();
+    _notifications
+        .addAll(savedNotifications.map((e) => e.cast<String, String>()));
 
     final token = await _messaging.getToken();
     log('FCM Token: $token');
@@ -187,15 +210,22 @@ class NotificationService {
       RemoteMessage message, BuildContext context) async {
     final notification = message.notification;
     if (notification != null) {
-      _notifications.add({
+      final data = {
         'title': notification.title ?? 'No title',
         'body': notification.body ?? 'No body',
         'user_name': message.data['user_name'] ?? 'Unknown',
         'user_email': message.data['user_email'] ?? 'Unknown',
         'photoUrl': message.data['photoUrl'] ?? '',
         'timestamp': DateTime.now().toIso8601String(),
-      });
+      };
 
+      // حفظ الإشعار في القائمة المحلية
+      _notifications.add(data);
+
+      // حفظ الإشعار في SQLite
+      await SQlHelperNotification().insertNotification(data);
+
+      // عرض الإشعار باستخدام الإشعارات المحلية
       await _localNotifications.show(
         notification.hashCode,
         notification.title,
@@ -220,4 +250,42 @@ class NotificationService {
       );
     }
   }
+
+  // Future<void> _handleMessage(
+  //     RemoteMessage message, BuildContext context) async {
+  //   final notification = message.notification;
+  //   if (notification != null) {
+  //     _notifications.add({
+  //       'title': notification.title ?? 'No title',
+  //       'body': notification.body ?? 'No body',
+  //       'user_name': message.data['user_name'] ?? 'Unknown',
+  //       'user_email': message.data['user_email'] ?? 'Unknown',
+  //       'photoUrl': message.data['photoUrl'] ?? '',
+  //       'timestamp': DateTime.now().toIso8601String(),
+  //     });
+
+  //     await _localNotifications.show(
+  //       notification.hashCode,
+  //       notification.title,
+  //       notification.body,
+  //       NotificationDetails(
+  //         android: AndroidNotificationDetails(
+  //           'high_importance_channel',
+  //           'High Importance Notifications',
+  //           channelDescription:
+  //               'This channel is used for important notifications.',
+  //           importance: Importance.high,
+  //           priority: Priority.high,
+  //           icon: '@mipmap/ic_launcher',
+  //         ),
+  //         iOS: DarwinNotificationDetails(
+  //           presentAlert: true,
+  //           presentBadge: true,
+  //           presentSound: true,
+  //         ),
+  //       ),
+  //       payload: message.data.toString(),
+  //     );
+  //   }
+  // }
 }

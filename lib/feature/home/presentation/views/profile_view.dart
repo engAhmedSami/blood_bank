@@ -1,6 +1,6 @@
 import 'package:blood_bank/core/helper_function/get_user.dart';
 import 'package:blood_bank/core/utils/app_colors.dart';
-import 'package:blood_bank/core/widget/CoustomCircularProgressIndicator.dart';
+import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/profile/logout_button.dart';
 import 'package:blood_bank/feature/localization/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
