@@ -12,40 +12,34 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            pinned: true,
-            floating: true,
-            snap: true,
-            expandedHeight: 290,
-            backgroundColor: Colors.white,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Stack(
-                children: const [
-                  UserHandler(),
-                  Positioned(
-                    top: 115,
-                    left: 0,
-                    right: 0,
-                    child: DonorCarousel(),
-                  ),
-                ],
-              ),
+      body: Column(
+        children: [
+          // ثابتة في مكانها
+          SizedBox(
+            height: 290, // ارتفاع الـ AppBar
+            child: Stack(
+              children: const [
+                UserHandler(),
+                Positioned(
+                  top: 115,
+                  left: 0,
+                  right: 0,
+                  child: DonorCarousel(),
+                ),
+              ],
             ),
           ),
-          SliverToBoxAdapter(
-            child: const CustomCardItems(),
-          ),
-          SliverToBoxAdapter(
-            child: const SizedBox(height: 20),
-          ),
-          SliverToBoxAdapter(
-            child: BloodNeededWidget(),
-          ),
-          SliverToBoxAdapter(
-            child: const RequestsForDonation(),
+          // التمرير يبدأ من هنا
+          Expanded(
+            child: ListView(
+              children: [
+                CustomCardItems(),
+                SizedBox(height: 20),
+                BloodNeededWidget(),
+                SizedBox(height: 20),
+                RequestsForDonation(),
+              ],
+            ),
           ),
         ],
       ),

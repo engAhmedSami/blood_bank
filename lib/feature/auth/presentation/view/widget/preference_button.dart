@@ -17,25 +17,26 @@ class PreferenceButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final buttonSize = screenWidth * 0.4; // Adjust ratio as needed
+
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        width: 150,
-        height: 150,
+        width: buttonSize,
+        height: buttonSize,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
           border: isSelected
               ? Border.all(
-                  color: Color(0xff800000),
+                  color: const Color(0xff800000),
                   width: 3,
                 )
               : null,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(
-                alpha: 0.1,
-              ),
+              color: Colors.black.withOpacity(0.1),
               blurRadius: 10,
               offset: const Offset(0, 5),
             ),

@@ -140,6 +140,8 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
     if (isLoading) {
       return const Scaffold(
         body: Center(
@@ -149,6 +151,7 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
     }
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: CustomAppBar(
         top: 120,
         left: 50,
@@ -170,27 +173,30 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 50),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    PreferenceButton(
-                      image: Assets.imagesNeed,
-                      label: "Need",
-                      isSelected: selectedOption == "Need",
-                      onPressed: () {
-                        _saveSelectionToPrefs("Need");
-                      },
-                    ),
-                    const SizedBox(width: 40),
-                    PreferenceButton(
-                      image: Assets.imagesDoner,
-                      label: "Donor",
-                      isSelected: selectedOption == "Donor",
-                      onPressed: () {
-                        _saveSelectionToPrefs("Donor");
-                      },
-                    ),
-                  ],
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      PreferenceButton(
+                        image: Assets.imagesNeed,
+                        label: "Need",
+                        isSelected: selectedOption == "Need",
+                        onPressed: () {
+                          _saveSelectionToPrefs("Need");
+                        },
+                      ),
+                      SizedBox(width: width * 0.1),
+                      PreferenceButton(
+                        image: Assets.imagesDoner,
+                        label: "Donor",
+                        isSelected: selectedOption == "Donor",
+                        onPressed: () {
+                          _saveSelectionToPrefs("Donor");
+                        },
+                      ),
+                    ],
+                  ),
                 ),
                 const Spacer(),
                 CustomButton(
