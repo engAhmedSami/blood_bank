@@ -1,7 +1,7 @@
 import 'package:blood_bank/constants.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:blood_bank/core/utils/page_rout_builder.dart';
-import 'package:blood_bank/feature/home/presentation/views/blood_instructions.dart';
+import 'package:blood_bank/feature/home/presentation/views/widget/home/blood_instructions.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/doner/find_doners.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/need/request_for_blood_items.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/home/custom_card.dart';
@@ -39,7 +39,7 @@ class CustomCardItems extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(
                     buildPageRoute(
-                      const BloodRequestScreen(),
+                      const BloodRequest(),
                     ),
                   );
                 },
@@ -50,7 +50,7 @@ class CustomCardItems extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(
                     buildPageRoute(
-                      const BloodInstructionsView(),
+                      const BloodInstructions(),
                     ),
                   );
                 },

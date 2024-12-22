@@ -26,7 +26,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
     await SQlHelperNotification().deleteNotification(id);
     NotificationService.instance.notifications.removeAt(index);
 
-    // تحديث الشاشة فوراً
     setState(() {
       _loadNotifications();
     });
@@ -42,7 +41,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
     await SQlHelperNotification().deleteAllNotifications();
     NotificationService.instance.notifications.clear();
 
-    // تحديث الشاشة فوراً
     setState(() {
       _loadNotifications();
     });
