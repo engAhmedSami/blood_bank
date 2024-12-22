@@ -1,3 +1,4 @@
+import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/core/widget/custom_request_text_field.dart';
@@ -93,26 +94,17 @@ class DonerRequestState extends State<DonerRequest> {
               '\nAnd your next eligible request date is ${nextDonationDate.toLocal().toString().split(' ')[0]}.';
         }
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'You have already submitted a request $additionalMessage',
-            ),
-          ),
-        );
+        succesTopSnackBar(
+            context, 'You have already submitted a request $additionalMessage');
         return false;
       }
     }
 
     // If current date is before `nextDonationDate`
     if (nextDonationDate != null && now.isBefore(nextDonationDate)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'You can submit a new request after ${nextDonationDate.toLocal().toString().split(' ')[0]}.',
-          ),
-        ),
-      );
+      succesTopSnackBar(context,
+          'You can submit a new request after ${nextDonationDate.toLocal().toString().split(' ')[0]}');
+
       return false;
     }
 
@@ -124,9 +116,7 @@ class DonerRequestState extends State<DonerRequest> {
       _formKey.currentState!.save();
 
       if (_user == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('User not authenticated')),
-        );
+        failuerTopSnackBar(context, 'User not authenticated');
         return;
       }
       final canSubmit = await _canSubmitNewRequest(_user.uid);
@@ -157,9 +147,7 @@ class DonerRequestState extends State<DonerRequest> {
 
       context.read<AddDonerRequestCubit>().addRequest(request);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Request submitted successfully!')),
-      );
+      succesTopSnackBar(context, 'Request submitted successfully!');
     } else {
       setState(() {
         autovalidateMode = AutovalidateMode.always;

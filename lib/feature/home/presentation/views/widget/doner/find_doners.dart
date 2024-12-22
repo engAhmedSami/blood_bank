@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
 import 'package:blood_bank/core/widget/governorate_drop_down.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -26,11 +27,8 @@ class _FindDonorsState extends State<FindDonors> {
     log("Location: $location");
 
     if (selectedBloodGroup == null || location == null || location!.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please fill all the fields"),
-        ),
-      );
+      failuerTopSnackBar(context, ' Please fill all the fields');
+
       return;
     }
 
@@ -57,11 +55,8 @@ class _FindDonorsState extends State<FindDonors> {
       });
     } catch (e) {
       log("Error fetching donors: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Failed to fetch donors: $e"),
-        ),
-      );
+
+      failuerTopSnackBar(context, 'Failed to fetch donors: $e');
     } finally {
       setState(() {
         isLoading = false;

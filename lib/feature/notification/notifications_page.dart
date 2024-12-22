@@ -1,3 +1,4 @@
+import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/feature/notification/notification_service.dart';
 import 'package:blood_bank/feature/notification/sql_helper_notification.dart';
 import 'package:flutter/material.dart';
@@ -46,12 +47,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
     setState(() {
       _loadNotifications();
     });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('All notifications deleted'),
-      ),
-    );
+    succesTopSnackBar(context, ' All notifications deleted');
   }
 
   @override

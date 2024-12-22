@@ -1,3 +1,4 @@
+import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
@@ -38,14 +39,10 @@ class BloodRequestScreen extends StatelessWidget {
               return BloodRequestCard(
                 request: request,
                 onAccept: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Request Accepted')),
-                  );
+                  succesTopSnackBar(context, 'Request Accepted');
                 },
                 onDecline: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Request Declined')),
-                  );
+                  failuerTopSnackBar(context, 'Request Declined');
                 },
               );
             },

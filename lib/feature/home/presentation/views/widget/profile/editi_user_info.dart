@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:blood_bank/constants.dart';
+import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/core/services/shared_preferences_sengleton.dart';
 import 'package:blood_bank/core/utils/custom_progrss_hud.dart';
 import 'package:blood_bank/core/widget/custom_app_bar.dart';
@@ -63,14 +64,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
         _userId = currentUser.uid;
         await _loadUserData(_userId!);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('No user is logged in')),
-        );
+        failuerTopSnackBar(context, ' No user is logged in');
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error initializing user: $e')),
-      );
+      failuerTopSnackBar(context, ' Error initializing user: $e');
     } finally {
       setState(() {
         _isLoading = false;
@@ -98,9 +95,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             _userStates.contains(data['userState']) ? data['userState'] : null;
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error loading data: $e')),
-      );
+      failuerTopSnackBar(context, ' Error loading data: $e');
     }
   }
 
@@ -126,9 +121,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       await storageRef.putFile(_selectedImage!);
       _uploadedImageUrl = await storageRef.getDownloadURL();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error uploading image: $e')),
-      );
+      failuerTopSnackBar(context, 'Error uploading image: $e');
     }
   }
 
@@ -170,15 +163,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
           final currentUserData = {...updatedData, 'uId': _userId};
           Prefs.setString(kUserData, jsonEncode(currentUserData));
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Data successfully updated!')),
-          );
+          succesTopSnackBar(context, ' Data successfully updated!');
+
           Navigator.pop(context);
         }
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error updating data: $e')),
-        );
+        failuerTopSnackBar(context, 'Error updating data: $e');
       } finally {
         setState(() {
           _isLoading = false;
