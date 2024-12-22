@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
-=======
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
->>>>>>> 21d69bb7590474b3146e63e707f989c8c1963c9b
 import 'package:blood_bank/feature/notification/notification_service.dart';
 import 'package:blood_bank/feature/notification/sql_helper_notification.dart';
 import 'package:flutter/material.dart';
