@@ -5,7 +5,7 @@ import 'package:blood_bank/core/services/firestor_service.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:blood_bank/core/utils/page_rout_builder.dart';
-import 'package:blood_bank/core/widget/CoustomCircularProgressIndicator.dart';
+import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
 import 'package:blood_bank/core/widget/custom_app_bar.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/feature/auth/presentation/view/widget/preference_button.dart';

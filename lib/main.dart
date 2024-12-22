@@ -1,4 +1,4 @@
-import 'package:blood_bank/App.dart';
+import 'package:blood_bank/app_blood_bank.dart';
 import 'package:blood_bank/core/services/sql_helper_health_request.dart';
 import 'package:blood_bank/core/services/custom_block_observer.dart';
 import 'package:blood_bank/core/services/get_it_service.dart';

@@ -13,7 +13,7 @@ class CoustomCircularProgressIndicator extends StatelessWidget {
           AppColors.backgroundColor,
         ), // Custom color from ColorsManager
         backgroundColor: AppColors.primaryColor
-            .withOpacity(0.3), // Use a softer background color
+            .withValues(alpha: 0.3), // Use a softer background color
       ),
     );
   }
