@@ -14,9 +14,8 @@ class HomeView extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          // ثابتة في مكانها
           SizedBox(
-            height: 290, // ارتفاع الـ AppBar
+            height: 290,
             child: Stack(
               children: const [
                 UserHandler(),
@@ -29,16 +28,17 @@ class HomeView extends StatelessWidget {
               ],
             ),
           ),
-          // التمرير يبدأ من هنا
           Expanded(
-            child: ListView(
-              children: [
-                CustomCardItems(),
-                SizedBox(height: 20),
-                BloodNeededWidget(),
-                SizedBox(height: 20),
-                RequestsForDonation(),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  CustomCardItems(),
+                  SizedBox(height: 20),
+                  BloodNeededWidget(),
+                  SizedBox(height: 20),
+                  RequestsForDonation(),
+                ],
+              ),
             ),
           ),
         ],
