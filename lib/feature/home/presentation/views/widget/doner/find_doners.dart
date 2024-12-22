@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:blood_bank/core/widget/CoustomCircularProgressIndicator.dart';
 import 'package:blood_bank/core/widget/governorate_drop_down.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -131,7 +132,7 @@ class _FindDonorsState extends State<FindDonors> {
                 text: 'Find Donors',
               ),
               if (isLoading)
-                const Center(child: CircularProgressIndicator())
+                const Center(child: CoustomCircularProgressIndicator())
               else if (donors.isNotEmpty)
                 Column(
                   children: donors.map((donor) {
