@@ -10,3 +10,12 @@ void succesTopSnackBar(BuildContext context, String message) {
     ),
   );
 }
+
+void failuerTopSnackBar(BuildContext context, String message) {
+  return showTopSnackBar(
+    Overlay.of(context),
+    CustomSnackBar.error(
+      message: message,
+    ),
+  );
+}

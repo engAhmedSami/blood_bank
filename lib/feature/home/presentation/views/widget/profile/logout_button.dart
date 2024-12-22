@@ -1,3 +1,4 @@
+import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/core/utils/page_rout_builder.dart';
 import 'package:blood_bank/feature/auth/presentation/view/login_view.dart';
 import 'package:flutter/material.dart';
@@ -67,12 +68,7 @@ class LogoutFeature extends StatelessWidget {
         (Route<dynamic> route) => false, // This condition removes all routes
       );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to logout: ${e.toString()}'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      failuerTopSnackBar(context, ' Failed to logout: ${e.toString()}');
     }
   }
 }
