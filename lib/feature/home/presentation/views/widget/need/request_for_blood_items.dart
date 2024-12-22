@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/svg.dart';
 
-class BloodRequestScreen extends StatelessWidget {
-  const BloodRequestScreen({super.key});
+class BloodRequest extends StatelessWidget {
+  const BloodRequest({super.key});
 
   @override
   Widget build(BuildContext context) {

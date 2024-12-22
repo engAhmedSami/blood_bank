@@ -1,27 +1,30 @@
+import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:flutter/material.dart';
 
-class BloodInstructionsView extends StatelessWidget {
-  const BloodInstructionsView({super.key});
+class BloodInstructions extends StatelessWidget {
+  const BloodInstructions({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: buildAppBar(
+        context,
+      ),
       backgroundColor: Colors.white,
       body: _buildBody(),
     );
   }
 
-  AppBar _buildAppBar() {
+  AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      centerTitle: true,
-      backgroundColor: Colors.white,
       title: Text(
-        'Blood instructions',
-        style: TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 20,
-        ),
+        "Blood Instructions",
+        style: TextStyles.semiBold19,
+      ),
+      centerTitle: true,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios_new_rounded),
+        onPressed: () => Navigator.pop(context),
       ),
     );
   }
