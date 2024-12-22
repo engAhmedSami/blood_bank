@@ -1,43 +1,4 @@
-// import 'package:flutter/material.dart';
-
-// class BloodInstructionsView extends StatelessWidget {
-//   const BloodInstructionsView({super.key});
-
-//   @override
-//   Widget build(BuildContext) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         centerTitle: true,
-//         backgroundColor: Colors.white,
-//         title: Text(
-//           'Blood instructions',
-//           style: TextStyle(
-//             fontWeight: FontWeight.w500,
-//             fontSize: 20,
-//           ),
-//         ),
-//       ),
-//       backgroundColor: Colors.white,
-//       body: Padding(
-//         padding: const EdgeInsets.symmetric(
-//           horizontal: 30,
-//         ),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.center,
-//           children: const [
-//             Text(
-//               "Additional tips before donating:",
-//               style: TextStyle(
-//                 fontSize: 20,
-//                 fontWeight: FontWeight.w700,
-//               ),
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+// ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
 
@@ -47,46 +8,21 @@ class BloodInstructionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
-      backgroundColor: Colors.white,
-      body: _buildBody(),
-    );
-  }
-
-  AppBar _buildAppBar() {
-    return AppBar(
-      centerTitle: true,
-      backgroundColor: Colors.white,
-      title: Text(
-        'Blood instructions',
-        style: TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 20,
-        ),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('Blood Instructions'),
       ),
-    );
-  }
-
-  Widget _buildBody() {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 30,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _buildSectionTitle("Additional tips before donating:"),
+      body: Column(
+        children: const [
+          Text(
+            'Additional tips before donating:',
+            style: TextStyle(
+              color: Color(0xff800000),
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+            ),
+          )
         ],
-      ),
-    );
-  }
-
-  static Widget _buildSectionTitle(String text) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.w700,
       ),
     );
   }
