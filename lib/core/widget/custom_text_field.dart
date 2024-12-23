@@ -39,6 +39,7 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: textInputType,
       onFieldSubmitted: onSubmitted, // Use this for handling submissions
       decoration: InputDecoration(
+        label: Text(hintText),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         hintText: hintText,

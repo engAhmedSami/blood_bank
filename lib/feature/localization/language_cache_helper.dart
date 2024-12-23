@@ -12,7 +12,7 @@ class LanguageCacheHelper {
     if (cachedLanguageCode != null) {
       return cachedLanguageCode;
     } else {
-      return "en";
+      return "ar";
     }
   }
 }
