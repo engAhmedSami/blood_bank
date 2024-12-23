@@ -1,6 +1,8 @@
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
+import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class BloodInstructions extends StatelessWidget {
   const BloodInstructions({super.key});
@@ -49,7 +51,7 @@ class BloodInstructions extends StatelessWidget {
             const SizedBox(height: 16),
             buildSectionTitle("Blood type matching:"),
             const SizedBox(height: 16),
-            buildBloodTypeTable(),
+            SvgPicture.asset(Assets.imagesBloodmatch)
           ],
         ),
       ),
