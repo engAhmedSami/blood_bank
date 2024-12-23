@@ -7,14 +7,12 @@ import 'package:sqflite/sqflite.dart';
 class SQlHelperNotification {
   static Database? _database;
 
-  // الوصول لقاعدة البيانات
   Future<Database> get database async {
     if (_database != null) return _database!;
     _database = await _initDatabase();
     return _database!;
   }
 
-  // تهيئة قاعدة البيانات
   Future<Database> _initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, 'notifications.db');
@@ -39,19 +37,16 @@ class SQlHelperNotification {
     );
   }
 
-  // إدخال إشعار
   Future<int> insertNotification(Map<String, dynamic> notification) async {
     final db = await database;
     return await db.insert('notifications', notification);
   }
 
-  // جلب جميع الإشعارات
   Future<List<Map<String, dynamic>>> getNotifications() async {
     final db = await database;
     return await db.query('notifications');
   }
 
-  // حذف إشعار واحد باستخدام المعرف (id)
   Future<int> deleteNotification(int id) async {
     final db = await database;
     return await db.delete(
@@ -61,7 +56,6 @@ class SQlHelperNotification {
     );
   }
 
-// حذف جميع الإشعارات
   Future<int> deleteAllNotifications() async {
     final db = await database;
     return await db.delete('notifications');
