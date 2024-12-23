@@ -34,7 +34,6 @@ class AuthRepoImpl extends AuthRepo {
         password: password,
       );
       var userEntity = UserEntity(
-        UserStatusAllowedOrBlocked: 'allowed',
         name: name,
         email: email,
         uId: user.uid,

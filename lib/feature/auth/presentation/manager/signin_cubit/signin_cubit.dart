@@ -48,10 +48,10 @@ class SigninCubit extends Cubit<SigninState> {
       (failure) => emit(SigninFailure(message: failure.message)),
       (_) => emit(SigninSuccess(
           userEntity: UserEntity(
-              name: '',
-              email: email,
-              uId: '',
-              UserStatusAllowedOrBlocked: 'allowed'))),
+        name: '',
+        email: email,
+        uId: '',
+      ))),
     );
   }
 }

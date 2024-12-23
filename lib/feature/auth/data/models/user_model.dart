@@ -13,7 +13,6 @@ class UserModel extends UserEntity {
 
   UserModel({
     required super.name,
-    required super.UserStatusAllowedOrBlocked,
     required super.email,
     required super.uId,
     required this.patientName,
@@ -30,7 +29,6 @@ class UserModel extends UserEntity {
   factory UserModel.fromFirebaseUser(User user) {
     return UserModel(
       name: user.displayName ?? '',
-      UserStatusAllowedOrBlocked: 'allowed',
       email: user.email ?? '',
       uId: user.uid,
       patientName: '', // قد تحتاج معالجة إضافية هنا
@@ -48,7 +46,6 @@ class UserModel extends UserEntity {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       name: json['name'] ?? '',
-      UserStatusAllowedOrBlocked: json['allaowed'] ?? '',
       email: json['email'] ?? '',
       uId: json['uId'] ?? '',
       patientName: json['patientName'] ?? '',
@@ -83,7 +80,6 @@ class UserModel extends UserEntity {
   /// لتحويل Entity إلى UserModel
   factory UserModel.fromEntity(UserEntity entity) {
     return UserModel(
-      UserStatusAllowedOrBlocked: 'allowed',
       name: entity.name,
       email: entity.email,
       uId: entity.uId,
