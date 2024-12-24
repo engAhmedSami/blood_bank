@@ -127,44 +127,6 @@ class AuthRepoImpl extends AuthRepo {
       );
     }
   }
-  // Future<Either<Failures, UserEntity>> signInWithGoogle() async {
-  //   try {
-  //     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-  //     if (googleUser == null) {
-  //       return left(ServerFailure('failed to sign in with google'));
-  //     }
-
-  //     final GoogleSignInAuthentication googleAuth =
-  //         await googleUser.authentication;
-
-  //     final credential = GoogleAuthProvider.credential(
-  //       accessToken: googleAuth.accessToken,
-  //       idToken: googleAuth.idToken,
-  //     );
-
-  //     final userCredential =
-  //         await FirebaseAuth.instance.signInWithCredential(credential);
-
-  //     final user = userCredential.user;
-
-  //     if (user != null) {
-  //       // تخزين البيانات في Firebase
-  //       final userEntity = UserModel.fromFirebaseUser(user);
-  //       await addUserData(user: userEntity);
-  //       return right(userEntity);
-  //     } else {
-  //       return left(ServerFailure(
-  //         'Failed to sign in with Google',
-  //       ));
-  //     }
-  //   } on FirebaseAuthException catch (e) {
-  //     return left(ServerFailure(e.message ?? 'Something went wrong'));
-  //   } catch (e) {
-  //     return left(ServerFailure(
-  //       'An error occurred. Please try again later.',
-  //     ));
-  //   }
-  // }
 
   @override
   Future<Either<Failures, UserEntity>> signInWithFacebook() async {
