@@ -61,7 +61,7 @@ class HomeHeader extends StatelessWidget {
                   style: TextStyles.semiBold16.copyWith(color: Colors.white),
                 ),
                 Text(
-                  '${'user_state'.tr(context)}: $userState', // Localized user state message
+                  '${'user_state'.tr(context)}: $userState.', // Localized user state message
                   style: TextStyles.regular13.copyWith(color: Colors.white),
                 ),
               ],

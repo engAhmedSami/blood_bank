@@ -4,6 +4,7 @@ import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/feature/home/domain/repos/doner_repo.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/doner/add_doner_request_view_body_bloc_builder.dart';
 import 'package:blood_bank/feature/home/presentation/manger/add_doner_request_cubit/add_doner_request_cubit.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,7 +19,7 @@ class DonerView extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.backgroundColor,
         title: Text(
-          'Donation Request',
+          'donation_request'.tr(context),
           style: TextStyles.semiBold19.copyWith(color: Colors.white),
         ),
         centerTitle: true,
