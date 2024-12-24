@@ -145,6 +145,47 @@
     "selectDonationType": "Select Donation Type",    "selectBloodType": "اختر فصيلة الدم",
     "pleaseSelectBloodType": "الرجاء تحديد فصيلة الدم"
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+,
+
+        "appName": "Blood Bank",
+        "name": "Name",
+        "national_id": "National ID",
+        "last_donation_date": "Last Donation Date",
+        "select_blood_type": "Select Blood Type",
+        "select_donation_type": "Select Donation Type",
+        "select_gender": "Select Gender",
+        "please_enter_name": "Please enter your name.",
+        "please_enter_age": "Please enter your age.",
+        "please_enter_id": "Please enter your national ID.",
+        "please_select_blood_type": "Please select a blood type.",
+        "please_select_donation_type": "Please select a donation type.",
+        "please_select_gender": "Please select a gender.",
+        "please_select_date": "Please select a date.",
+        "submit": "Submit",
+        "already_submitted_request": "You have already submitted a request today.",
+        "submit_after_date": "You can submit a new request after",
+        "request_submitted_successfully": "Your request has been submitted successfully!",
+        "next_eligible_request_date": "Your next eligible request date is"
+      
+      
+
+
+
+
     
 }
    

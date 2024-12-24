@@ -146,4 +146,41 @@
     "selectDonationType": "اختر نوع التبرع",    "pleaseSelectDate": "الرجاء تحديد تاريخ"
     ,
     "activeRequest": "لديك طلب نشط. يرجى إكماله قبل تقديم طلب جديد."
+
+
+
+
+
+
+
+    
+    ,    "appName": "بنك الدم",
+        "name": "الاسم",
+        "national_id": "رقم الهوية",
+        "last_donation_date": "تاريخ آخر تبرع",
+        "select_blood_type": "اختر فصيلة الدم",
+        "select_donation_type": "اختر نوع التبرع",
+        "select_gender": "اختر الجنس",
+        "please_enter_name": "يرجى إدخال الاسم.",
+        "please_enter_age": "يرجى إدخال العمر.",
+        "please_enter_id": "يرجى إدخال رقم الهوية.",
+        "please_select_blood_type": "يرجى اختيار فصيلة الدم.",
+        "please_select_donation_type": "يرجى اختيار نوع التبرع.",
+        "please_select_gender": "يرجى اختيار الجنس.",
+        "please_select_date": "يرجى اختيار التاريخ.",
+        "submit": "إرسال",
+        "already_submitted_request": "لقد قمت بالفعل بتقديم طلب اليوم.",
+        "submit_after_date": "يمكنك تقديم طلب جديد بعد",
+        "request_submitted_successfully": "تم تقديم طلبك بنجاح!",
+        "next_eligible_request_date": "تاريخ الطلب المؤهل التالي الخاص بك هو"
+      
+      
+
+
+
+
+
+
+
+
 }
