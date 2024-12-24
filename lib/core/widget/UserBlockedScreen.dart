@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +11,7 @@ class UserBlockedScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.all(14.0),
+        padding: const EdgeInsets.all(20),
         child: Center(
           child: Container(
             padding: const EdgeInsets.all(16),
@@ -28,8 +26,6 @@ class UserBlockedScreen extends StatelessWidget {
               ],
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
                 const SizedBox(height: 20),
@@ -38,9 +34,13 @@ class UserBlockedScreen extends StatelessWidget {
                   width: 50,
                   height: 50,
                 ),
-                SvgPicture.asset(
-                  Assets.imagesSplashAppName,
-                ),
+                // Image.asset(
+                //   Assets.imagesSplashAppName,
+                //   width: 100,
+                //   height: 100,
+                // ),
+
+                SvgPicture.asset(Assets.imagesSplashAppName),
                 Text(
                   'Access Restricted',
                   style: TextStyle(
