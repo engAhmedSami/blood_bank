@@ -1,7 +1,7 @@
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/core/utils/custom_progrss_hud.dart';
 import 'package:blood_bank/core/utils/page_rout_builder.dart';
-import 'package:blood_bank/core/widget/UserBlockedScreen.dart';
+import 'package:blood_bank/core/widget/user_blocked_widget.dart';
 import 'package:blood_bank/feature/auth/presentation/manager/signin_cubit/signin_cubit.dart';
 import 'package:blood_bank/feature/auth/presentation/view/donor_or_need.dart';
 import 'package:blood_bank/feature/auth/presentation/view/widget/login_view_body.dart';
