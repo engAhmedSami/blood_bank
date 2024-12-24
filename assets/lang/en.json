@@ -29,6 +29,19 @@
     "Let’s login for explore continues" : "Let’s login for explore continues.",
     "Forgot Password" : "Forgot Password",
     "Don't have an account" : "Don't have an account? ",
+
+
+
+    "account_created_successfully": "Account created successfully, verify your account",
+    "email_verification_link_sent": "Email verification link has been sent.",
+    "unable_to_send_verification_email": "Unable to send verification email.",
+    "verify_email": "Verify Email",
+    "resend_verification_email": "Resend Verification Email",
+    "please_verify_email_address": "Please verify your email address.",
+
+
+
+
     "Remember me" : "Remember me",
     "Enter Eamil"   : "Please enter your email. We’ll send you a link to reset your password.",
     "Send code" : "Send code",
@@ -38,5 +51,23 @@
    "the terms" : "the terms",
    "and conditions of our policy" : "and conditions of our policy",
    "Please accept terms and conditions" : "Please accept terms and conditions",
-   "Choose which one do you prefer?" : "Choose which one do you prefer?"
-}
+   "Choose which one do you prefer?" : "Choose which one do you prefer?",
+ 
+    "choose_preference": "Choose which one do you prefer?",
+    "need": "Need",
+    "donor": "Donor",
+    "next": "Next",
+    "saving": "Saving...",
+    "user_not_authenticated": "User not authenticated",
+    "update_successful": "User state updated successfully",
+    "update_failed": "Failed to update user state",
+    "please_select_an_option": "Please select an option"
+  }
+   
+   
+
+
+
+
+
+  

@@ -130,9 +130,14 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
         }
       }
     } else {
+      // failuerTopSnackBar(
+      //   context,
+      //   '${'Please select an option'}.tr(context)',
+      // );
+
       failuerTopSnackBar(
         context,
-        'Please select an option',
+        'please_select_an_option'.tr(context),
       );
     }
   }
@@ -179,7 +184,7 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
                     children: [
                       PreferenceButton(
                         image: Assets.imagesNeed,
-                        label: "Need",
+                        label: "need".tr(context),
                         isSelected: selectedOption == "Need",
                         onPressed: () {
                           _saveSelectionToPrefs("Need");
@@ -188,7 +193,7 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
                       SizedBox(width: width * 0.1),
                       PreferenceButton(
                         image: Assets.imagesDoner,
-                        label: "Donor",
+                        label: "donor.".tr(context),
                         isSelected: selectedOption == "Donor",
                         onPressed: () {
                           _saveSelectionToPrefs("Donor");

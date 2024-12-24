@@ -42,7 +42,9 @@ class ForgotPasswordViewBodyBlocCunsumer extends StatelessWidget {
       listener: (context, state) {
         if (state is SigninSuccess) {
           succesTopSnackBar(
-              context, 'Password reset link sent to ${state.userEntity.email}');
+              context,
+              'Password reset link sent to ${state.userEntity.email}'
+                  .tr(context));
         } else if (state is SigninFailure) {
           failuerTopSnackBar(context, state.message);
         }

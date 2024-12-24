@@ -9,6 +9,7 @@ import 'package:blood_bank/core/utils/page_rout_builder.dart';
 import 'package:blood_bank/core/widget/custom_app_bar.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/feature/auth/presentation/view/donor_or_need.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -55,15 +56,15 @@ class VerfiedEmailViewState extends State<VerfiedEmailView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Verify Email',
+        title: 'Verify Email'.tr(context),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: kHorizintalPadding),
         child: Column(
           children: [
             const SizedBox(height: 50),
-            const Text(
-              'Please verify your email address.',
+            Text(
+              'Please verify your email address.'.tr(context),
               style: TextStyles.semiBold19,
               textAlign: TextAlign.center,
             ),
@@ -72,7 +73,7 @@ class VerfiedEmailViewState extends State<VerfiedEmailView> {
             const SizedBox(height: 50),
             CustomButton(
                 onPressed: () => resendVerificationEmail(context),
-                text: 'Resend Verification Email'),
+                text: 'Resend Verification Email'.tr(context)),
           ],
         ),
       ),
@@ -85,9 +86,11 @@ class VerfiedEmailViewState extends State<VerfiedEmailView> {
       await user.sendEmailVerification();
       if (!mounted) return;
 
-      succesTopSnackBar(context, 'Email verification link has been sent.');
+      succesTopSnackBar(
+          context, 'Email verification link has been sent.'.tr(context));
     } else {
-      failuerTopSnackBar(context, 'Unable to send verification email.');
+      failuerTopSnackBar(
+          context, 'Unable to send verification email.'.tr(context));
     }
   }
 }

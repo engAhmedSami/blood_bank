@@ -3,6 +3,7 @@ import 'package:blood_bank/core/utils/page_rout_builder.dart';
 import 'package:blood_bank/feature/auth/presentation/manager/signup_cubit/signup_cubit.dart';
 import 'package:blood_bank/feature/auth/presentation/view/verfied_email_view.dart';
 import 'package:blood_bank/feature/auth/presentation/view/widget/signup_view_body.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -19,7 +20,7 @@ class SignupViewBodyBlockConsumer extends StatelessWidget {
         if (state is SignupSuccess) {
           succesTopSnackBar(
             context,
-            'Account created successfully, verify your account  ',
+            'Account created successfully, verify your account  '.tr(context),
           );
         }
         Navigator.of(context).pushReplacement(

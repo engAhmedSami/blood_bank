@@ -63,6 +63,7 @@ import 'package:blood_bank/core/widget/UserBlockedScreen.dart';
 import 'package:blood_bank/feature/auth/presentation/manager/signin_cubit/signin_cubit.dart';
 import 'package:blood_bank/feature/auth/presentation/view/donor_or_need.dart';
 import 'package:blood_bank/feature/auth/presentation/view/widget/login_view_body.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -96,7 +97,7 @@ class LoginViewBodyBlocConsumer extends StatelessWidget {
   void _handleSigninSuccess(BuildContext context) {
     succesTopSnackBar(
       context,
-      'Signed in successfully!',
+      'Signed in successfully!'.tr(context),
     );
     Navigator.of(context).pushReplacement(
       buildPageRoute(const DonorOrNeed()),
