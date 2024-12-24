@@ -1,6 +1,8 @@
 import 'package:blood_bank/feature/auth/domain/entites/user_entity.dart';
 import 'package:blood_bank/feature/auth/domain/repos/auth_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 part 'signin_state.dart';
 
 class SigninCubit extends Cubit<SigninState> {
@@ -16,26 +18,49 @@ class SigninCubit extends Cubit<SigninState> {
     );
 
     result.fold(
-      (failuer) => emit(SigninFailure(message: failuer.message)),
-      (success) => emit(SigninSuccess(userEntity: success)),
+      (failure) => emit(SigninFailure(message: failure.message)),
+      (success) async {
+        final userStat = await checkUserStatus(success.uId);
+        if (userStat == 'blocked') {
+          emit(SigninBlocked());
+        } else {
+          emit(SigninSuccess(userEntity: success));
+        }
+      },
     );
   }
 
   Future<void> signInWithGoogle() async {
     emit(SigninLoading());
     final result = await authRepo.signInWithGoogle();
+
     result.fold(
-      (failuer) => emit(SigninFailure(message: failuer.message)),
-      (success) => emit(SigninSuccess(userEntity: success)),
+      (failure) => emit(SigninFailure(message: failure.message)),
+      (success) async {
+        final userStat = await checkUserStatus(success.uId);
+        if (userStat == 'blocked') {
+          emit(SigninBlocked());
+        } else {
+          emit(SigninSuccess(userEntity: success));
+        }
+      },
     );
   }
 
   Future<void> signInWithFacebook() async {
     emit(SigninLoading());
     final result = await authRepo.signInWithFacebook();
+
     result.fold(
-      (failuer) => emit(SigninFailure(message: failuer.message)),
-      (success) => emit(SigninSuccess(userEntity: success)),
+      (failure) => emit(SigninFailure(message: failure.message)),
+      (success) async {
+        final userStat = await checkUserStatus(success.uId);
+        if (userStat == 'blocked') {
+          emit(SigninBlocked());
+        } else {
+          emit(SigninSuccess(userEntity: success));
+        }
+      },
     );
   }
 
@@ -53,5 +78,18 @@ class SigninCubit extends Cubit<SigninState> {
         uId: '',
       ))),
     );
+  }
+
+  Future<String> checkUserStatus(String uid) async {
+    try {
+      final userDoc =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+      if (userDoc.exists) {
+        return userDoc.data()?['userStat'] ?? 'allowed';
+      }
+    } catch (e) {
+      // Log or handle the error as needed.
+    }
+    return 'allowed';
   }
 }

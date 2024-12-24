@@ -21,3 +21,6 @@ final class SigninFailure extends SigninState {
   final String message;
   SigninFailure({required this.message});
 }
+
+// Add the missing SigninBlocked class
+final class SigninBlocked extends SigninState {}

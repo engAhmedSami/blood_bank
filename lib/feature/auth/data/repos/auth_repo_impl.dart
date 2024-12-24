@@ -32,67 +32,90 @@ class AuthRepoImpl extends AuthRepo {
     User? user;
 
     try {
-      var user = await firebaseAuthService.createUserWithEmailAndPassword(
+      user = await firebaseAuthService.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+
       var userEntity = UserEntity(
         name: name,
         email: email,
         uId: user.uid,
       );
 
+      // Add the user to the database with an initial 'allowed' status
       await addUserData(user: userEntity);
+
       await saveUserData(user: userEntity);
 
       return right(userEntity);
     } on CustomExceptions catch (e) {
       await deleteUser(user);
-
       return left(ServerFailure(e.message));
     } catch (e) {
       await deleteUser(user);
-
       log(
-        'Exception in AuthRepoImpl.createUserWithEmailAndPassword :${e.toString()}',
+        'Exception in AuthRepoImpl.createUserWithEmailAndPassword: ${e.toString()}',
       );
       return left(
-        ServerFailure(
-          'An error occurred. Please try again later.',
-        ),
+        ServerFailure('An error occurred. Please try again later.'),
       );
-    }
-  }
-
-  Future<void> deleteUser(User? user) async {
-    if (user != null) {
-      await firebaseAuthService.deleteUser();
     }
   }
 
   @override
-  Future<Either<Failures, UserEntity>> signInWithEmailAndPassword(
-      String email, String password) async {
+  Future addUserData({required UserEntity user}) {
+    final userMap = user.toMap();
+
+    // Add the 'userStat' field to the user data
+    userMap['userStat'] = 'allowed';
+
+    return databaseService.addData(
+      path: BackendEndpoint.addUserData,
+      data: userMap,
+      docuementId: user.uId,
+    );
+  }
+
+  @override
+  Future<Either<Failures, void>> sendPasswordResetLink(String email) async {
     try {
-      var user = await firebaseAuthService.signInWithEmailAndPassword(
-          email: email, password: password);
-      var userEntity = await getUserData(uid: user.uid);
-      await saveUserData(user: userEntity);
-      return right(
-        UserModel.fromFirebaseUser(user),
-      );
-    } on CustomExceptions catch (e) {
-      return left(ServerFailure(e.message));
+      // تحقق من وجود البريد الإلكتروني
+      final emailExists = await isEmailExists(email);
+      if (!emailExists) {
+        return left(ServerFailure('Email not found. Please register first.'));
+      }
+
+      // إرسال رابط إعادة تعيين كلمة المرور
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      return right(null);
+    } on FirebaseAuthException catch (e) {
+      return left(ServerFailure(e.message ?? 'Invalid email address.'));
     } catch (e) {
-      log(
-        'Exception in AuthRepoImpl.signInWithEmailAndPassword :${e.toString()}',
-      );
-      return left(
-        ServerFailure(
-          'An error occurred. Please try again later.',
-        ),
-      );
+      log('Error in sendPasswordResetLink: ${e.toString()}');
+      return left(ServerFailure('An error occurred. Please try again later.'));
     }
+  }
+
+  @override
+  Future<UserEntity> getUserData({required String uid}) async {
+    var userData = await databaseService.getData(
+        path: BackendEndpoint.getUserData, docuementId: uid);
+
+    return UserModel.fromJson(userData);
+  }
+
+  Future<void> saveUserData({required UserEntity user}) async {
+    var jsonData = jsonEncode(UserModel.fromEntity(user).toMap());
+    await Prefs.setString(kUserData, jsonData);
+    log('User data saved successfully. UserData: $jsonData');
+  }
+
+  Future<bool> isEmailExists(String email) async {
+    final usersCollection = FirebaseFirestore.instance.collection('users');
+    final querySnapshot =
+        await usersCollection.where('email', isEqualTo: email).get();
+    return querySnapshot.docs.isNotEmpty;
   }
 
   @override
@@ -148,51 +171,33 @@ class AuthRepoImpl extends AuthRepo {
   }
 
   @override
-  Future<Either<Failures, void>> sendPasswordResetLink(String email) async {
+  Future<Either<Failures, UserEntity>> signInWithEmailAndPassword(
+      String email, String password) async {
     try {
-      // تحقق من وجود البريد الإلكتروني
-      final emailExists = await isEmailExists(email);
-      if (!emailExists) {
-        return left(ServerFailure('Email not found. Please register first.'));
-      }
-
-      // إرسال رابط إعادة تعيين كلمة المرور
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      return right(null);
-    } on FirebaseAuthException catch (e) {
-      return left(ServerFailure(e.message ?? 'Invalid email address.'));
+      var user = await firebaseAuthService.signInWithEmailAndPassword(
+          email: email, password: password);
+      var userEntity = await getUserData(uid: user.uid);
+      await saveUserData(user: userEntity);
+      return right(
+        UserModel.fromFirebaseUser(user),
+      );
+    } on CustomExceptions catch (e) {
+      return left(ServerFailure(e.message));
     } catch (e) {
-      log('Error in sendPasswordResetLink: ${e.toString()}');
-      return left(ServerFailure('An error occurred. Please try again later.'));
+      log(
+        'Exception in AuthRepoImpl.signInWithEmailAndPassword :${e.toString()}',
+      );
+      return left(
+        ServerFailure(
+          'An error occurred. Please try again later.',
+        ),
+      );
     }
   }
 
-  @override
-  Future addUserData({required UserEntity user}) {
-    return databaseService.addData(
-        path: BackendEndpoint.addUserData,
-        data: user.toMap(),
-        docuementId: user.uId);
-  }
-
-  @override
-  Future<UserEntity> getUserData({required String uid}) async {
-    var userData = await databaseService.getData(
-        path: BackendEndpoint.getUserData, docuementId: uid);
-
-    return UserModel.fromJson(userData);
-  }
-
-  Future<void> saveUserData({required UserEntity user}) async {
-    var jsonData = jsonEncode(UserModel.fromEntity(user).toMap());
-    await Prefs.setString(kUserData, jsonData);
-    log('User data saved successfully. UserData: $jsonData');
-  }
-
-  Future<bool> isEmailExists(String email) async {
-    final usersCollection = FirebaseFirestore.instance.collection('users');
-    final querySnapshot =
-        await usersCollection.where('email', isEqualTo: email).get();
-    return querySnapshot.docs.isNotEmpty;
+  Future<void> deleteUser(User? user) async {
+    if (user != null) {
+      await firebaseAuthService.deleteUser();
+    }
   }
 }
