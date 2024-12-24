@@ -22,7 +22,7 @@ class SignupViewBody extends StatefulWidget {
 class _SignupViewBodyState extends State<SignupViewBody> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-  late String email, name, password, confirmPassword;
+  late String email, name, password, confirmPassword, UserStatusAccessRule;
   late bool isTermsAccepted = false;
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -158,6 +158,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                               email,
                               password,
                               name,
+                              UserStatusAccessRule = 'allowedUser',
                             );
                       }
                     }

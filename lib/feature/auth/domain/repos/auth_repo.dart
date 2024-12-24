@@ -4,7 +4,11 @@ import 'package:dartz/dartz.dart';
 
 abstract class AuthRepo {
   Future<Either<Failures, UserEntity>> createUserWithEmailAndPassword(
-      String email, String password, String name);
+      // ignore: non_constant_identifier_names
+      String email,
+      String password,
+      String name,
+      String UserStatusAccessRule);
 
   Future<Either<Failures, UserEntity>> signInWithEmailAndPassword(
       String email, String password);

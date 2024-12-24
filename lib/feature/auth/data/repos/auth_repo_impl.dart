@@ -25,7 +25,10 @@ class AuthRepoImpl extends AuthRepo {
 
   @override
   Future<Either<Failures, UserEntity>> createUserWithEmailAndPassword(
-      String email, String password, String name) async {
+      String email,
+      String password,
+      String name,
+      String UserStatusAccessRule) async {
     User? user;
 
     try {
@@ -34,6 +37,7 @@ class AuthRepoImpl extends AuthRepo {
         password: password,
       );
       var userEntity = UserEntity(
+        UserStatusAccessRule: 'allowedUser',
         name: name,
         email: email,
         uId: user.uid,

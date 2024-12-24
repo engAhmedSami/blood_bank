@@ -13,6 +13,8 @@ class UserModel extends UserEntity {
 
   UserModel({
     required super.name,
+    // ignore: non_constant_identifier_names
+    required super.UserStatusAccessRule,
     required super.email,
     required super.uId,
     required this.patientName,
@@ -28,6 +30,7 @@ class UserModel extends UserEntity {
   /// مُعامل لتحويل بيانات FirebaseUser إلى UserModel
   factory UserModel.fromFirebaseUser(User user) {
     return UserModel(
+      UserStatusAccessRule: 'allowedUser',
       name: user.displayName ?? '',
       email: user.email ?? '',
       uId: user.uid,
@@ -49,6 +52,7 @@ class UserModel extends UserEntity {
       email: json['email'] ?? '',
       uId: json['uId'] ?? '',
       patientName: json['patientName'] ?? '',
+      UserStatusAccessRule: json['allowedUser'],
       bloodType: json['bloodType'] ?? '',
       age: json['age'] ?? '',
       diseaseName: json['diseaseName'] ?? '',
@@ -63,6 +67,7 @@ class UserModel extends UserEntity {
   @override
   Map<String, dynamic> toMap() {
     return {
+      'allowedUser': UserStatusAccessRule,
       'name': name,
       'email': email,
       'uId': uId,
@@ -80,6 +85,7 @@ class UserModel extends UserEntity {
   /// لتحويل Entity إلى UserModel
   factory UserModel.fromEntity(UserEntity entity) {
     return UserModel(
+      UserStatusAccessRule: 'allowedUser',
       name: entity.name,
       email: entity.email,
       uId: entity.uId,
