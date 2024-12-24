@@ -14,14 +14,12 @@ class SignupCubit extends Cubit<SignupState> {
     // ignore: non_constant_identifier_names
     String name,
     // ignore: non_constant_identifier_names
-    String UserStatusAccessRule,
   ) async {
     emit(SignupLoding());
     final result = await authRepo.createUserWithEmailAndPassword(
       email,
       password,
       name,
-      UserStatusAccessRule,
     );
     result.fold(
       (failuer) {
