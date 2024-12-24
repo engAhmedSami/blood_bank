@@ -3,6 +3,7 @@ import 'package:blood_bank/core/services/firebase_auth_service.dart';
 import 'package:blood_bank/core/services/shared_preferences_sengleton.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/page_rout_builder.dart';
+import 'package:blood_bank/feature/auth/presentation/view/login_view_body_bloc_consumer.dart';
 import 'package:blood_bank/feature/home/presentation/views/custom_bottom_nav_bar.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:blood_bank/feature/on_boarding/presentation/views/chooes_to_signup_or_login_view.dart';
@@ -10,6 +11,7 @@ import 'package:blood_bank/feature/on_boarding/presentation/views/on_boarding_vi
 import 'package:blood_bank/feature/splash/presentation/views/widget/big_drop_animation.dart';
 import 'package:blood_bank/feature/splash/presentation/views/widget/blood_drops_animation.dart';
 import 'package:blood_bank/feature/splash/presentation/views/widget/center_logo_animation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:jumping_dot/jumping_dot.dart';
@@ -75,36 +77,129 @@ class SplashViewState extends State<SplashView> with TickerProviderStateMixin {
     );
 
     _startAnimations();
-    excuteNaviagtion();
+    excuteNaviagtion(context);
   }
 
-  void excuteNaviagtion() {
+  void excuteNaviagtion(BuildContext context) async {
     bool isOnBoardingViewSeen = Prefs.getBool(kIsOnBoardingViewSeen);
     bool isLoggedIn = FirebaseAuthService().isLoggedIn();
-    Future.delayed(const Duration(seconds: 7), () {
-      if (isOnBoardingViewSeen == true) {
-        if (isLoggedIn) {
-          Navigator.of(context).pushReplacement(
-            buildPageRoute(
-              const CustomBottomNavBar(),
-            ),
-          );
-        } else if (!isLoggedIn) {
-          Navigator.of(context).pushReplacement(
-            buildPageRoute(
-              const ChooesToSignupOrLoginView(),
-            ),
-          );
+
+    // Delay for splash screen duration
+    await Future.delayed(const Duration(seconds: 7));
+
+    // If the user is logged in, check user status
+    if (isLoggedIn) {
+      String? userId = FirebaseAuthService().currentUser?.uid;
+
+      if (userId != null) {
+        // Fetch user status from Firestore
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .get();
+
+        if (userDoc.exists) {
+          String userStatus = userDoc.get('userStat');
+
+          // If user is blocked, navigate to the block screen
+          if (userStatus == 'blocked') {
+            Navigator.of(context).pushReplacement(
+              buildPageRoute(
+                const UserBlockedScreen(),
+              ),
+            );
+            return;
+          }
         }
+      }
+    }
+
+    // Proceed with normal navigation logic
+    if (isOnBoardingViewSeen == true) {
+      if (isLoggedIn) {
+        Navigator.of(context).pushReplacement(
+          buildPageRoute(
+            const CustomBottomNavBar(),
+          ),
+        );
       } else {
         Navigator.of(context).pushReplacement(
           buildPageRoute(
-            const OnBoardingView(),
+            const ChooesToSignupOrLoginView(),
           ),
         );
       }
-    });
+    } else {
+      Navigator.of(context).pushReplacement(
+        buildPageRoute(
+          const OnBoardingView(),
+        ),
+      );
+    }
   }
+
+  // void excuteNaviagtion() async {
+  //   bool isOnBoardingViewSeen = Prefs.getBool(kIsOnBoardingViewSeen);
+  //   bool isLoggedIn = FirebaseAuthService().isLoggedIn();
+
+  //   // Delay for splash screen duration
+  //   await Future.delayed(const Duration(seconds: 7));
+
+  //   if (isOnBoardingViewSeen) {
+  //     if (isLoggedIn) {
+  //       // Check if the user is blocked before proceeding
+  //       bool isBlocked = await _checkIfUserIsBlocked();
+
+  //       if (isBlocked) {
+  //         Navigator.of(context).pushReplacement(
+  //           buildPageRoute(
+  //             const UserBlockedScreen(),
+  //           ),
+  //         );
+  //       } else {
+  //         Navigator.of(context).pushReplacement(
+  //           buildPageRoute(
+  //             const CustomBottomNavBar(),
+  //           ),
+  //         );
+  //       }
+  //     } else {
+  //       Navigator.of(context).pushReplacement(
+  //         buildPageRoute(
+  //           const ChooesToSignupOrLoginView(),
+  //         ),
+  //       );
+  //     }
+  //   } else {
+  //     Navigator.of(context).pushReplacement(
+  //       buildPageRoute(
+  //         const OnBoardingView(),
+  //       ),
+  //     );
+  //   }
+  // }
+
+  /// Helper method to check if the user is blocked
+  // Future<bool> _checkIfUserIsBlocked() async {
+  //   try {
+  //     String? userId = FirebaseAuthService().currentUser?.uid;
+
+  //     // Fetch user data from Firestore
+  //     final userDoc = await FirebaseFirestore.instance
+  //         .collection('users')
+  //         .doc(userId)
+  //         .get();
+
+  //     if (userDoc.exists) {
+  //       bool isBlocked = userDoc.data()?['blocked'] ?? false;
+  //       return isBlocked;
+  //     }
+  //   } catch (e) {
+  //     // Log error or handle it gracefully
+  //     // lo('Error checking if user is blocked: $e');
+  //   }
+  //   return false;
+  // }
 
   Future<void> _startAnimations() async {
     await Future.delayed(const Duration(seconds: 1));

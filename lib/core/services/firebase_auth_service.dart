@@ -260,6 +260,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 class FirebaseAuthService {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final messaging = FirebaseMessaging.instance;
+  User? get currentUser => firebaseAuth.currentUser;
 
   /// دالة لحفظ التوكن
   Future<void> saveUserToken(String token) async {
