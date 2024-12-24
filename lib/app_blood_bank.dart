@@ -1,5 +1,3 @@
-import 'package:blood_bank/core/services/UsersAccesStatConfigration.dart';
-import 'package:blood_bank/core/widget/UserBlockedScreen.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:blood_bank/feature/localization/cubit/locale_cubit.dart';
 import 'package:blood_bank/feature/splash/Presentation/views/SplashInitializer.dart';
@@ -22,42 +20,27 @@ class BloodBank extends StatelessWidget {
       child: BlocBuilder<LocaleCubit, ChangeLocaleState>(
         builder: (context, state) {
           return MaterialApp(
-            theme: ThemeData(fontFamily: 'iwanzaza'),
-            locale: state.locale,
-            supportedLocales: const [Locale('en'), Locale('ar')],
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            localeResolutionCallback: (deviceLocale, supportedLocales) {
-              for (var locale in supportedLocales) {
-                if (deviceLocale != null &&
-                    deviceLocale.languageCode == locale.languageCode) {
-                  return deviceLocale;
-                }
-              }
-
-              return supportedLocales.first;
-            },
-            debugShowCheckedModeBanner: false,
-            home: FutureBuilder<String>(
-              future: UsersAccesStatConfigration.getUserState(
-                  FirebaseAuth.instance.currentUser!.uid), // Pass the user ID
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const UserBlockedScreen();
+              theme: ThemeData(fontFamily: 'iwanzaza'),
+              locale: state.locale,
+              supportedLocales: const [Locale('en'), Locale('ar')],
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              localeResolutionCallback: (deviceLocale, supportedLocales) {
+                for (var locale in supportedLocales) {
+                  if (deviceLocale != null &&
+                      deviceLocale.languageCode == locale.languageCode) {
+                    return deviceLocale;
+                  }
                 }
 
-                if (snapshot.hasData && snapshot.data == "blocked") {
-                  return const UserBlockedScreen();
-                }
-
-                return const SplashInitializer(); // Proceed to your app's main logic
+                return supportedLocales.first;
               },
-            ),
-          );
+              debugShowCheckedModeBanner: false,
+              home: SplashInitializer());
         },
       ),
     );
