@@ -141,25 +141,23 @@
     "contactNumberError": "Please enter contact number",
     "hospitalNameError": "Please enter hospital name", 
     "selectGender": "Select Gender",
-    "pleaseSelectGender": "Please select gender",    "pleaseSelectDonationType": "Please select donation type",
-    "selectDonationType": "Select Donation Type",    "selectBloodType": "اختر فصيلة الدم",
-    "pleaseSelectBloodType": "الرجاء تحديد فصيلة الدم"
+    "pleaseSelectGender": "Please select gender", 
+       "pleaseSelectDonationType": "Please select donation type",
+    "selectDonationType": "Select Donation Type",   
+    
 
-
-
-
-
-
-
-
-
-
-
-
+"selectBloodType":"select Blood Type",
+"pleaseSelectBloodType":"please Select Blood Type"
 
 
 
 ,
+
+
+
+
+
+
 
         "appName": "Blood Bank",
         "name": "Name",
@@ -236,9 +234,48 @@
     "b_minus_give": "B-, B+, AB-, AB+",
     "b_minus_receive": "B-, O-",
     "ab_minus_give": "AB-, AB+",
-    "ab_minus_receive": "AB-, A-, B-, O-"
+    "ab_minus_receive": "AB-, A-, B-, O-",
   
-  
+    "bloodTypeAPlus": "A+",
+  "bloodTypeAMinus": "A-",
+  "bloodTypeBPlus": "B+",
+  "bloodTypeBMinus": "B-",
+  "bloodTypeOPlus": "O+",
+  "bloodTypeOMinus": "O-",
+  "bloodTypeABPlus": "AB+",
+  "bloodTypeABMinus": "AB-",
+  "wholeBlood": "Whole Blood",
+  "plasma": "Plasma",
+  "platelets": "Platelets",
+  "male": "Male",
+  "female": "Female",  "Cairo": "Cairo",
+  "Alexandria": "Alexandria",
+  "Giza": "Giza",
+  "Dakahlia": "Dakahlia",
+  "Red Sea": "Red Sea",
+  "Beheira": "Beheira",
+  "Fayoum": "Fayoum",
+  "Gharbia": "Gharbia",
+  "Ismailia": "Ismailia",
+  "Menofia": "Menofia",
+  "Minya": "Minya",
+  "Qaliubiya": "Qaliubiya",
+  "New Valley": "New Valley",
+  "Suez": "Suez",
+  "Aswan": "Aswan",
+  "Assiut": "Assiut",
+  "Beni Suef": "Beni Suef",
+  "Port Said": "Port Said",
+  "Damietta": "Damietta",
+  "Sharkia": "Sharkia",
+  "South Sinai": "South Sinai",
+  "Kafr El Sheikh": "Kafr El Sheikh",
+  "Matrouh": "Matrouh",
+  "North Sinai": "North Sinai",
+  "Qena": "Qena",
+  "Sohag": "Sohag",
+  "Luxor": "Luxor",  "select_governorate": "Select Governorate",
+  "please_select_governorate": "Please select a governorate"
 
 
     

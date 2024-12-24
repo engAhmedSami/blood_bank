@@ -34,23 +34,26 @@ class NeedRequestState extends State<NeedRequest> {
   String hospitalName = '';
 
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  List<String> get _bloodTypes {
+    return [
+      'bloodTypeAPlus'.tr(context),
+      'bloodTypeAMinus'.tr(context),
+      'bloodTypeBPlus'.tr(context),
+      'bloodTypeBMinus'.tr(context),
+      'bloodTypeOPlus'.tr(context),
+      'bloodTypeOMinus'.tr(context),
+      'bloodTypeABPlus'.tr(context),
+      'bloodTypeABMinus'.tr(context),
+    ];
+  }
 
-  final List<String> _bloodTypes = [
-    'A+',
-    'A-',
-    'B+',
-    'B-',
-    'O+',
-    'O-',
-    'AB+',
-    'AB-'
-  ];
-
-  final List<String> _donationTypes = [
-    'Whole Blood',
-    'Plasma',
-    'Platelets',
-  ];
+  List<String> get _donationTypes {
+    return [
+      'wholeBlood'.tr(context),
+      'plasma'.tr(context),
+      'platelets'.tr(context),
+    ];
+  }
 
   final List<String> _genders = ['Male', 'Female'];
 
