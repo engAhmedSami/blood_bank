@@ -65,16 +65,19 @@ class BigInfoCard extends StatelessWidget {
               ),
             ],
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InfoColumn(title: savedLives, image: Assets.imagesLifesaved),
-              InfoColumn(title: bloodGroup, image: Assets.imagesBlood),
-              InfoColumn(
-                title: formattedNextDonationDate,
-                image: Assets.imagesNextdonation,
-              ),
-            ],
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InfoColumn(title: savedLives, image: Assets.imagesLifesaved),
+                InfoColumn(title: bloodGroup, image: Assets.imagesBlood),
+                InfoColumn(
+                  title: formattedNextDonationDate,
+                  image: Assets.imagesNextdonation,
+                ),
+              ],
+            ),
           ),
         );
       },

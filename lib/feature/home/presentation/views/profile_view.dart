@@ -2,6 +2,7 @@ import 'package:blood_bank/core/helper_function/get_user.dart';
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/profile/logout_button.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:blood_bank/feature/localization/cubit/locale_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:blood_bank/feature/auth/data/models/user_model.dart';
@@ -24,8 +25,7 @@ class ProfileView extends StatelessWidget {
           Column(
             children: [
               StreamBuilder<UserModel>(
-                stream:
-                    getUserStream(), // اشتراك في التحديثات المباشرة لبيانات المستخدم
+                stream: getUserStream(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -33,11 +33,12 @@ class ProfileView extends StatelessWidget {
                   }
 
                   if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
+                    return Center(child: Text('error_occurred'.tr(context)));
                   }
 
                   if (!snapshot.hasData) {
-                    return const Center(child: Text('No user data available'));
+                    return Center(
+                        child: Text('no_user_data_available'.tr(context)));
                   }
 
                   final user = snapshot.data!;
@@ -56,28 +57,28 @@ class ProfileView extends StatelessWidget {
                   physics: const BouncingScrollPhysics(),
                   children: [
                     SettingsSwitch(
-                      title: 'Available To Donate',
+                      title: 'available_to_donate'.tr(context),
                       keyName: 'available_to_donate',
                     ),
                     SettingsSwitch(
-                      title: 'Notification',
+                      title: 'notification'.tr(context),
                       keyName: 'notification',
                     ),
                     SettingsSwitch(
-                      title: 'Allow Tracking',
+                      title: 'allow_tracking'.tr(context),
                       keyName: 'allow_tracking',
                     ),
                     SettingsItem(
-                      title: 'Manage Address',
+                      title: 'manage_address'.tr(context),
                       icon: Icons.location_on,
                     ),
                     SettingsItem(
-                      title: 'Language',
+                      title: 'language'.tr(context),
                       icon: Icons.language,
                       onTap: () => _showLanguagePicker(context),
                     ),
                     SettingsItem(
-                      title: 'Contact Details',
+                      title: 'contact_details'.tr(context),
                       icon: Icons.arrow_forward_ios,
                     ),
                     const SizedBox(height: 20),
@@ -99,18 +100,19 @@ class ProfileView extends StatelessWidget {
                 }
 
                 if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
+                  return Center(child: Text('error_occurred'.tr(context)));
                 }
 
                 if (!snapshot.hasData) {
-                  return const Center(child: Text('No user data available'));
+                  return Center(
+                      child: Text('no_user_data_available'.tr(context)));
                 }
 
                 final user = snapshot.data!;
                 return BigInfoCard(
-                  savedLives: '3 life saved',
-                  bloodGroup: '${user.bloodType} Group',
-                  nextDonationDate: 'Next Donation Date',
+                  savedLives: 'lives_saved'.tr(context),
+                  bloodGroup: '${user.bloodType} ${'group'.tr(context)}',
+                  nextDonationDate: 'next_donation_date'.tr(context),
                 );
               },
             ),
@@ -133,15 +135,15 @@ class ProfileView extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                'Choose Language',
-                style: TextStyle(color: Colors.white, fontSize: 18),
+              Text(
+                'choose_language'.tr(context),
+                style: const TextStyle(color: Colors.white, fontSize: 18),
               ),
               const SizedBox(height: 20),
               ListTile(
                 leading: const Icon(Icons.language, color: Colors.white),
-                title: const Text('English',
-                    style: TextStyle(color: Colors.white)),
+                title: Text('english'.tr(context),
+                    style: const TextStyle(color: Colors.white)),
                 onTap: () {
                   context.read<LocaleCubit>().changeLanguage('en');
                   Navigator.pop(context);
@@ -149,8 +151,8 @@ class ProfileView extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.language, color: Colors.white),
-                title: const Text('العربية',
-                    style: TextStyle(color: Colors.white)),
+                title: Text('arabic'.tr(context),
+                    style: const TextStyle(color: Colors.white)),
                 onTap: () {
                   context.read<LocaleCubit>().changeLanguage('ar');
                   Navigator.pop(context);

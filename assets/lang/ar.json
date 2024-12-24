@@ -88,6 +88,34 @@
 "error": "خطاء",
 "user_state": "حالة المستخدم"
 ,
+
+
+
+
+
+
+
+
+
+
+
+
+"error_occurred": "حدث خطأ.",
+"available_to_donate": "متاح للتبرع",
+"notification": "الإشعارات",
+"allow_tracking": "السماح بالتتبع",
+"manage_address": "إدارة العنوان",
+"language": "اللغة",
+"contact_details": "تفاصيل الاتصال",
+"lives_saved": "الأرواح التي تم إنقاذها",
+"group": "فصيلة الدم",
+"next_donation_date": "موعد التبرع القادم",
+"choose_language": "اختر اللغة",
+"english": "الإنجليزية",
+"arabic": "العربية"
+,
+
+
 "home": "الرئيسية",
 "hello": "مرحبًا",
 "profile": "الملف الشخصي",

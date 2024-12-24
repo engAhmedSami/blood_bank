@@ -1,6 +1,7 @@
 import 'package:blood_bank/core/utils/custom_progrss_hud.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/doner/add_doner_request.dart';
 import 'package:blood_bank/feature/home/presentation/manger/add_doner_request_cubit/add_doner_request_cubit.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,7 +17,7 @@ class AddDonerRequestViewBodyBlocBuilder extends StatelessWidget {
     return BlocConsumer<AddDonerRequestCubit, AddDonerRequestState>(
       listener: (context, state) {
         if (state is AddDonerRequestSuccess) {
-          successTopSnackBar(context, 'Product Added Successfully');
+          successTopSnackBar(context, 'Product Added Successfully'.tr(context));
         }
         if (state is AddDonerRequestFailure) {
           failureTopSnackBar(context, 'Something went wrong ');
