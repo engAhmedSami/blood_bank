@@ -190,6 +190,57 @@
         "unknown_date": "Unknown Date",
         "accept": "Accept",
         "decline": "Decline"
+
+
+
+
+
+
+
+,
+
+
+
+
+
+
+
+
+    "additional_tips_before": "Additional tips before donating:",
+    "no_aspirin": "Don't take aspirin for 2 days before your appointment.",
+    "ask_friend": "Ask a friend to donate at the same time. You can support each other and do twice as much good!",
+    "download_app": "Download the Blood Bank App to receive appointment reminders, start your RapidPass and more.",
+    "additional_tips_day": "Additional tips the day of your donation:",
+    "drink_extra_water": "Drink an extra 16 oz. of water (or other nonalcoholic drink) before your appointment.",
+    "eat_healthy_meal": "Eat a healthy meal, avoiding fatty foods like hamburgers, fries or ice cream.",
+    "preferred_arm": "Let us know if you have a preferred arm or particular vein that has been used successfully in the past to draw blood.",
+    "additional_tips_after": "Additional tips after donating:",
+    "keep_bandage": "Keep the strip bandage on for the next several hours. To avoid a skin rash, clean the area around the bandage.",
+    "no_heavy_lifting": "Don't do any heavy lifting or vigorous exercise for the rest of the day.",
+    "eat_iron_rich": "Keep eating iron-rich foods.",
+    "blood_type_matching": "Blood type matching:",
+    "blood_type": "Blood Type",
+    "give_blood_to": "You Can Give Blood To",
+    "receive_blood_from": "You Can Receive Blood From",
+    "a_plus_give": "A+, AB+",
+    "a_plus_receive": "A+, A-, O+, O-",
+    "o_plus_give": "O+, A+, B+, AB+",
+    "o_plus_receive": "O+, O-",
+    "b_plus_give": "B+, AB+",
+    "b_plus_receive": "B+, B-, O+, O-",
+    "ab_plus_give": "AB+",
+    "everyone": "Everyone",
+    "a_minus_give": "A-, A+, AB-, AB+",
+    "a_minus_receive": "A-, O-",
+    "o_minus_receive": "O-",
+    "b_minus_give": "B-, B+, AB-, AB+",
+    "b_minus_receive": "B-, O-",
+    "ab_minus_give": "AB-, AB+",
+    "ab_minus_receive": "AB-, A-, B-, O-"
+  
+  
+
+
     
 }
    

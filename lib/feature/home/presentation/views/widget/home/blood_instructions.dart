@@ -1,8 +1,10 @@
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:path/path.dart';
 
 class BloodInstructions extends StatelessWidget {
   const BloodInstructions({super.key});
@@ -11,13 +13,21 @@ class BloodInstructions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Blood Instructions",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+        backgroundColor: AppColors.backgroundColor,
+        title: Text(
+          "blood_instructions".tr(context),
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 19,
+            color: Colors.white,
+          ),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Colors.white,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -26,32 +36,24 @@ class BloodInstructions extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            buildSectionTitle("Additional tips before donating:"),
-            buildBulletPoint(
-                "Don't take aspirin for 2 days before your appointment."),
-            buildBulletPoint(
-                "Ask a friend to donate at the same time. You can support each other and do twice as much good!"),
-            buildBulletPoint(
-                "Download the Blood Bank App to receive appointment reminders, start your RapidPass and more."),
+            buildSectionTitle("additional_tips_before".tr(context)),
+            buildBulletPoint("no_aspirin".tr(context)),
+            buildBulletPoint("ask_friend".tr(context)),
+            buildBulletPoint("download_app".tr(context)),
             const SizedBox(height: 16),
-            buildSectionTitle("Additional tips the day of your donation:"),
-            buildBulletPoint(
-                "Drink an extra 16 oz. of water (or other nonalcoholic drink) before your appointment."),
-            buildBulletPoint(
-                "Eat a healthy meal, avoiding fatty foods like hamburgers, fries or ice cream."),
-            buildBulletPoint(
-                "Let us know if you have a preferred arm or particular vein that has been used successfully in the past to draw blood."),
+            buildSectionTitle("additional_tips_day".tr(context)),
+            buildBulletPoint("drink_extra_water".tr(context)),
+            buildBulletPoint("eat_healthy_meal".tr(context)),
+            buildBulletPoint("preferred_arm".tr(context)),
             const SizedBox(height: 16),
-            buildSectionTitle("Additional tips after donating:"),
-            buildBulletPoint(
-                "Keep the strip bandage on for the next several hours. To avoid a skin rash, clean the area around the bandage."),
-            buildBulletPoint(
-                "Don't do any heavy lifting or vigorous exercise for the rest of the day."),
-            buildBulletPoint("Keep eating iron-rich foods."),
+            buildSectionTitle("additional_tips_after".tr(context)),
+            buildBulletPoint("keep_bandage".tr(context)),
+            buildBulletPoint("no_heavy_lifting".tr(context)),
+            buildBulletPoint("eat_iron_rich".tr(context)),
             const SizedBox(height: 16),
-            buildSectionTitle("Blood type matching:"),
+            buildSectionTitle("blood_type_matching".tr(context)),
             const SizedBox(height: 16),
-            SvgPicture.asset(Assets.imagesBloodmatch)
+            SvgPicture.asset(Assets.imagesBloodmatch),
           ],
         ),
       ),
@@ -87,7 +89,7 @@ class BloodInstructions extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.3),
+            color: Colors.grey.withOpacity(0.3),
             blurRadius: 8.0,
             offset: const Offset(0, 2),
           ),
@@ -106,25 +108,53 @@ class BloodInstructions extends StatelessWidget {
         ),
         children: [
           _buildTableRow(
-            ["o", "YOU CAN GIVE BLOOD TO", "YOU CAN RECEIVE BLOOD FROM"],
+            [
+              "blood_type".tr(context as BuildContext),
+              "give_blood_to".tr(context as BuildContext),
+              "receive_blood_from".tr(context as BuildContext)
+            ],
             isHeader: true,
           ),
-          _buildTableRow(["A+", "A+, AB+", "A+, A-, O+, O-"],
-              colorColumn2: Colors.red.shade900, colorColumn3: Colors.black),
-          _buildTableRow(["O+", "O+, A+, B+, AB+", "O+, O-"],
-              colorColumn2: Colors.red.shade900, colorColumn3: Colors.black),
-          _buildTableRow(["B+", "B+, AB+", "B+, B-, O+, O-"],
-              colorColumn2: Colors.red.shade900, colorColumn3: Colors.black),
-          _buildTableRow(["AB+", "AB+", "EVERYONE"],
-              colorColumn2: Colors.red.shade900, colorColumn3: Colors.black),
-          _buildTableRow(["A-", "A-, A+, AB-, AB+", "A-, O-"],
-              colorColumn2: Colors.red.shade900, colorColumn3: Colors.black),
-          _buildTableRow(["O-", "EVERYONE", "O-"],
-              colorColumn2: Colors.red.shade900, colorColumn3: Colors.black),
-          _buildTableRow(["B-", "B-, B+, AB-, AB+", "B-, O-"],
-              colorColumn2: Colors.red.shade900, colorColumn3: Colors.black),
-          _buildTableRow(["AB-", "AB-, AB+", "AB-, A-, B-, O-"],
-              colorColumn2: Colors.red.shade900, colorColumn3: Colors.black),
+          _buildTableRow([
+            "A+",
+            "a_plus_give".tr(context as BuildContext),
+            "a_plus_receive".tr(context as BuildContext)
+          ], colorColumn2: Colors.red.shade900, colorColumn3: Colors.black),
+          _buildTableRow([
+            "O+",
+            "o_plus_give".tr(context as BuildContext),
+            "o_plus_receive".tr(context as BuildContext)
+          ], colorColumn2: Colors.red.shade900, colorColumn3: Colors.black),
+          _buildTableRow([
+            "B+",
+            "b_plus_give".tr(context as BuildContext),
+            "b_plus_receive".tr(context as BuildContext)
+          ], colorColumn2: Colors.red.shade900, colorColumn3: Colors.black),
+          _buildTableRow([
+            "AB+",
+            "ab_plus_give".tr(context as BuildContext),
+            "everyone".tr(context as BuildContext)
+          ], colorColumn2: Colors.red.shade900, colorColumn3: Colors.black),
+          _buildTableRow([
+            "A-",
+            "a_minus_give".tr(context as BuildContext),
+            "a_minus_receive".tr(context as BuildContext)
+          ], colorColumn2: Colors.red.shade900, colorColumn3: Colors.black),
+          _buildTableRow([
+            "O-",
+            "everyone".tr(context as BuildContext),
+            "o_minus_receive".tr(context as BuildContext)
+          ], colorColumn2: Colors.red.shade900, colorColumn3: Colors.black),
+          _buildTableRow([
+            "B-",
+            "b_minus_give".tr(context as BuildContext),
+            "b_minus_receive".tr(context as BuildContext)
+          ], colorColumn2: Colors.red.shade900, colorColumn3: Colors.black),
+          _buildTableRow([
+            "AB-",
+            "ab_minus_give".tr(context as BuildContext),
+            "ab_minus_receive".tr(context as BuildContext)
+          ], colorColumn2: Colors.red.shade900, colorColumn3: Colors.black),
         ],
       ),
     );
