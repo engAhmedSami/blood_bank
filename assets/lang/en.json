@@ -182,10 +182,14 @@
         "next_eligible_request_date": "Your next eligible request date is"
       
       
+,
 
 
-
-
+        "emergency_blood_needed": "Emergency {0} Blood Needed",
+        "n_a": "N/A",
+        "unknown_date": "Unknown Date",
+        "accept": "Accept",
+        "decline": "Decline"
     
 }
    

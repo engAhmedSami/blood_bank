@@ -176,8 +176,12 @@
       
       
 
-
-
+,
+        "emergency_blood_needed": "حاجة طارئة إلى دم {0}",
+        "n_a": "غير متوفر",
+        "unknown_date": "تاريخ غير معروف",
+        "accept": "قبول",
+        "decline": "رفض"
 
 
 
