@@ -51,11 +51,21 @@
       "signed_in_successfully": "تم تسجيل الدخول بنجاح!",
 
 
+          "see_all": "عرض الكل",
+    "blood_types": "فصيلة الدم",
+
+
+    "no_name": "لا اسم",
+    "unknown_hospital": "مستشفى غير معروف",
+
+"no_donation_requests_available": "لا توجد طلبات تبرع متاحة حالياً.",
+    "donation_request": "طلب التبرع",
+
 
       "find_donors": "ابحث عن المتبرعين",
       "request_for_blood": "طلب دم",
       "blood_instructions": "تعليمات الدم",
-
+      "blood_needed": "الدم المطلوب",
 
 "user_not": "المستخدم غير موجود",
     "failed_to_update_user_state": "فشل في تحديث حالة المستخدم",
@@ -70,11 +80,16 @@
 
 
 ,
+
+"no_user_data_available": "No user data available",
   "password_reset_link_sent_to": "تم إرسال رابط إعادة تعيين كلمة المرور إلى",
     "forgot_password": "نسيت كلمة المرور"
 ,
-
+"error": "خطاء",
+"user_state": "حالة المستخدم"
+,
 "home": "الرئيسية",
+"hello": "مرحبًا",
 "profile": "الملف الشخصي",
 "doner": "متبرع",
   "user_state_updated_successfully": "تم تحديث حالة المستخدم بنجاح"

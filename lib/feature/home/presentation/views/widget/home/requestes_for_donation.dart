@@ -1,6 +1,8 @@
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
+import 'package:blood_bank/feature/home/presentation/views/widget/SeeAll.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -18,7 +20,7 @@ class RequestsForDonation extends StatelessWidget {
         }
 
         if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+          return Center(child: Text('error: ${snapshot.error}'));
         }
 
         final requests = snapshot.data?.docs ?? [];
@@ -26,8 +28,8 @@ class RequestsForDonation extends StatelessWidget {
         final reversedRequests = requests.reversed.toList();
 
         if (reversedRequests.isEmpty) {
-          return const Center(
-              child: Text('No donation requests available right now.'));
+          return Center(
+              child: Text('no_donation_requests_available'.tr(context)));
         }
 
         return Column(
@@ -40,8 +42,8 @@ class RequestsForDonation extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Donation Request',
+                  Text(
+                    'donation_requests'.tr(context),
                     style: TextStyles.semiBold16,
                   ),
                   SeeAll(requests: reversedRequests),
@@ -84,7 +86,7 @@ class RequestsForDonation extends StatelessWidget {
                           ),
                         ),
                         title: Text(
-                          request['name'] ?? 'No Name',
+                          request['name'] ?? 'no_name'.tr(context),
                           style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w600),
                         ),
@@ -93,7 +95,8 @@ class RequestsForDonation extends StatelessWidget {
                             const Icon(Icons.location_on,
                                 size: 16, color: Colors.grey),
                             Text(
-                              request['hospitalName'] ?? 'Unknown Hospital',
+                              request['hospitalName'] ??
+                                  'unknown_hospital'.tr(context),
                               style: const TextStyle(
                                   fontSize: 12, color: Colors.grey),
                             ),
@@ -152,51 +155,6 @@ class RequestsForDonation extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-}
-
-class SeeAll extends StatelessWidget {
-  const SeeAll({
-    super.key,
-    required this.requests,
-  });
-
-  final List<QueryDocumentSnapshot<Map<String, dynamic>>> requests;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        showModalBottomSheet(
-          context: context,
-          builder: (BuildContext context) {
-            return ListView.builder(
-              itemCount: requests.length,
-              itemBuilder: (context, index) {
-                final request = requests[index].data();
-                return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      request['photoUrl'] ??
-                          'https://i.stack.imgur.com/l60Hf.png',
-                    ),
-                  ),
-                  title: Text(request['name'] ?? 'No Name'),
-                  subtitle: Text(
-                    'Blood Type: ${request['bloodType'] ?? 'N/A'}',
-                  ),
-                  trailing: Text('${request['distance'] ?? '0'} km'),
-                );
-              },
-            );
-          },
-        );
-      },
-      child: Text(
-        'See All',
-        style: TextStyles.semiBold14.copyWith(color: Colors.grey),
-      ),
     );
   }
 }

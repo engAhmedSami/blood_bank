@@ -42,6 +42,11 @@
 
 
 
+"no_donation_requests_available": "No donation requests available right now.",
+    "donation_request": "Donation Request",
+"no_name": "No Name",
+    "unknown_hospital": "Unknown Hospital",
+
     "Remember me" : "Remember me",
     "Enter Eamil"   : "Please enter your email. We’ll send you a link to reset your password.",
     "Send code" : "Send code",
@@ -55,20 +60,26 @@
  
     "choose_preference": "Choose which one do you prefer?",
     "donor": "Donor",
+    "error": "Error",
     "saving": "Saving...",
     "user_not_authenticated": "User not authenticated",
     "update_successful": "User state updated successfully",
     "update_failed": "Failed to update user state",
     "please_select_an_option": "Please select an option"
   
+,  "user_state": "User state"
+,
+
+"no_user_data_available": "لا توجد بيانات للمستخدم"
 ,
 "user_not": "User not found",
 "failed_to_update_user_state": "Failed to update user state",
 
 "password_reset_link_sent_to": "Password reset link sent to",
     "forgot_password": "Forgot Password",
-    "home": "Home",
+    "home": "Home",   "blood_needed": "Blood Needed",
     "need": "Need",
+    "hello": "Hello",
     "profile": "Profile",
     "doner": "Doner"
 ,  "user_state_updated_successfully": "User state updated successfully",
@@ -76,6 +87,13 @@
 "find_donors": "Find Donors",
 "request_for_blood": "Request for blood",
 "blood_instructions": "Blood Instructions"
+
+
+
+
+
+,    "see_all": "See All",
+    "blood_types": "Blood Type"
 }
    
    

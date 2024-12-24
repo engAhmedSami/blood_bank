@@ -2,6 +2,7 @@ import 'package:blood_bank/core/helper_function/get_user.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
 import 'package:blood_bank/feature/auth/data/models/user_model.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/home/home_header.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class UserHandler extends StatelessWidget {
@@ -21,11 +22,12 @@ class UserHandler extends StatelessWidget {
             }
 
             if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
+              return Center(
+                  child: Text('error: ${snapshot.error}'.tr(context)));
             }
 
             if (!snapshot.hasData) {
-              return const Center(child: Text('No user data available'));
+              return Center(child: Text('no_user_data_available'.tr(context)));
             }
 
             final user = snapshot.data!;

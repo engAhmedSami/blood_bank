@@ -1,5 +1,6 @@
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/page_rout_builder.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:blood_bank/feature/notification/notifications_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -56,11 +57,11 @@ class HomeHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Hello $name!',
+                  '${'hello'.tr(context)} $name!', // Localized hello message
                   style: TextStyles.semiBold16.copyWith(color: Colors.white),
                 ),
                 Text(
-                  'User state: $userState',
+                  '${'user_state'.tr(context)}: $userState', // Localized user state message
                   style: TextStyles.regular13.copyWith(color: Colors.white),
                 ),
               ],

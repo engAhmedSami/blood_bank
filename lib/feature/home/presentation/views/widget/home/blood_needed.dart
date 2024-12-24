@@ -1,6 +1,7 @@
 import 'package:blood_bank/constants.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/home/blood_drop.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class BloodNeededWidget extends StatelessWidget {
@@ -21,8 +22,8 @@ class BloodNeededWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Blood Needed',
+          Text(
+            'blood_needed'.tr(context),
             style: TextStyles.semiBold16,
           ),
           const SizedBox(height: 12),
