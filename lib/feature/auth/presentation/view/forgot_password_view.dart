@@ -22,7 +22,7 @@ class ForgotPasswordView extends StatelessWidget {
         appBar: CustomAppBar(
           top: 120,
           left: 50,
-          title: 'Forgot Password'.tr(context),
+          title: 'forgot_password'.tr(context),
           leadingIcon: Icons.arrow_back_ios_new_rounded,
         ),
         body: ForgotPasswordViewBodyBlocCunsumer(),
@@ -41,12 +41,15 @@ class ForgotPasswordViewBodyBlocCunsumer extends StatelessWidget {
     return BlocConsumer<SigninCubit, SigninState>(
       listener: (context, state) {
         if (state is SigninSuccess) {
-          succesTopSnackBar(
-              context,
-              'Password reset link sent to ${state.userEntity.email}'
-                  .tr(context));
+          // succesTopSnackBar(
+          //     context,
+          //     'password_reset_link_sent_to${state.userEntity.email}'
+          //         .tr(context));
+
+          successTopSnackBar(context,
+              '${'password_reset_link_sent_to'.tr(context)} ${state.userEntity.email}');
         } else if (state is SigninFailure) {
-          failuerTopSnackBar(context, state.message);
+          failureTopSnackBar(context, state.message);
         }
       },
       builder: (context, state) {

@@ -12,7 +12,7 @@
     "sign_up": "إنشاء حساب",
     "login": "تسجيل الدخول",
     "Prev": "السابق",
-    "Next": "التالي",
+    "next": "التالي",
     "Start": "ابدأ",
     "Create your account": "إنشاء حسابك",
     "Register": "سجل الآن لإنشاء حساب جديد",
@@ -33,7 +33,6 @@
     "choose_preference": "اختر أيهما تفضل؟",
     "need": "احتياج",
     "donor": "متبرع",
-    "next": "التالي",
     "saving": "جارٍ الحفظ...",
     "user_not_authenticated": "المستخدم غير مسجل الدخول",
     "update_successful": "تم تحديث حالة المستخدم بنجاح",
@@ -49,11 +48,17 @@
     "and conditions of our policy": "والأحكام الخاصة بسياسة الخصوصية",
     "Please accept terms and conditions": "يرجى قبول الشروط والأحكام",
     "Choose which one do you prefer?" : "اختر أيهما تفضل؟",
+      "signed_in_successfully": "تم تسجيل الدخول بنجاح!",
 
 
 
+      "find_donors": "ابحث عن المتبرعين",
+      "request_for_blood": "طلب دم",
+      "blood_instructions": "تعليمات الدم",
 
 
+"user_not": "المستخدم غير موجود",
+    "failed_to_update_user_state": "فشل في تحديث حالة المستخدم",
 
     "account_created_successfully": "تم إنشاء الحساب بنجاح، تحقق من حسابك",
     "email_verification_link_sent": "تم إرسال رابط التحقق من البريد الإلكتروني.",
@@ -61,4 +66,16 @@
     "verify_email": "تحقق من البريد الإلكتروني",
     "resend_verification_email": "إعادة إرسال رابط التحقق",
     "please_verify_email_address": "يرجى التحقق من عنوان بريدك الإلكتروني."
+
+
+
+,
+  "password_reset_link_sent_to": "تم إرسال رابط إعادة تعيين كلمة المرور إلى",
+    "forgot_password": "نسيت كلمة المرور"
+,
+
+"home": "الرئيسية",
+"profile": "الملف الشخصي",
+"doner": "متبرع",
+  "user_state_updated_successfully": "تم تحديث حالة المستخدم بنجاح"
 }

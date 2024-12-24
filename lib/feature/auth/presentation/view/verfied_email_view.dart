@@ -56,7 +56,7 @@ class VerfiedEmailViewState extends State<VerfiedEmailView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Verify Email'.tr(context),
+        title: 'verify_email'.tr(context),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: kHorizintalPadding),
@@ -64,7 +64,7 @@ class VerfiedEmailViewState extends State<VerfiedEmailView> {
           children: [
             const SizedBox(height: 50),
             Text(
-              'Please verify your email address.'.tr(context),
+              'please_verify_email_address.'.tr(context),
               style: TextStyles.semiBold19,
               textAlign: TextAlign.center,
             ),
@@ -73,7 +73,7 @@ class VerfiedEmailViewState extends State<VerfiedEmailView> {
             const SizedBox(height: 50),
             CustomButton(
                 onPressed: () => resendVerificationEmail(context),
-                text: 'Resend Verification Email'.tr(context)),
+                text: 'resend_verification_email'.tr(context)),
           ],
         ),
       ),
@@ -86,11 +86,10 @@ class VerfiedEmailViewState extends State<VerfiedEmailView> {
       await user.sendEmailVerification();
       if (!mounted) return;
 
-      succesTopSnackBar(
-          context, 'Email verification link has been sent.'.tr(context));
+      successTopSnackBar(context, 'email_verification_link_sent.'.tr(context));
     } else {
-      failuerTopSnackBar(
-          context, 'Unable to send verification email.'.tr(context));
+      failureTopSnackBar(
+          context, 'unable_to_send_verification_email.'.tr(context));
     }
   }
 }

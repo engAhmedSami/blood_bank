@@ -359,10 +359,10 @@ class _UserProfilePageState extends State<UserProfilePage> {
         _userId = currentUser.uid;
         await _loadUserData(_userId!);
       } else {
-        failuerTopSnackBar(context, ' No user is logged in');
+        failureTopSnackBar(context, ' No user is logged in');
       }
     } catch (e) {
-      failuerTopSnackBar(context, ' Error initializing user: $e');
+      failureTopSnackBar(context, ' Error initializing user: $e');
     } finally {
       setState(() {
         _isLoading = false;
@@ -390,7 +390,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
             _userStates.contains(data['userState']) ? data['userState'] : null;
       }
     } catch (e) {
-      failuerTopSnackBar(context, ' Error loading data: $e');
+      failureTopSnackBar(context, ' Error loading data: $e');
     }
   }
 
@@ -416,7 +416,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       await storageRef.putFile(_selectedImage!);
       _uploadedImageUrl = await storageRef.getDownloadURL();
     } catch (e) {
-      failuerTopSnackBar(context, 'Error uploading image: $e');
+      failureTopSnackBar(context, 'Error uploading image: $e');
     }
   }
 
@@ -458,12 +458,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
           final currentUserData = {...updatedData, 'uId': _userId};
           Prefs.setString(kUserData, jsonEncode(currentUserData));
 
-          succesTopSnackBar(context, ' Data successfully updated!');
+          successTopSnackBar(context, ' Data successfully updated!');
 
           Navigator.pop(context);
         }
       } catch (e) {
-        failuerTopSnackBar(context, 'Error updating data: $e');
+        failureTopSnackBar(context, 'Error updating data: $e');
       } finally {
         setState(() {
           _isLoading = false;

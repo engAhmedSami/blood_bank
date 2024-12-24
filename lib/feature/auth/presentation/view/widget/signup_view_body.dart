@@ -149,7 +149,7 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
                       if (!isTermsAccepted) {
-                        failuerTopSnackBar(context,
+                        failureTopSnackBar(context,
                             'Please accept terms and conditions'.tr(context));
                       } else {
                         await context

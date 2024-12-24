@@ -68,7 +68,7 @@ class LogoutFeature extends StatelessWidget {
         (Route<dynamic> route) => false, // This condition removes all routes
       );
     } catch (e) {
-      failuerTopSnackBar(context, ' Failed to logout: ${e.toString()}');
+      failureTopSnackBar(context, ' Failed to logout: ${e.toString()}');
     }
   }
 }

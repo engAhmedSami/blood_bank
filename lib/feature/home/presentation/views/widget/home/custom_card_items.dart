@@ -5,6 +5,7 @@ import 'package:blood_bank/feature/home/presentation/views/widget/home/blood_ins
 import 'package:blood_bank/feature/home/presentation/views/widget/doner/find_doners.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/need/request_for_blood_items.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/home/custom_card.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class CustomCardItems extends StatelessWidget {
@@ -23,7 +24,7 @@ class CustomCardItems extends StatelessWidget {
             spacing: 25,
             children: [
               CustomCard(
-                title: 'Find Donors',
+                title: 'find_donors'.tr(context),
                 imagePath: Assets.imagesSearch,
                 onTap: () {
                   Navigator.of(context).push(
@@ -34,7 +35,7 @@ class CustomCardItems extends StatelessWidget {
                 },
               ),
               CustomCard(
-                title: 'Request                       for blood',
+                title: 'request_for_blood'.tr(context),
                 imagePath: Assets.imagesRequest,
                 onTap: () {
                   Navigator.of(context).push(
@@ -45,7 +46,7 @@ class CustomCardItems extends StatelessWidget {
                 },
               ),
               CustomCard(
-                title: 'Blood Instructions',
+                title: 'blood_instructions'.tr(context),
                 imagePath: Assets.imagesInstructions,
                 onTap: () {
                   Navigator.of(context).push(

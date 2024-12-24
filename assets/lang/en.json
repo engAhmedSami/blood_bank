@@ -12,7 +12,7 @@
     "sign_up": "Sign Up",
     "login": "Login",
     "Prev": "Prev",
-    "Next": "Next",
+    "next": "Next",
     "Start": "Start",
     "Create your account" : "Create your account",
     "Register" : "Register now to create a new account",
@@ -30,7 +30,7 @@
     "Forgot Password" : "Forgot Password",
     "Don't have an account" : "Don't have an account? ",
 
-
+"signed_in_successfully": "Signed in successfully!",
 
     "account_created_successfully": "Account created successfully, verify your account",
     "email_verification_link_sent": "Email verification link has been sent.",
@@ -54,15 +54,29 @@
    "Choose which one do you prefer?" : "Choose which one do you prefer?",
  
     "choose_preference": "Choose which one do you prefer?",
-    "need": "Need",
     "donor": "Donor",
-    "next": "Next",
     "saving": "Saving...",
     "user_not_authenticated": "User not authenticated",
     "update_successful": "User state updated successfully",
     "update_failed": "Failed to update user state",
     "please_select_an_option": "Please select an option"
-  }
+  
+,
+"user_not": "User not found",
+"failed_to_update_user_state": "Failed to update user state",
+
+"password_reset_link_sent_to": "Password reset link sent to",
+    "forgot_password": "Forgot Password",
+    "home": "Home",
+    "need": "Need",
+    "profile": "Profile",
+    "doner": "Doner"
+,  "user_state_updated_successfully": "User state updated successfully",
+
+"find_donors": "Find Donors",
+"request_for_blood": "Request for blood",
+"blood_instructions": "Blood Instructions"
+}
    
    
 

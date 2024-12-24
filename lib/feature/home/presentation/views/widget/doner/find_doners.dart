@@ -27,7 +27,7 @@ class _FindDonorsState extends State<FindDonors> {
     log("Location: $location");
 
     if (selectedBloodGroup == null || location == null || location!.isEmpty) {
-      failuerTopSnackBar(context, ' Please fill all the fields');
+      failureTopSnackBar(context, ' Please fill all the fields');
 
       return;
     }
@@ -56,7 +56,7 @@ class _FindDonorsState extends State<FindDonors> {
     } catch (e) {
       log("Error fetching donors: $e");
 
-      failuerTopSnackBar(context, 'Failed to fetch donors: $e');
+      failureTopSnackBar(context, 'Failed to fetch donors: $e');
     } finally {
       setState(() {
         isLoading = false;

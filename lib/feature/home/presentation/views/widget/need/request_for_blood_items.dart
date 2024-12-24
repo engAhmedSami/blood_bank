@@ -39,10 +39,10 @@ class BloodRequest extends StatelessWidget {
               return BloodRequestCard(
                 request: request,
                 onAccept: () {
-                  succesTopSnackBar(context, 'Request Accepted');
+                  successTopSnackBar(context, 'Request Accepted');
                 },
                 onDecline: () {
-                  failuerTopSnackBar(context, 'Request Declined');
+                  failureTopSnackBar(context, 'Request Declined');
                 },
               );
             },

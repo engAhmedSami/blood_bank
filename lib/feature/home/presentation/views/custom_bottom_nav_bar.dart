@@ -4,6 +4,7 @@ import 'package:blood_bank/feature/home/presentation/views/doner_view.dart';
 import 'package:blood_bank/feature/home/presentation/views/home_view.dart';
 import 'package:blood_bank/feature/home/presentation/views/need_view.dart';
 import 'package:blood_bank/feature/home/presentation/views/profile_view.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -40,8 +41,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
           ),
           option: DotBarOptions(
             dotStyle: DotStyle.tile,
-            gradient: const LinearGradient(
-              colors: [
+            gradient: LinearGradient(
+              colors: const [
                 Colors.deepPurple,
                 Colors.pink,
               ],
@@ -53,19 +54,21 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             BottomBarItem(
               icon: SvgPicture.asset(
                 Assets.imagesHome,
-                colorFilter: const ColorFilter.mode(
+                colorFilter: ColorFilter.mode(
                   Colors.grey,
                   BlendMode.srcIn,
                 ),
               ),
               selectedIcon: SvgPicture.asset(Assets.imagesHome),
               selectedColor: AppColors.primaryColor,
-              title: const Text('Home'),
+              title: Text(
+                'home'.tr(context),
+              ),
             ),
             BottomBarItem(
               icon: SvgPicture.asset(
                 Assets.imagesNeed,
-                colorFilter: const ColorFilter.mode(
+                colorFilter: ColorFilter.mode(
                   Colors.grey,
                   BlendMode.srcIn,
                 ),
@@ -76,12 +79,14 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                 height: 30,
               ),
               selectedColor: AppColors.primaryColor,
-              title: const Text('Need'),
+              title: Text(
+                'need'.tr(context),
+              ),
             ),
             BottomBarItem(
                 icon: SvgPicture.asset(
                   Assets.imagesDoner,
-                  colorFilter: const ColorFilter.mode(
+                  colorFilter: ColorFilter.mode(
                     Colors.grey,
                     BlendMode.srcIn,
                   ),
@@ -89,11 +94,13 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                 ),
                 selectedIcon: SvgPicture.asset(Assets.imagesDoner, height: 30),
                 selectedColor: AppColors.primaryColor,
-                title: const Text('Doner')),
+                title: Text(
+                  'doner'.tr(context),
+                )),
             BottomBarItem(
                 icon: SvgPicture.asset(
                   Assets.imagesProfile,
-                  colorFilter: const ColorFilter.mode(
+                  colorFilter: ColorFilter.mode(
                     Colors.grey,
                     BlendMode.srcIn,
                   ),
@@ -104,7 +111,9 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                   height: 30,
                 ),
                 selectedColor: AppColors.primaryColor,
-                title: const Text('Profile')),
+                title: Text(
+                  'profile'.tr(context),
+                )),
           ],
           hasNotch: true,
           fabLocation: StylishBarFabLocation.center,
@@ -122,7 +131,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 10,
-        shape: const CircleBorder(),
+        shape: CircleBorder(),
         onPressed: () {},
         backgroundColor: AppColors.primaryColor,
         child: SvgPicture.asset(Assets.imagesAdd),
@@ -131,8 +140,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       body: SafeArea(
         child: PageView(
           controller: controller,
-          physics:
-              const NeverScrollableScrollPhysics(), // Disable swipe gesture
+          physics: NeverScrollableScrollPhysics(), // Disable swipe gesture
           children: const [
             HomeView(),
             NeedView(),

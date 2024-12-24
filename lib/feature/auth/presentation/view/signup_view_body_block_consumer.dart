@@ -18,9 +18,9 @@ class SignupViewBodyBlockConsumer extends StatelessWidget {
     return BlocConsumer<SignupCubit, SignupState>(
       listener: (context, state) {
         if (state is SignupSuccess) {
-          succesTopSnackBar(
+          successTopSnackBar(
             context,
-            'Account created successfully, verify your account  '.tr(context),
+            'account_created_successfully'.tr(context),
           );
         }
         Navigator.of(context).pushReplacement(
@@ -30,7 +30,7 @@ class SignupViewBodyBlockConsumer extends StatelessWidget {
         );
 
         if (state is SignupFailure) {
-          failuerTopSnackBar(
+          failureTopSnackBar(
             context,
             state.message,
           );

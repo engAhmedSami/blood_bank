@@ -99,9 +99,13 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
 
           if (!mounted) return;
 
-          succesTopSnackBar(
+          // succesTopSnackBar(
+          //   context,
+          //   'User state updated successfully',
+          // );
+          successTopSnackBar(
             context,
-            'User state updated successfully',
+            'user_state_updated_successfully'.tr(context),
           );
 
           // الانتقال إلى الصفحة الرئيسية مع إيقاف اللودينج
@@ -111,15 +115,19 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
             );
           });
         } else {
-          failuerTopSnackBar(
+          // failuerTopSnackBar(
+          //   context,
+          //   'User not ',
+          // );
+          failureTopSnackBar(
             context,
-            'User not authenticated',
+            'user_not'.tr(context),
           );
         }
       } catch (e) {
-        failuerTopSnackBar(
+        failureTopSnackBar(
           context,
-          'Failed to update user state: $e',
+          'failed_to_update_user_state$e'.tr(context),
         );
       } finally {
         // تعيين حالة الحفظ إلى false فقط إذا لم يتم التنقل
@@ -135,7 +143,7 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
       //   '${'Please select an option'}.tr(context)',
       // );
 
-      failuerTopSnackBar(
+      failureTopSnackBar(
         context,
         'please_select_an_option'.tr(context),
       );
@@ -193,7 +201,7 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
                       SizedBox(width: width * 0.1),
                       PreferenceButton(
                         image: Assets.imagesDoner,
-                        label: "donor.".tr(context),
+                        label: "donor".tr(context),
                         isSelected: selectedOption == "Donor",
                         onPressed: () {
                           _saveSelectionToPrefs("Donor");
@@ -205,7 +213,7 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
                 const Spacer(),
                 CustomButton(
                   onPressed: saveUserState, // تعطيل الزر أثناء الحفظ
-                  text: isSaving ? "Saving...".tr(context) : "Next".tr(context),
+                  text: isSaving ? "Saving...".tr(context) : "next".tr(context),
                 ),
                 const SizedBox(height: 80),
               ],

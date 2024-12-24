@@ -60,7 +60,7 @@ class NeedRequestState extends State<NeedRequest> {
         .get();
 
     if (querySnapshot.docs.isNotEmpty) {
-      failuerTopSnackBar(context,
+      failureTopSnackBar(context,
           'You have an active request. Please complete it before submitting a new one.');
 
       return false;
@@ -74,7 +74,7 @@ class NeedRequestState extends State<NeedRequest> {
       _formKey.currentState!.save();
 
       if (_user == null) {
-        failuerTopSnackBar(context, 'User not authenticated');
+        failureTopSnackBar(context, 'User not authenticated');
         return;
       }
       final canSubmit = await _canSubmitNewRequest(_user.uid);
@@ -99,7 +99,7 @@ class NeedRequestState extends State<NeedRequest> {
 
       context.read<AddNeederRequestCubit>().addNeederRequest(request);
 
-      succesTopSnackBar(context, 'Request submitted successfully!');
+      successTopSnackBar(context, 'Request submitted successfully!');
     } else {
       setState(() {
         autovalidateMode = AutovalidateMode.always;
