@@ -38,6 +38,7 @@
     "verify_email": "Verify Email",
     "resend_verification_email": "Resend Verification Email",
     "please_verify_email_address": "Please verify your email address.",
+        "activeRequest": "You have an active request. Please complete it before submitting a new one.",
 
 
 
@@ -116,10 +117,35 @@
 
 
 ,    "see_all": "See All",
-    "blood_types": "Blood Type", "product_added_successfully": "Product Added Successfully",
-    "something_went_wrong": "Something went wrong",   "edit_user_info": "Edit User Info",
+    "blood_types": "Blood Type", 
+    "product_added_successfully": "Product Added Successfully",
+    "something_went_wrong": "Something went wrong",  
+     "edit_user_info": "Edit User Info",
     "tap_here_to_update_your_profile_information": "Tap here to update your profile information.",
     "state": "State" 
+    ,
+
+    "pleaseSelectDate": "Please select a date" 
+    ,  "patientName": "Patient Name",
+    "age": "Age",
+    "bloodType": "Blood Type",
+    "donationType": "Donation Type",
+    "gender": "Gender",
+    "nationalId": "National ID",
+    "medicalConditions": "Medical Conditions",
+    "contactNumber": "Contact Number",
+    "governorate": "Governorate",
+    "hospitalName": "Hospital Name",
+    "addRequest": "Add Request",  "patientNameError": "Please enter your patientName",
+    "ageError": "Please enter your age",   "idCardError": "Please enter your ID card number",
+    "contactNumberError": "Please enter contact number",
+    "hospitalNameError": "Please enter hospital name", 
+    "selectGender": "Select Gender",
+    "pleaseSelectGender": "Please select gender",    "pleaseSelectDonationType": "Please select donation type",
+    "selectDonationType": "Select Donation Type",    "selectBloodType": "اختر فصيلة الدم",
+    "pleaseSelectBloodType": "الرجاء تحديد فصيلة الدم"
+
+    
 }
    
    

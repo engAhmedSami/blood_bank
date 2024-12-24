@@ -124,5 +124,26 @@
 "profile": "الملف الشخصي",
 "doner": "متبرع",
   "user_state_updated_successfully": "تم تحديث حالة المستخدم بنجاح", "product_added_successfully": "تمت إضافة المنتج بنجاح",
-    "something_went_wrong": "حدث خطأ ما"
+    "something_went_wrong": "حدث خطأ ما",
+
+    "patientName": "اسم المريض",
+    "age": "العمر",
+    "bloodType": "فصيلة الدم",
+    "donationType": "نوع التبرع",
+    "gender": "الجنس",
+    "nationalId": "الرقم القومي",
+    "medicalConditions": "الحالات الطبية",
+    "contactNumber": "رقم الاتصال",
+    "governorate": "المحافظة",
+    "hospitalName": "اسم المستشفى",
+    "addRequest": "إضافة طلب"
+,    "patientNameError": "الرجاء إدخال اسم المريض",
+    "ageError": "الرجاء إدخال العمر"
+,  "idCardError": "الرجاء إدخال رقم بطاقة الهوية",
+"contactNumberError": "الرجاء إدخال رقم الاتصال",
+"hospitalNameError": "الرجاء إدخال اسم المستشفى",   "selectGender": "اختر الجنس",
+    "pleaseSelectGender": "الرجاء تحديد الجنس",    "pleaseSelectDonationType": "الرجاء تحديد نوع التبرع",
+    "selectDonationType": "اختر نوع التبرع",    "pleaseSelectDate": "الرجاء تحديد تاريخ"
+    ,
+    "activeRequest": "لديك طلب نشط. يرجى إكماله قبل تقديم طلب جديد."
 }

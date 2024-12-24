@@ -5,6 +5,7 @@ import 'package:blood_bank/core/widget/custom_request_text_field.dart';
 import 'package:blood_bank/core/widget/governorate_drop_down.dart';
 import 'package:blood_bank/feature/home/domain/entities/needer_request_entity.dart';
 import 'package:blood_bank/feature/home/presentation/manger/add_need_request_cubit/add_need_request_cubit.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -60,135 +61,12 @@ class NeedRequestState extends State<NeedRequest> {
         .get();
 
     if (querySnapshot.docs.isNotEmpty) {
-      failureTopSnackBar(context,
-          'You have an active request. Please complete it before submitting a new one.');
+      failureTopSnackBar(context, 'activeRequest'.tr(context));
 
       return false;
     }
 
     return true;
-  }
-
-  void _submitRequest() async {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-
-      if (_user == null) {
-        failureTopSnackBar(context, 'User not authenticated');
-        return;
-      }
-      final canSubmit = await _canSubmitNewRequest(_user.uid);
-      if (!canSubmit) {
-        return;
-      }
-
-      NeederRequestEntity request = NeederRequestEntity(
-        patientName: patientName,
-        age: age,
-        bloodType: bloodType ?? '',
-        donationType: donationType ?? '',
-        gender: gender ?? '',
-        idCard: idCard,
-        medicalConditions: medicalConditions,
-        contact: contact,
-        address: address ?? '',
-        uId: _user.uid,
-        hospitalName: hospitalName,
-        dateTime: DateTime.now(),
-      );
-
-      context.read<AddNeederRequestCubit>().addNeederRequest(request);
-
-      successTopSnackBar(context, 'Request submitted successfully!');
-    } else {
-      setState(() {
-        autovalidateMode = AutovalidateMode.always;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            spacing: 10,
-            children: [
-              CustomRequestTextField(
-                hintText: 'PatientName',
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter your patientName' : null,
-                onSaved: (value) {
-                  patientName = value!;
-                },
-              ),
-              CustomRequestTextField(
-                textInputType: TextInputType.number,
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter your age' : null,
-                hintText: 'Age',
-                onSaved: (value) {
-                  age = num.parse(value!);
-                },
-              ),
-              bloodTypeDropDown(),
-              donationTypeDropDown(),
-              genderDropDown(),
-              CustomRequestTextField(
-                hintText: 'National ID',
-                textInputType: TextInputType.number,
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter your ID card number' : null,
-                onSaved: (value) {
-                  idCard = num.parse(value!);
-                },
-              ),
-              CustomRequestTextField(
-                hintText: 'Medical Conditions',
-                maxLines: 3,
-                onSaved: (value) {
-                  medicalConditions = value!;
-                },
-              ),
-              CustomRequestTextField(
-                hintText: 'Contact Number',
-                textInputType: TextInputType.phone,
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter contact number' : null,
-                onSaved: (value) {
-                  contact = num.parse(value!);
-                },
-              ),
-              GovernorateDropdown(
-                selectedGovernorate: address,
-                onChanged: (value) {
-                  setState(() {
-                    address = value;
-                  });
-                },
-              ),
-              CustomRequestTextField(
-                hintText: 'Hospital Name',
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter hospital name' : null,
-                onSaved: (value) {
-                  hospitalName = value!;
-                },
-              ),
-              const SizedBox(height: 16),
-              CustomButton(
-                text: 'Add Request',
-                onPressed: _submitRequest,
-              ),
-              const SizedBox(height: 16),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   Widget datePickerField({
@@ -201,7 +79,7 @@ class NeedRequestState extends State<NeedRequest> {
       initialValue: selectedDate,
       validator: (value) {
         if (value == null) {
-          return 'Please select a date'; // Validation message
+          return 'pleaseSelectDate'.tr(context); // Validation message
         }
         return null; // Return null if the date is selected
       },
@@ -264,13 +142,14 @@ class NeedRequestState extends State<NeedRequest> {
         bloodType = value!;
       }),
       decoration: InputDecoration(
-        hintText: 'Select Blood Type',
+        hintText: 'selectBloodType'.tr(context),
         hintStyle: TextStyles.semiBold14,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
       ),
-      validator: (value) => value == null ? 'Please select blood type' : null,
+      validator: (value) =>
+          value == null ? 'pleaseSelectBloodType'.tr(context) : null,
     );
   }
 
@@ -287,14 +166,14 @@ class NeedRequestState extends State<NeedRequest> {
         donationType = value!;
       }),
       decoration: InputDecoration(
-        hintText: 'Select Donation Type',
+        hintText: 'pleaseSelectDonationType'.tr(context),
         hintStyle: TextStyles.semiBold14,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
       ),
       validator: (value) =>
-          value == null ? 'Please select donation type' : null,
+          value == null ? 'selectDonationType'.tr(context) : null,
     );
   }
 
@@ -311,13 +190,136 @@ class NeedRequestState extends State<NeedRequest> {
         gender = value!;
       }),
       decoration: InputDecoration(
-        hintText: 'Select Gender',
+        hintText: 'selectGender'.tr(context),
         hintStyle: TextStyles.semiBold14,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
       ),
-      validator: (value) => value == null ? 'Please select gender' : null,
+      validator: (value) =>
+          value == null ? 'pleaseSelectGender'.tr(context) : null,
+    );
+  }
+
+  void _submitRequest() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      if (_user == null) {
+        failureTopSnackBar(context, 'User not authenticated');
+        return;
+      }
+      final canSubmit = await _canSubmitNewRequest(_user.uid);
+      if (!canSubmit) {
+        return;
+      }
+
+      NeederRequestEntity request = NeederRequestEntity(
+        patientName: patientName,
+        age: age,
+        bloodType: bloodType ?? '',
+        donationType: donationType ?? '',
+        gender: gender ?? '',
+        idCard: idCard,
+        medicalConditions: medicalConditions,
+        contact: contact,
+        address: address ?? '',
+        uId: _user.uid,
+        hospitalName: hospitalName,
+        dateTime: DateTime.now(),
+      );
+
+      context.read<AddNeederRequestCubit>().addNeederRequest(request);
+
+      successTopSnackBar(context, 'Request submitted successfully!');
+    } else {
+      setState(() {
+        autovalidateMode = AutovalidateMode.always;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            spacing: 10,
+            children: [
+              CustomRequestTextField(
+                hintText: 'patientName'.tr(context),
+                validator: (value) =>
+                    value!.isEmpty ? 'patientNameError'.tr(context) : null,
+                onSaved: (value) {
+                  patientName = value!;
+                },
+              ),
+              CustomRequestTextField(
+                textInputType: TextInputType.number,
+                validator: (value) =>
+                    value!.isEmpty ? 'ageError'.tr(context) : null,
+                hintText: 'age'.tr(context),
+                onSaved: (value) {
+                  age = num.parse(value!);
+                },
+              ),
+              bloodTypeDropDown(),
+              donationTypeDropDown(),
+              genderDropDown(),
+              CustomRequestTextField(
+                hintText: 'nationalId'.tr(context),
+                textInputType: TextInputType.number,
+                validator: (value) =>
+                    value!.isEmpty ? 'idCardError'.tr(context) : null,
+                onSaved: (value) {
+                  idCard = num.parse(value!);
+                },
+              ),
+              CustomRequestTextField(
+                hintText: 'medicalConditions'.tr(context),
+                maxLines: 3,
+                onSaved: (value) {
+                  medicalConditions = value!;
+                },
+              ),
+              CustomRequestTextField(
+                hintText: 'contactNumber'.tr(context),
+                textInputType: TextInputType.phone,
+                validator: (value) =>
+                    value!.isEmpty ? 'contactNumberError'.tr(context) : null,
+                onSaved: (value) {
+                  contact = num.parse(value!);
+                },
+              ),
+              GovernorateDropdown(
+                selectedGovernorate: address,
+                onChanged: (value) {
+                  setState(() {
+                    address = value;
+                  });
+                },
+              ),
+              CustomRequestTextField(
+                hintText: 'hospitalName'.tr(context),
+                validator: (value) =>
+                    value!.isEmpty ? 'hospitalNameError'.tr(context) : null,
+                onSaved: (value) {
+                  hospitalName = value!;
+                },
+              ),
+              const SizedBox(height: 16),
+              CustomButton(
+                text: 'addRequest'.tr(context),
+                onPressed: _submitRequest,
+              ),
+              const SizedBox(height: 16),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
