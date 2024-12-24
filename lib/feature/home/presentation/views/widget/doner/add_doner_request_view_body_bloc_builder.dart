@@ -17,10 +17,10 @@ class AddDonerRequestViewBodyBlocBuilder extends StatelessWidget {
     return BlocConsumer<AddDonerRequestCubit, AddDonerRequestState>(
       listener: (context, state) {
         if (state is AddDonerRequestSuccess) {
-          successTopSnackBar(context, 'Product Added Successfully'.tr(context));
+          successTopSnackBar(context, 'product_added_successfully'.tr(context));
         }
         if (state is AddDonerRequestFailure) {
-          failureTopSnackBar(context, 'Something went wrong ');
+          failureTopSnackBar(context, 'something_went_wrong'.tr(context));
         }
       },
       builder: (context, state) {

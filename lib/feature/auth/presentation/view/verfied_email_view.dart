@@ -61,6 +61,7 @@ class VerfiedEmailViewState extends State<VerfiedEmailView> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: kHorizintalPadding),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 50),
             Text(

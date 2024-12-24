@@ -28,6 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return SizedBox(
       height: preferredSize.height,
       child: Stack(
+        alignment: Alignment.center,
         children: [
           SvgPicture.asset(
             Assets.imagesAppBar,
@@ -48,7 +49,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           Positioned(
             top: 50,
-            right: 16, // Position for the Skip button
+            right: 25, // Position for the Skip button
             child: TextButton(
               onPressed: onSkipPressed, // Call the skip handler
               child: Text(

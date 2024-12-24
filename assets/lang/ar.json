@@ -114,11 +114,15 @@
 "english": "الإنجليزية",
 "arabic": "العربية"
 ,
-
-
 "home": "الرئيسية",
 "hello": "مرحبًا",
+"edit_user_info": "تعديل معلومات المستخدم",
+"tap_here_to_update_your_profile_information": "اضغط هنا لتحديث معلومات ملفك الشخصي.",
+"state": "الحالة" 
+,
+
 "profile": "الملف الشخصي",
 "doner": "متبرع",
-  "user_state_updated_successfully": "تم تحديث حالة المستخدم بنجاح"
+  "user_state_updated_successfully": "تم تحديث حالة المستخدم بنجاح", "product_added_successfully": "تمت إضافة المنتج بنجاح",
+    "something_went_wrong": "حدث خطأ ما"
 }

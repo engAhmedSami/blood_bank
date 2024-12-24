@@ -1,3 +1,4 @@
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
@@ -73,11 +74,11 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
-            child: const Column(
+            child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "Edit User Info",
+                  "edit_user_info".tr(context),
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -86,7 +87,7 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "Tap here to update your profile information.",
+                  "tap_here_to_update_your_profile_information".tr(context),
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.white70,
@@ -168,7 +169,7 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
                 ),
               ),
               Text(
-                'State: ${widget.userState}',
+                '${'state'.tr(context)}: ${widget.userState}',
                 style: const TextStyle(
                   fontSize: 14,
                   color: Colors.white70,
