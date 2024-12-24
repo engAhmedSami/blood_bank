@@ -1,7 +1,6 @@
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:blood_bank/feature/localization/cubit/locale_cubit.dart';
-import 'package:blood_bank/feature/notification/notification_service.dart';
-import 'package:blood_bank/feature/splash/presentation/views/splash_view.dart';
+import 'package:blood_bank/feature/splash/Presentation/views/SplashInitializer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -45,29 +44,5 @@ class BloodBank extends StatelessWidget {
         },
       ),
     );
-  }
-}
-
-class SplashInitializer extends StatefulWidget {
-  const SplashInitializer({super.key});
-
-  @override
-  State<SplashInitializer> createState() => _SplashInitializerState();
-}
-
-class _SplashInitializerState extends State<SplashInitializer> {
-  @override
-  void initState() {
-    super.initState();
-    _initializeNotifications();
-  }
-
-  Future<void> _initializeNotifications() async {
-    await NotificationService.instance.initialize(context);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SplashView();
   }
 }
