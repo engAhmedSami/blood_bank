@@ -1,5 +1,7 @@
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
+import 'package:blood_bank/core/widget/CoustomDialog.dart';
+import 'package:blood_bank/core/widget/coustomAleartDiloage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'sql_helper_notification.dart';
@@ -56,20 +58,17 @@ class _NotificationsPageState extends State<NotificationsPage> {
     return showDialog<bool>(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: const Text('Delete All Notifications'),
-          content:
-              const Text('Are you sure you want to delete all notifications?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, true),
-              child: const Text('Delete'),
-            ),
-          ],
+        return CustomAlertDialog(
+          title: 'Delete All Notifications',
+          content: 'Are you sure you want to delete all notifications?',
+          confirmText: 'Delete',
+          cancelText: 'Cancel',
+          onConfirm: () {
+            Navigator.pop(context, true);
+          },
+          onCancel: () {
+            Navigator.pop(context, false);
+          },
         );
       },
     );
@@ -78,6 +77,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: buildAppbar(context),
       body: FutureBuilder(
         future: _notificationsFuture,
@@ -87,7 +87,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
           }
 
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No Notifications Found'));
+            return const Center(
+                child: CoustomDialog(
+              content: 'you don\'t have notifications yet',
+              title: 'Alert for Notification',
+            ));
           }
 
           final notifications = snapshot.data!;
@@ -147,6 +151,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
   AppBar buildAppbar(BuildContext context) {
     return AppBar(
+      backgroundColor: Colors.white,
       centerTitle: true,
       title: Text(
         'Notifications',
