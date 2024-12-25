@@ -1,7 +1,10 @@
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
-import 'package:blood_bank/core/utils/app_text_style.dart';
+import 'package:blood_bank/core/widget/GenderDropdown.dart';
+import 'package:blood_bank/core/widget/bloodTypeDropDown.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/core/widget/custom_request_text_field.dart';
+import 'package:blood_bank/core/widget/datePickerField.dart';
+import 'package:blood_bank/core/widget/donationTypeDropDown.dart';
 import 'package:blood_bank/core/widget/governorate_drop_down.dart';
 import 'package:blood_bank/feature/home/domain/entities/doner_request_entity.dart';
 import 'package:blood_bank/feature/home/presentation/manger/add_doner_request_cubit/add_doner_request_cubit.dart';
@@ -219,9 +222,20 @@ class DonerRequestState extends State<DonerRequest> {
                   age = num.parse(value!);
                 },
               ),
-              bloodTypeDropDown(),
-              donationTypeDropDown(),
-              genderDropDown(),
+              BloodTypeDropdown(onBloodTypeSelected: _bloodTypes),
+              DonationTypeDropdown(onTypeSelected: _donationTypes),
+              // donationTypeDropDown(),
+              // genderDropDown(),
+
+              GenderDropdown(
+                genders: _genders,
+                onGenderSelected: (gender) {
+                  setState(() {
+                    gender = gender;
+                  });
+                },
+              ),
+
               CustomRequestTextField(
                 controller: idCardController,
                 hintText: 'National ID Number',
@@ -233,6 +247,7 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               datePickerField(
+                context: context,
                 label: 'Last Donation Date',
                 selectedDate: lastDonationDate,
                 onDateSelected: (date) {
@@ -243,6 +258,7 @@ class DonerRequestState extends State<DonerRequest> {
                 isNextDonationDate: false,
               ),
               datePickerField(
+                context: context,
                 label: 'Next Donation Date',
                 selectedDate: nextDonationDate,
                 onDateSelected: (date) {
@@ -324,139 +340,6 @@ class DonerRequestState extends State<DonerRequest> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget datePickerField({
-    required String label,
-    required DateTime? selectedDate,
-    required Function(DateTime) onDateSelected,
-    required bool isNextDonationDate,
-  }) {
-    return FormField<DateTime>(
-      initialValue: selectedDate,
-      validator: (value) {
-        if (value == null) {
-          return 'Please select a date';
-        }
-        return null;
-      },
-      builder: (formFieldState) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomRequestTextField(
-              controller: TextEditingController(
-                text: selectedDate != null
-                    ? selectedDate.toLocal().toString().split(' ')[0]
-                    : '',
-              ),
-              hintText: label,
-              suffixIcon: const Icon(Icons.calendar_today),
-              readOnly: true,
-              onTap: () async {
-                final date = await showDatePicker(
-                  context: context,
-                  initialDate: selectedDate ?? DateTime.now(),
-                  firstDate:
-                      isNextDonationDate ? DateTime.now() : DateTime(2000),
-                  lastDate: isNextDonationDate
-                      ? DateTime.now().add(const Duration(days: 365 * 11))
-                      : DateTime.now(),
-                );
-                if (date != null) {
-                  onDateSelected(date);
-                  formFieldState.didChange(date);
-                }
-              },
-            ),
-            if (formFieldState.hasError)
-              Padding(
-                padding: const EdgeInsets.only(top: 4.0),
-                child: Text(
-                  formFieldState.errorText!,
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 12,
-                  ),
-                ),
-              ),
-          ],
-        );
-      },
-    );
-  }
-
-  DropdownButtonFormField<String> bloodTypeDropDown() {
-    return DropdownButtonFormField<String>(
-      value: bloodType,
-      items: _bloodTypes
-          .map((type) => DropdownMenuItem(
-                value: type,
-                child: Text(type, style: TextStyles.semiBold14),
-              ))
-          .toList(),
-      onChanged: (value) => setState(() {
-        bloodType = value!;
-      }),
-      decoration: InputDecoration(
-        hintText: 'Select Blood Type',
-        hintStyle: TextStyles.semiBold14,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      validator: (value) => value == null ? 'Please select blood type' : null,
-    );
-  }
-
-  DropdownButtonFormField<String> donationTypeDropDown() {
-    return DropdownButtonFormField<String>(
-      value: donationType,
-      items: _donationTypes
-          .map((type) => DropdownMenuItem(
-                value: type,
-                child: Text(type, style: TextStyles.semiBold14),
-              ))
-          .toList(),
-      onChanged: (value) => setState(() {
-        donationType = value!;
-      }),
-      decoration: InputDecoration(
-        hintText: 'Select Donation Type',
-        hintStyle: TextStyles.semiBold14,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      validator: (value) =>
-          value == null ? 'Please select donation type' : null,
-    );
-  }
-
-  DropdownButtonFormField<String> genderDropDown() {
-    return DropdownButtonFormField<String>(
-      value: gender,
-      items: _genders
-          .map((gender) => DropdownMenuItem(
-                value: gender,
-                child: Text(
-                  gender,
-                  style: TextStyles.semiBold14,
-                ),
-              ))
-          .toList(),
-      onChanged: (value) => setState(() {
-        gender = value!;
-      }),
-      decoration: InputDecoration(
-        hintText: 'Select Gender',
-        hintStyle: TextStyles.semiBold14,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      validator: (value) => value == null ? 'Please select gender' : null,
     );
   }
 }

@@ -236,6 +236,7 @@ class NeedRequestState extends State<NeedRequest> {
               // bloodTypeDropDown(),
 
               BloodTypeDropdown(onBloodTypeSelected: _bloodTypes),
+
               DonationTypeDropdown(onTypeSelected: _donationTypes),
 
               GenderDropdown(
@@ -246,6 +247,7 @@ class NeedRequestState extends State<NeedRequest> {
                   });
                 },
               ),
+
               CustomRequestTextField(
                 controller: idCardController,
                 hintText: 'nationalId'.tr(context),
@@ -256,6 +258,7 @@ class NeedRequestState extends State<NeedRequest> {
                   idCard = num.parse(value!);
                 },
               ),
+
               CustomRequestTextField(
                 controller: medicalConditionsController,
                 hintText: 'medicalConditions'.tr(context),
@@ -264,6 +267,7 @@ class NeedRequestState extends State<NeedRequest> {
                   medicalConditions = value!;
                 },
               ),
+
               CustomRequestTextField(
                 controller: contactController,
                 hintText: 'contactNumber'.tr(context),
@@ -274,6 +278,7 @@ class NeedRequestState extends State<NeedRequest> {
                   contact = num.parse(value!);
                 },
               ),
+
               GovernorateDropdown(
                 selectedGovernorate: address,
                 onChanged: (value) {
@@ -282,6 +287,7 @@ class NeedRequestState extends State<NeedRequest> {
                   });
                 },
               ),
+
               CustomRequestTextField(
                 controller: hospitalNameController,
                 hintText: 'hospitalName'.tr(context),
@@ -291,11 +297,14 @@ class NeedRequestState extends State<NeedRequest> {
                   hospitalName = value!;
                 },
               ),
+
               const SizedBox(height: 16),
+
               CustomButton(
                 text: 'addRequest'.tr(context),
                 onPressed: _submitRequest,
               ),
+
               const SizedBox(height: 16),
             ],
           ),
