@@ -1,6 +1,7 @@
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
+import 'package:blood_bank/core/widget/CoustomDialog.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/need/blood_request_card.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class BloodRequest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: buildAppBar(context),
       body: StreamBuilder(
         stream:
@@ -28,8 +30,13 @@ class BloodRequest extends StatelessWidget {
 
           final requests = snapshot.data?.docs ?? [];
           if (requests.isEmpty) {
-            return const Center(
-                child: Text('No requests available at the moment.'));
+            return CoustomDialog(
+              title: 'thanks for your contribution',
+              content: 'No requests available at the moment.',
+            );
+
+            // const Center(
+            //     child: Text('No requests available at the moment.'));
           }
 
           return ListView.builder(
@@ -54,6 +61,7 @@ class BloodRequest extends StatelessWidget {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
+      backgroundColor: Colors.white,
       title: Text(
         "Blood Requests",
         style: TextStyles.semiBold19,
