@@ -329,7 +329,7 @@ class NeedRequestState extends State<NeedRequest> {
                 },
               ),
               GovernorateDropdown(
-                selectedGovernorate: address,
+                selectedGovernorateKey: address,
                 onChanged: (value) {
                   setState(() {
                     address = value;

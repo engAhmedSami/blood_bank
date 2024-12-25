@@ -116,7 +116,7 @@ class _FindDonorsState extends State<FindDonors> {
               ),
               const SizedBox(height: 8),
               GovernorateDropdown(
-                selectedGovernorate: location,
+                selectedGovernorateKey: location,
                 onChanged: (value) {
                   setState(() {
                     location = value;

@@ -288,11 +288,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   genderDropDown(),
                   const SizedBox(height: 16),
                   GovernorateDropdown(
-                    selectedGovernorate: locationController.text.isNotEmpty
-                        ? locationController.text
+                    // عرض المفتاح المخزن
+                    selectedGovernorateKey: locationController.text.isNotEmpty
+                        ? locationController.text // المفتاح مثل 'cairo'
                         : null,
                     onChanged: (value) {
                       setState(() {
+                        // تخزين المفتاح وليس النص
                         locationController.text = value ?? '';
                       });
                     },

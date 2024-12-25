@@ -651,7 +651,7 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               GovernorateDropdown(
-                selectedGovernorate: address,
+                selectedGovernorateKey: address,
                 onChanged: (value) {
                   setState(() {
                     address = value;
