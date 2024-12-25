@@ -1,5 +1,6 @@
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/core/utils/page_rout_builder.dart';
+import 'package:blood_bank/core/widget/coustomAleartDiloage.dart';
 import 'package:blood_bank/feature/auth/presentation/view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:blood_bank/core/utils/app_colors.dart';
@@ -36,23 +37,17 @@ class LogoutFeature extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Confirm Logout'),
-          content: const Text('Are you sure you want to logout?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () async {
-                await _performLogout(context); // Perform logout
-              },
-              child: const Text('Logout'),
-            ),
-          ],
+        return CustomAlertDialog(
+          title: 'Confirm Logout',
+          content: 'Are you sure you want to logout?',
+          confirmText: 'Logout',
+          cancelText: 'Cancel',
+          onConfirm: () async {
+            await _performLogout(context); // Perform logout
+          },
+          onCancel: () {
+            Navigator.of(context).pop(); // Close the dialog
+          },
         );
       },
     );
