@@ -25,7 +25,7 @@ class CustomSnackBar extends StatefulWidget {
     this.backgroundColor = const Color(0xff00E676),
     this.boxShadow = kDefaultBoxShadow,
     this.borderRadius = kDefaultBorderRadius,
-    this.textScaleFactor = 1.0,
+    this.textScaler = const TextScaler.linear(1.0),
     this.textAlign = TextAlign.center,
   });
 
@@ -50,7 +50,7 @@ class CustomSnackBar extends StatefulWidget {
     this.backgroundColor = const Color(0xff2196F3),
     this.boxShadow = kDefaultBoxShadow,
     this.borderRadius = kDefaultBorderRadius,
-    this.textScaleFactor = 1.0,
+    this.textScaler = const TextScaler.linear(1.0),
     this.textAlign = TextAlign.center,
   });
 
@@ -75,7 +75,7 @@ class CustomSnackBar extends StatefulWidget {
     this.backgroundColor = const Color(0xffff5252),
     this.boxShadow = kDefaultBoxShadow,
     this.borderRadius = kDefaultBorderRadius,
-    this.textScaleFactor = 1.0,
+    this.textScaler = const TextScaler.linear(1.0),
     this.textAlign = TextAlign.center,
   });
 
@@ -90,7 +90,7 @@ class CustomSnackBar extends StatefulWidget {
   final double iconPositionTop;
   final double iconPositionLeft;
   final EdgeInsetsGeometry messagePadding;
-  final double textScaleFactor;
+  final TextScaler? textScaler;
   final TextAlign textAlign;
 
   @override
@@ -132,7 +132,7 @@ class CustomSnackBarState extends State<CustomSnackBar> {
                 textAlign: widget.textAlign,
                 overflow: TextOverflow.ellipsis,
                 maxLines: widget.maxLines,
-                textScaleFactor: widget.textScaleFactor,
+                textScaler: widget.textScaler,
               ),
             ),
           ),
