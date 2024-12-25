@@ -226,9 +226,7 @@ class BloodRequestCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'emergency_blood_needed'.tr(
-                          context,
-                        ),
+                        'Emergency ${request['bloodType']} Blood Needed',
                         style: TextStyles.bold16
                             .copyWith(color: AppColors.primaryColor),
                       ),
