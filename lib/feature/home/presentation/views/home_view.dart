@@ -10,38 +10,42 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          SizedBox(
-            height: 290,
-            child: Stack(
-              children: const [
-                UserHandler(),
-                Positioned(
-                  top: 115,
-                  left: 0,
-                  right: 0,
-                  child: DonorCarousel(),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  CustomCardItems(),
-                  SizedBox(height: 20),
-                  BloodNeededWidget(),
-                  SizedBox(height: 20),
-                  RequestsForDonation(),
+    final bool isArabic = Localizations.localeOf(context).languageCode == 'ar';
+    return Directionality(
+      textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Column(
+          children: [
+            SizedBox(
+              height: 290,
+              child: Stack(
+                children: const [
+                  UserHandler(),
+                  Positioned(
+                    top: 115,
+                    left: 0,
+                    right: -20,
+                    child: DonorCarousel(),
+                  ),
                 ],
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    CustomCardItems(),
+                    SizedBox(height: 20),
+                    BloodNeededWidget(),
+                    SizedBox(height: 20),
+                    RequestsForDonation(),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -205,7 +205,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
-  DropdownButtonFormField<String> genderDropDown() {
+  DropdownButtonFormField<String> stateDropDown() {
     return DropdownButtonFormField<String>(
       value: _selectedGender,
       items: _userStates
@@ -285,7 +285,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   const SizedBox(height: 16),
                   bloodTypeDropDown(),
                   const SizedBox(height: 16),
-                  genderDropDown(),
+                  stateDropDown(),
                   const SizedBox(height: 16),
                   GovernorateDropdown(
                     selectedGovernorate: locationController.text.isNotEmpty

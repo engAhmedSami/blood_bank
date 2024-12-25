@@ -56,7 +56,7 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
   void _showTutorial() {
     tutorialCoachMark = TutorialCoachMark(
       targets: _createTargets(),
-      textSkip: "SKIP",
+      textSkip: "Skip".tr(context),
       hideSkip: false,
       onFinish: () {
         debugPrint("Tutorial finished");
