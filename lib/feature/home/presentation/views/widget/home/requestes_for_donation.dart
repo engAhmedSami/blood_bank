@@ -1,3 +1,4 @@
+import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
@@ -6,6 +7,8 @@ import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class RequestsForDonation extends StatelessWidget {
   const RequestsForDonation({super.key});
@@ -59,7 +62,7 @@ class RequestsForDonation extends StatelessWidget {
                   final request = reversedRequests[index].data();
 
                   return Padding(
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                       horizontal: 12,
                       vertical: 8,
                     ),
@@ -77,74 +80,107 @@ class RequestsForDonation extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          radius: 25,
-                          backgroundImage: NetworkImage(
-                            request['photoUrl'] ??
-                                'https://i.stack.imgur.com/l60Hf.png',
+                      child: GestureDetector(
+                        onTap: () {
+                          // showTopSnackBar(
+                          //   displayDuration: const Duration(seconds: 3),
+                          //   Overlay.of(context),
+                          //   CustomSnackBar.info(
+                          //     backgroundColor: AppColors.backgroundColor,
+                          //     textStyle: const TextStyle(
+                          //       fontWeight: FontWeight.normal,
+                          //       color: Colors.white,
+                          //     ),
+                          //     maxLines: 3,
+                          //     textAlign: TextAlign.center,
+                          //     message: request['name'] ?? 'no_name'.tr(context),
+                          //   ),
+                          // );
+                          showTopSnackBar(
+                            displayDuration: const Duration(seconds: 3),
+                            Overlay.of(context),
+                            CustomSnackBar.info(
+                              backgroundColor: AppColors.backgroundColor,
+                              textStyle: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                                color: Colors.white,
+                              ),
+                              maxLines: 3,
+                              textAlign: TextAlign.center,
+                              message: 'donationDetails'.trWithParams(context,
+                                  {'name': request['name'] ?? 'Unknown'}),
+                            ),
+                          );
+                        },
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            radius: 25,
+                            backgroundImage: NetworkImage(
+                              request['photoUrl'] ??
+                                  'https://i.stack.imgur.com/l60Hf.png',
+                            ),
                           ),
-                        ),
-                        title: Text(
-                          request['name'] ?? 'no_name'.tr(context),
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
-                        ),
-                        subtitle: Row(
-                          children: [
-                            const Icon(Icons.location_on,
-                                size: 16, color: Colors.grey),
-                            Text(
-                              request['hospitalName'] ??
-                                  'unknown_hospital'.tr(context),
-                              style: const TextStyle(
-                                  fontSize: 12, color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      Assets.imagesBlooddrop,
-                                      height: 35,
-                                    ),
-                                    Text(
-                                      '${request['bloodType'] ?? 'N/A'}',
-                                      style: TextStyles.semiBold11.copyWith(
-                                        color: Colors.white,
+                          title: Text(
+                            request['name'] ?? 'no_name'.tr(context),
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w600),
+                          ),
+                          subtitle: Row(
+                            children: [
+                              const Icon(Icons.location_on,
+                                  size: 16, color: Colors.grey),
+                              Text(
+                                request['hospitalName'] ??
+                                    'unknown_hospital'.tr(context),
+                                style: const TextStyle(
+                                    fontSize: 12, color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      SvgPicture.asset(
+                                        Assets.imagesBlooddrop,
+                                        height: 35,
                                       ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(width: 12),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 2, horizontal: 6),
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xff598158),
-                                      borderRadius: BorderRadius.circular(8)),
-                                  child: Text(
-                                    '${request['distance'] ?? '0'} km',
-                                    style: TextStyles.semiBold12
-                                        .copyWith(color: Colors.white),
+                                      Text(
+                                        '${request['bloodType'] ?? 'N/A'}',
+                                        style: TextStyles.semiBold11.copyWith(
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                              const SizedBox(width: 12),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 2, horizontal: 6),
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xff598158),
+                                        borderRadius: BorderRadius.circular(8)),
+                                    child: Text(
+                                      '${request['distance'] ?? '0'} km',
+                                      style: TextStyles.semiBold12
+                                          .copyWith(color: Colors.white),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

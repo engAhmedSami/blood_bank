@@ -147,11 +147,8 @@
     
 
 "selectBloodType":"select Blood Type",
-"pleaseSelectBloodType":"please Select Blood Type"
-
-
-
-,
+"pleaseSelectBloodType":"please Select Blood Type",
+      "donationDetails": "You can see all details about {name}'s request by going to the requested screen",
 
 
 

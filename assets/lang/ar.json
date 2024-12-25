@@ -172,11 +172,8 @@
         "already_submitted_request": "لقد قمت بالفعل بتقديم طلب اليوم.",
         "submit_after_date": "يمكنك تقديم طلب جديد بعد",
         "request_submitted_successfully": "تم تقديم طلبك بنجاح!",
-        "next_eligible_request_date": "تاريخ الطلب المؤهل التالي الخاص بك هو"
-      
-      
-
-,
+        "next_eligible_request_date": "تاريخ الطلب المؤهل التالي الخاص بك هو",   
+        "donationDetails":"يمكنك رؤية جميع التفاصيل حول طلب {name} بالذهاب إلى الشاشة الطلبات",
         "emergency_blood_needed": "حاجة طارئة إلى دم {0}",
         "n_a": "غير متوفر",
         "unknown_date": "تاريخ غير معروف",

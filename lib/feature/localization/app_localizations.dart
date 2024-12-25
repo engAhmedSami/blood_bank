@@ -50,6 +50,17 @@ class _AppLocalizationsDelegate
       false;
 }
 
+extension TranslateWithParams on String {
+  String trWithParams(BuildContext context, Map<String, String> params) {
+    String translation = tr(context); // Existing translation mechanism
+    params.forEach((key, value) {
+      translation =
+          translation.replaceAll('{$key}', value); // Replace placeholders
+    });
+    return translation;
+  }
+}
+
 extension TranslateX on String {
   String tr(BuildContext context) {
     return AppLocalizations.of(context)!.translate(this);
