@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 
 class DonationTypeDropdown extends StatefulWidget {
   final String? initialType;
-  final List<String> onTypeSelected;
+  final Function(String) onTypeSelected; // تعديل هنا لجعلها دالة
+
   const DonationTypeDropdown({
     super.key,
     this.initialType,
@@ -61,7 +62,7 @@ class DonationTypeDropdownState extends State<DonationTypeDropdown> {
         setState(() {
           selectedType = value!;
         });
-        widget.onTypeSelected;
+        widget.onTypeSelected(value!); // استدعاء الدالة وتمرير القيمة المحددة
       },
       decoration: InputDecoration(
         labelText: 'selectDonationType'.tr(context),

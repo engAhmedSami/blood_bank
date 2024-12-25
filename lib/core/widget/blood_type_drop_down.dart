@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class BloodTypeDropdown extends StatefulWidget {
   final String? initialBloodType;
-  final List<String> onBloodTypeSelected;
+  final Function(String) onBloodTypeSelected;
 
   const BloodTypeDropdown({
     super.key,
@@ -59,7 +59,7 @@ class BloodTypeDropdownState extends State<BloodTypeDropdown> {
         setState(() {
           selectedBloodType = value!;
         });
-        widget.onBloodTypeSelected;
+        widget.onBloodTypeSelected(value!); // تم تحديث القيمة هنا
       },
       decoration: InputDecoration(
         labelText: 'selectBloodType'.tr(context),

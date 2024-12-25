@@ -61,7 +61,7 @@ class NeedRequestState extends State<NeedRequest> {
     });
   }
 
-  List<String> get _bloodTypes {
+  List<String> get bloodTypes {
     return [
       'bloodTypeAPlus'.tr(context),
       'bloodTypeAMinus'.tr(context),
@@ -74,7 +74,7 @@ class NeedRequestState extends State<NeedRequest> {
     ];
   }
 
-  List<String> get _donationTypes {
+  List<String> get donationTypes {
     return [
       'wholeBlood'.tr(context),
       'plasma'.tr(context),
@@ -82,7 +82,7 @@ class NeedRequestState extends State<NeedRequest> {
     ];
   }
 
-  List<String> get _genders {
+  List<String> get genders {
     return [
       'male'.tr(context),
       'female'.tr(context),
@@ -234,17 +234,34 @@ class NeedRequestState extends State<NeedRequest> {
               ),
               // bloodTypeDropDown(),
 
-              BloodTypeDropdown(onBloodTypeSelected: _bloodTypes),
-              DonationTypeDropdown(onTypeSelected: _donationTypes),
-
-              GenderDropdown(
-                genders: _genders,
-                onGenderSelected: (gender) {
+              BloodTypeDropdown(
+                initialBloodType: bloodType,
+                onBloodTypeSelected: (selectedType) {
                   setState(() {
-                    gender = gender;
+                    bloodType = selectedType;
                   });
                 },
               ),
+
+              DonationTypeDropdown(
+                initialType: donationType,
+                onTypeSelected: (selectedType) {
+                  setState(() {
+                    donationType = selectedType;
+                  });
+                },
+              ),
+
+              GenderDropdown(
+                genders: genders,
+                initialGender: gender,
+                onGenderSelected: (value) {
+                  setState(() {
+                    gender = value;
+                  });
+                },
+              ),
+
               CustomRequestTextField(
                 controller: idCardController,
                 hintText: 'nationalId'.tr(context),

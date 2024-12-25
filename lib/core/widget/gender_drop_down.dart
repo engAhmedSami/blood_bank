@@ -25,29 +25,42 @@ class GenderDropdownState extends State<GenderDropdown> {
   @override
   void initState() {
     super.initState();
-    selectedGender = widget.initialGender;
+    // التحقق من أن القيمة الافتراضية موجودة ضمن القائمة
+    selectedGender = widget.genders.contains(widget.initialGender)
+        ? widget.initialGender
+        : null;
   }
 
   @override
   Widget build(BuildContext context) {
+    // خريطة للأيقونات والألوان
+    final Map<String, IconData> genderIcons = {
+      'Male': Icons.male,
+      'Female': Icons.female,
+    };
+
+    final Map<String, Color> genderColors = {
+      'Male': AppColors.lightPrimaryColor,
+      'Female': AppColors.orangeColor,
+    };
+
     return DropdownButtonFormField<String>(
       value: selectedGender,
       items: widget.genders.map((gender) {
-        IconData icon = gender == 'Male' ? Icons.male : Icons.female;
-        Color iconColor = gender == 'Male'
-            ? AppColors.lightPrimaryColor
-            : AppColors.orangeColor;
-
         return DropdownMenuItem(
           value: gender,
           child: Row(
             children: [
-              Icon(icon, color: iconColor, size: 20),
+              Icon(
+                genderIcons[gender] ?? Icons.person, // افتراضي لأي جنس غير معرف
+                color: genderColors[gender] ?? AppColors.lightPrimaryColor,
+                size: 20,
+              ),
               const SizedBox(width: 10),
               Text(
                 gender,
                 style: TextStyles.semiBold14.copyWith(
-                  color: AppColors.lightPrimaryColor,
+                  color: genderColors[gender] ?? AppColors.orangeColor,
                 ),
               ),
             ],
@@ -58,12 +71,13 @@ class GenderDropdownState extends State<GenderDropdown> {
         setState(() {
           selectedGender = value!;
         });
-        widget.onGenderSelected(value!);
+        widget.onGenderSelected(value!); // تمرير القيمة المحددة إلى الدالة
       },
       decoration: InputDecoration(
         labelText: 'selectGender'.tr(context),
-        labelStyle:
-            TextStyles.semiBold14.copyWith(color: AppColors.lightPrimaryColor),
+        labelStyle: TextStyles.semiBold14.copyWith(
+          color: AppColors.lightPrimaryColor,
+        ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
