@@ -1,5 +1,6 @@
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
+import 'package:blood_bank/core/widget/GenderDropdown.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/core/widget/custom_request_text_field.dart';
 import 'package:blood_bank/core/widget/governorate_drop_down.dart';
@@ -205,29 +206,29 @@ class NeedRequestState extends State<NeedRequest> {
     );
   }
 
-  DropdownButtonFormField<String> genderDropDown() {
-    return DropdownButtonFormField<String>(
-      value: gender,
-      items: _genders
-          .map((gender) => DropdownMenuItem(
-                value: gender,
-                child: Text(gender, style: TextStyles.semiBold14),
-              ))
-          .toList(),
-      onChanged: (value) => setState(() {
-        gender = value!;
-      }),
-      decoration: InputDecoration(
-        hintText: 'selectGender'.tr(context),
-        hintStyle: TextStyles.semiBold14,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      validator: (value) =>
-          value == null ? 'pleaseSelectGender'.tr(context) : null,
-    );
-  }
+  // DropdownButtonFormField<String> genderDropDown() {
+  //   return DropdownButtonFormField<String>(
+  //     value: gender,
+  //     items: _genders
+  //         .map((gender) => DropdownMenuItem(
+  //               value: gender,
+  //               child: Text(gender, style: TextStyles.semiBold14),
+  //             ))
+  //         .toList(),
+  //     onChanged: (value) => setState(() {
+  //       gender = value!;
+  //     }),
+  //     decoration: InputDecoration(
+  //       hintText: 'selectGender'.tr(context),
+  //       hintStyle: TextStyles.semiBold14,
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.circular(10),
+  //       ),
+  //     ),
+  //     validator: (value) =>
+  //         value == null ? 'pleaseSelectGender'.tr(context) : null,
+  //   );
+  // }
 
   void _submitRequest() async {
     if (_formKey.currentState!.validate()) {
@@ -299,7 +300,16 @@ class NeedRequestState extends State<NeedRequest> {
               ),
               bloodTypeDropDown(),
               donationTypeDropDown(),
-              genderDropDown(),
+              // genderDropDown(),
+
+              GenderDropdown(
+                genders: _genders,
+                onGenderSelected: (gender) {
+                  setState(() {
+                    gender = gender;
+                  });
+                },
+              ),
               CustomRequestTextField(
                 controller: idCardController,
                 hintText: 'nationalId'.tr(context),
