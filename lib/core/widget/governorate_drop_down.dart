@@ -3,55 +3,55 @@ import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class GovernorateDropdown extends StatelessWidget {
-  final String? selectedGovernorateKey; // المفتاح المخزن
+  final String? selectedGovernorate;
   final ValueChanged<String?> onChanged;
 
   const GovernorateDropdown({
     super.key,
-    this.selectedGovernorateKey,
+    this.selectedGovernorate,
     required this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, String> governorates = {
-      'cairo': 'Cairo',
-      'alexandria': 'Alexandria',
-      'giza': 'Giza',
-      'dakahlia': 'Dakahlia',
-      'red_sea': 'Red Sea',
-      'beheira': 'Beheira',
-      'fayoum': 'Fayoum',
-      'gharbia': 'Gharbia',
-      'ismailia': 'Ismailia',
-      'menofia': 'Menofia',
-      'minya': 'Minya',
-      'qaliubiya': 'Qaliubiya',
-      'new_valley': 'New Valley',
-      'suez': 'Suez',
-      'aswan': 'Aswan',
-      'assiut': 'Assiut',
-      'beni_suef': 'Beni Suef',
-      'port_said': 'Port Said',
-      'damietta': 'Damietta',
-      'sharkia': 'Sharkia',
-      'south_sinai': 'South Sinai',
-      'kafr_el_sheikh': 'Kafr El Sheikh',
-      'matrouh': 'Matrouh',
-      'north_sinai': 'North Sinai',
-      'qena': 'Qena',
-      'sohag': 'Sohag',
-      'luxor': 'Luxor',
-    };
+    final List<String> governorates = [
+      'Cairo'.tr(context),
+      'Alexandria'.tr(context),
+      'Giza'.tr(context),
+      'Dakahlia'.tr(context),
+      'Red Sea'.tr(context),
+      'Beheira'.tr(context),
+      'Fayoum'.tr(context),
+      'Gharbia'.tr(context),
+      'Ismailia'.tr(context),
+      'Menofia'.tr(context),
+      'Minya'.tr(context),
+      'Qaliubiya'.tr(context),
+      'New Valley'.tr(context),
+      'Suez'.tr(context),
+      'Aswan'.tr(context),
+      'Assiut'.tr(context),
+      'Beni Suef'.tr(context),
+      'Port Said'.tr(context),
+      'Damietta'.tr(context),
+      'Sharkia'.tr(context),
+      'South Sinai'.tr(context),
+      'Kafr El Sheikh'.tr(context),
+      'Matrouh'.tr(context),
+      'North Sinai'.tr(context),
+      'Qena'.tr(context),
+      'Sohag'.tr(context),
+      'Luxor'.tr(context),
+    ];
 
     return DropdownButtonFormField<String>(
-      value: selectedGovernorateKey,
-      items: governorates.entries
+      value: selectedGovernorate,
+      items: governorates
           .map(
-            (entry) => DropdownMenuItem(
-              value: entry.key, // Ensures unique value is used
+            (governorate) => DropdownMenuItem(
+              value: governorate,
               child: Text(
-                entry.value.tr(context), // Translates the name dynamically
+                governorate,
                 style: TextStyles.semiBold14,
               ),
             ),
@@ -59,7 +59,7 @@ class GovernorateDropdown extends StatelessWidget {
           .toList(),
       onChanged: onChanged,
       decoration: InputDecoration(
-        hintText: 'select_governorate'.tr(context), // Dynamic translation
+        hintText: 'select_governorate'.tr(context),
         hintStyle: TextStyles.semiBold14,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),

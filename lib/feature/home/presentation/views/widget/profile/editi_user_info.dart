@@ -205,7 +205,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
-  DropdownButtonFormField<String> genderDropDown() {
+  DropdownButtonFormField<String> stateDropDown() {
     return DropdownButtonFormField<String>(
       value: _selectedGender,
       items: _userStates
@@ -285,16 +285,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   const SizedBox(height: 16),
                   bloodTypeDropDown(),
                   const SizedBox(height: 16),
-                  genderDropDown(),
+                  stateDropDown(),
                   const SizedBox(height: 16),
                   GovernorateDropdown(
-                    // عرض المفتاح المخزن
-                    selectedGovernorateKey: locationController.text.isNotEmpty
-                        ? locationController.text // المفتاح مثل 'cairo'
+                    selectedGovernorate: locationController.text.isNotEmpty
+                        ? locationController.text
                         : null,
                     onChanged: (value) {
                       setState(() {
-                        // تخزين المفتاح وليس النص
                         locationController.text = value ?? '';
                       });
                     },
