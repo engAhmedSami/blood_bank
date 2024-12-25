@@ -26,10 +26,13 @@ class CenterLogoAnimation extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 50),
-                  SvgPicture.asset(Assets.imagesSplashLogo),
+                  const SizedBox(height: 130),
+                  // SvgPicture.asset(Assets.imagesSplashLogo),
                   const SizedBox(height: 20),
-                  SvgPicture.asset(Assets.imagesSplashAppName),
+                  SvgPicture.asset(
+                    Assets.imagesDonersplash,
+                    width: 200,
+                  ),
                 ],
               ),
             ),

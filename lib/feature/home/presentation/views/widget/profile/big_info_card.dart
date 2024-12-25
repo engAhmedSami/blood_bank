@@ -1,3 +1,4 @@
+import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -27,8 +28,7 @@ class BigInfoCard extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection('donerRequest')
-          .where('uId',
-              isEqualTo: currentUserUid) // تصفية البيانات بناءً على الـ uid
+          .where('uId', isEqualTo: currentUserUid)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -65,19 +65,16 @@ class BigInfoCard extends StatelessWidget {
               ),
             ],
           ),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InfoColumn(title: savedLives, image: Assets.imagesLifesaved),
-                InfoColumn(title: bloodGroup, image: Assets.imagesBlood),
-                InfoColumn(
-                  title: formattedNextDonationDate,
-                  image: Assets.imagesNextdonation,
-                ),
-              ],
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              InfoColumn(title: savedLives, image: Assets.imagesLifesaved),
+              InfoColumn(title: bloodGroup, image: Assets.imagesBlood),
+              InfoColumn(
+                title: formattedNextDonationDate,
+                image: Assets.imagesNextdonation,
+              ),
+            ],
           ),
         );
       },
@@ -101,14 +98,7 @@ class InfoColumn extends StatelessWidget {
       children: [
         SvgPicture.asset(image, height: 30),
         const SizedBox(height: 8),
-        Text(
-          title,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        Text(title, textAlign: TextAlign.center, style: TextStyles.semiBold13),
       ],
     );
   }

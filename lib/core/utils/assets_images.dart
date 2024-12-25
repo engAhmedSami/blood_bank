@@ -54,6 +54,10 @@ class Assets {
   /// assets/images/doner.svg
   static const String imagesDoner = "assets/images/doner.svg";
 
+  /// Assets for imagesDonersplash
+  /// assets/images/donersplash.svg
+  static const String imagesDonersplash = "assets/images/donersplash.svg";
+
   /// Assets for imagesEmptydrop
   /// assets/images/emptydrop.svg
   static const String imagesEmptydrop = "assets/images/emptydrop.svg";
@@ -93,6 +97,10 @@ class Assets {
   /// Assets for imagesLifesaved
   /// assets/images/lifesaved.svg
   static const String imagesLifesaved = "assets/images/lifesaved.svg";
+
+  /// Assets for imagesLogodoner
+  /// assets/images/logodoner.svg
+  static const String imagesLogodoner = "assets/images/logodoner.svg";
 
   /// Assets for imagesNblood
   /// assets/images/nblood.svg

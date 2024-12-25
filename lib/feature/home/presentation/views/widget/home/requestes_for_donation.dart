@@ -43,7 +43,7 @@ class RequestsForDonation extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'donation_requests'.tr(context),
+                    'donation_request'.tr(context),
                     style: TextStyles.semiBold16,
                   ),
                   SeeAll(requests: reversedRequests),

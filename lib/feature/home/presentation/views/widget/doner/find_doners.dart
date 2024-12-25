@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
+import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
 import 'package:blood_bank/core/widget/governorate_drop_down.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -67,6 +68,7 @@ class _FindDonorsState extends State<FindDonors> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: buildAppBar(context),
       body: SingleChildScrollView(
         child: Padding(
@@ -77,7 +79,7 @@ class _FindDonorsState extends State<FindDonors> {
               const SizedBox(height: 30),
               const Text(
                 "Choose Blood Group",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyles.semiBold19,
               ),
               const SizedBox(height: 30),
               BloodGroupSelector(
@@ -95,7 +97,7 @@ class _FindDonorsState extends State<FindDonors> {
                 children: [
                   const Text(
                     "Blood Unit Needed",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: TextStyles.semiBold16,
                   ),
                   UnitsDropdown(
                     selectedUnits: selectedUnits,
@@ -110,7 +112,7 @@ class _FindDonorsState extends State<FindDonors> {
               const SizedBox(height: 20),
               const Text(
                 "Enter your location",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                style: TextStyles.semiBold16,
               ),
               const SizedBox(height: 8),
               GovernorateDropdown(
@@ -156,9 +158,10 @@ class _FindDonorsState extends State<FindDonors> {
 
 AppBar buildAppBar(BuildContext context) {
   return AppBar(
+    backgroundColor: Colors.white,
     title: const Text(
       "Find Donors",
-      style: TextStyle(fontSize: 19, fontWeight: FontWeight.w600),
+      style: TextStyles.bold19,
     ),
     centerTitle: true,
     leading: IconButton(
