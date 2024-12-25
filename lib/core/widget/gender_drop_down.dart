@@ -3,55 +3,52 @@ import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 
-class DonationTypeDropdown extends StatefulWidget {
-  final String? initialType;
-  final List<String> onTypeSelected;
-  const DonationTypeDropdown({
+class GenderDropdown extends StatefulWidget {
+  final List<String> genders;
+  final String? initialGender;
+  final Function(String) onGenderSelected;
+
+  const GenderDropdown({
     super.key,
-    this.initialType,
-    required this.onTypeSelected,
+    required this.genders,
+    this.initialGender,
+    required this.onGenderSelected,
   });
 
   @override
-  _DonationTypeDropdownState createState() => _DonationTypeDropdownState();
+  GenderDropdownState createState() => GenderDropdownState();
 }
 
-class _DonationTypeDropdownState extends State<DonationTypeDropdown> {
-  String? selectedType;
+class GenderDropdownState extends State<GenderDropdown> {
+  String? selectedGender;
 
   @override
   void initState() {
     super.initState();
-    selectedType = widget.initialType;
-  }
-
-  List<String> get _donationTypes {
-    return [
-      'wholeBlood'.tr(context),
-      'plasma'.tr(context),
-      'platelets'.tr(context),
-    ];
+    selectedGender = widget.initialGender;
   }
 
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
-      value: selectedType,
-      items: _donationTypes.map((type) {
+      value: selectedGender,
+      items: widget.genders.map((gender) {
+        IconData icon = gender == 'Male' ? Icons.male : Icons.female;
+        Color iconColor = gender == 'Male'
+            ? AppColors.lightPrimaryColor
+            : AppColors.orangeColor;
+
         return DropdownMenuItem(
-          value: type,
+          value: gender,
           child: Row(
             children: [
-              Icon(
-                Icons.bloodtype,
-                color: AppColors.lightPrimaryColor,
-                size: 20,
-              ),
+              Icon(icon, color: iconColor, size: 20),
               const SizedBox(width: 10),
               Text(
-                type,
-                style: TextStyles.semiBold14
-                    .copyWith(color: AppColors.lightPrimaryColor),
+                gender,
+                style: TextStyles.semiBold14.copyWith(
+                  color: AppColors.lightPrimaryColor,
+                ),
               ),
             ],
           ),
@@ -59,12 +56,12 @@ class _DonationTypeDropdownState extends State<DonationTypeDropdown> {
       }).toList(),
       onChanged: (value) {
         setState(() {
-          selectedType = value!;
+          selectedGender = value!;
         });
-        widget.onTypeSelected;
+        widget.onGenderSelected(value!);
       },
       decoration: InputDecoration(
-        labelText: 'selectDonationType'.tr(context),
+        labelText: 'selectGender'.tr(context),
         labelStyle:
             TextStyles.semiBold14.copyWith(color: AppColors.lightPrimaryColor),
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -83,7 +80,7 @@ class _DonationTypeDropdownState extends State<DonationTypeDropdown> {
       ),
       icon: Icon(Icons.arrow_drop_down, color: AppColors.primaryColor),
       validator: (value) =>
-          value == null ? 'pleaseSelectDonationType'.tr(context) : null,
+          value == null ? 'pleaseSelectGender'.tr(context) : null,
       dropdownColor: AppColors.backgroundColor,
     );
   }

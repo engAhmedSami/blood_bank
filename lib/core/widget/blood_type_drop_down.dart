@@ -14,10 +14,10 @@ class BloodTypeDropdown extends StatefulWidget {
   });
 
   @override
-  _BloodTypeDropdownState createState() => _BloodTypeDropdownState();
+  BloodTypeDropdownState createState() => BloodTypeDropdownState();
 }
 
-class _BloodTypeDropdownState extends State<BloodTypeDropdown> {
+class BloodTypeDropdownState extends State<BloodTypeDropdown> {
   String? selectedBloodType;
 
   @override

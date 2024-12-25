@@ -1,10 +1,9 @@
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
-import 'package:blood_bank/core/utils/app_text_style.dart';
-import 'package:blood_bank/core/widget/GenderDropdown.dart';
-import 'package:blood_bank/core/widget/bloodTypeDropDown.dart';
+import 'package:blood_bank/core/widget/gender_drop_down.dart';
+import 'package:blood_bank/core/widget/blood_type_drop_down.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/core/widget/custom_request_text_field.dart';
-import 'package:blood_bank/core/widget/donationTypeDropDown.dart';
+import 'package:blood_bank/core/widget/donation_type_drop_down.dart';
 import 'package:blood_bank/core/widget/governorate_drop_down.dart';
 import 'package:blood_bank/feature/home/domain/entities/needer_request_entity.dart';
 import 'package:blood_bank/feature/home/presentation/manger/add_need_request_cubit/add_need_request_cubit.dart';

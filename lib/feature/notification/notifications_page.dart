@@ -1,7 +1,7 @@
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
-import 'package:blood_bank/core/widget/CoustomDialog.dart';
-import 'package:blood_bank/core/widget/coustomAleartDiloage.dart';
+import 'package:blood_bank/core/widget/coustom_dialog.dart';
+import 'package:blood_bank/core/widget/coustom_aleart_diloage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'sql_helper_notification.dart';

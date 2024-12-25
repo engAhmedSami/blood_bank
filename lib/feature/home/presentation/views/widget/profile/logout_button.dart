@@ -1,6 +1,6 @@
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/core/utils/page_rout_builder.dart';
-import 'package:blood_bank/core/widget/coustomAleartDiloage.dart';
+import 'package:blood_bank/core/widget/coustom_aleart_diloage.dart';
 import 'package:blood_bank/feature/auth/presentation/view/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:blood_bank/core/utils/app_colors.dart';
