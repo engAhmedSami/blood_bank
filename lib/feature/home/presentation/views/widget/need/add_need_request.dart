@@ -22,6 +22,16 @@ class NeedRequestState extends State<NeedRequest> {
   final _formKey = GlobalKey<FormState>();
   final User? _user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // Controllers
+  final TextEditingController patientNameController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
+  final TextEditingController idCardController = TextEditingController();
+  final TextEditingController medicalConditionsController =
+      TextEditingController();
+  final TextEditingController contactController = TextEditingController();
+  final TextEditingController hospitalNameController = TextEditingController();
+
+  // ----------------- Form Fields -----------------
   String patientName = '';
   String? address;
   String medicalConditions = '';
@@ -34,6 +44,21 @@ class NeedRequestState extends State<NeedRequest> {
   String hospitalName = '';
 
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  void _clearFormFields() {
+    patientNameController.clear();
+    ageController.clear();
+    idCardController.clear();
+    medicalConditionsController.clear();
+    contactController.clear();
+    hospitalNameController.clear();
+    setState(() {
+      bloodType = null;
+      donationType = null;
+      gender = null;
+      address = null;
+    });
+  }
+
   List<String> get _bloodTypes {
     return [
       'bloodTypeAPlus'.tr(context),
@@ -235,6 +260,7 @@ class NeedRequestState extends State<NeedRequest> {
       context.read<AddNeederRequestCubit>().addNeederRequest(request);
 
       successTopSnackBar(context, 'Request submitted successfully!');
+      _clearFormFields();
     } else {
       setState(() {
         autovalidateMode = AutovalidateMode.always;
@@ -253,6 +279,7 @@ class NeedRequestState extends State<NeedRequest> {
             spacing: 10,
             children: [
               CustomRequestTextField(
+                controller: patientNameController,
                 hintText: 'patientName'.tr(context),
                 validator: (value) =>
                     value!.isEmpty ? 'patientNameError'.tr(context) : null,
@@ -261,6 +288,7 @@ class NeedRequestState extends State<NeedRequest> {
                 },
               ),
               CustomRequestTextField(
+                controller: ageController,
                 textInputType: TextInputType.number,
                 validator: (value) =>
                     value!.isEmpty ? 'ageError'.tr(context) : null,
@@ -273,6 +301,7 @@ class NeedRequestState extends State<NeedRequest> {
               donationTypeDropDown(),
               genderDropDown(),
               CustomRequestTextField(
+                controller: idCardController,
                 hintText: 'nationalId'.tr(context),
                 textInputType: TextInputType.number,
                 validator: (value) =>
@@ -282,6 +311,7 @@ class NeedRequestState extends State<NeedRequest> {
                 },
               ),
               CustomRequestTextField(
+                controller: medicalConditionsController,
                 hintText: 'medicalConditions'.tr(context),
                 maxLines: 3,
                 onSaved: (value) {
@@ -289,6 +319,7 @@ class NeedRequestState extends State<NeedRequest> {
                 },
               ),
               CustomRequestTextField(
+                controller: contactController,
                 hintText: 'contactNumber'.tr(context),
                 textInputType: TextInputType.phone,
                 validator: (value) =>
@@ -306,6 +337,7 @@ class NeedRequestState extends State<NeedRequest> {
                 },
               ),
               CustomRequestTextField(
+                controller: hospitalNameController,
                 hintText: 'hospitalName'.tr(context),
                 validator: (value) =>
                     value!.isEmpty ? 'hospitalNameError'.tr(context) : null,

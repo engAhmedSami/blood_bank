@@ -391,6 +391,18 @@ class DonerRequestState extends State<DonerRequest> {
   final _formKey = GlobalKey<FormState>();
   final User? _user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // Controllers
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController notesController = TextEditingController();
+  final TextEditingController medicalConditionsController =
+      TextEditingController();
+  final TextEditingController ageController = TextEditingController();
+  final TextEditingController contactController = TextEditingController();
+  final TextEditingController unitsController = TextEditingController();
+  final TextEditingController idCardController = TextEditingController();
+  final TextEditingController hospitalNameController = TextEditingController();
+  final TextEditingController distanceController = TextEditingController();
 
   // Variables initialized with default values
   String name = '';
@@ -410,6 +422,27 @@ class DonerRequestState extends State<DonerRequest> {
   num distance = 0;
 
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+
+  void _clearFormFields() {
+    unitsController.clear();
+    notesController.clear();
+    addressController.clear();
+    distanceController.clear();
+    nameController.clear();
+    ageController.clear();
+    idCardController.clear();
+    medicalConditionsController.clear();
+    contactController.clear();
+    hospitalNameController.clear();
+    setState(() {
+      bloodType = null;
+      donationType = null;
+      gender = null;
+      address = null;
+      lastDonationDate = null;
+      nextDonationDate = null;
+    });
+  }
 
   final List<String> _bloodTypes = [
     'A+',
@@ -518,6 +551,7 @@ class DonerRequestState extends State<DonerRequest> {
       context.read<AddDonerRequestCubit>().addRequest(request);
 
       successTopSnackBar(context, 'Request submitted successfully!');
+      _clearFormFields();
     } else {
       setState(() {
         autovalidateMode = AutovalidateMode.always;
@@ -537,6 +571,7 @@ class DonerRequestState extends State<DonerRequest> {
             spacing: 10,
             children: [
               CustomRequestTextField(
+                controller: nameController,
                 hintText: 'Name',
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter your name' : null,
@@ -545,6 +580,7 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
+                controller: ageController,
                 textInputType: TextInputType.number,
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter your age' : null,
@@ -557,6 +593,7 @@ class DonerRequestState extends State<DonerRequest> {
               donationTypeDropDown(),
               genderDropDown(),
               CustomRequestTextField(
+                controller: idCardController,
                 hintText: 'National ID Number',
                 textInputType: TextInputType.number,
                 validator: (value) =>
@@ -586,6 +623,7 @@ class DonerRequestState extends State<DonerRequest> {
                 isNextDonationDate: true,
               ),
               CustomRequestTextField(
+                controller: medicalConditionsController,
                 hintText: 'Medical Conditions',
                 maxLines: 3,
                 onSaved: (value) {
@@ -593,6 +631,7 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
+                controller: unitsController,
                 hintText: 'Units Required',
                 textInputType: TextInputType.number,
                 validator: (value) =>
@@ -602,6 +641,7 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
+                controller: contactController,
                 hintText: 'Contact Number',
                 textInputType: TextInputType.phone,
                 validator: (value) =>
@@ -619,6 +659,7 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
+                controller: notesController,
                 hintText: 'Notes',
                 maxLines: 3,
                 onSaved: (value) {
@@ -626,6 +667,7 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
+                controller: hospitalNameController,
                 hintText: 'Hospital Name',
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter the hospital name' : null,
@@ -634,6 +676,8 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
+                  controller: distanceController,
+                  textInputType: TextInputType.number,
                   hintText: 'Distance',
                   validator: (value) =>
                       value!.isEmpty ? 'Please enter the distance' : null,
