@@ -1,8 +1,10 @@
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/widget/GenderDropdown.dart';
+import 'package:blood_bank/core/widget/bloodTypeDropDown.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/core/widget/custom_request_text_field.dart';
+import 'package:blood_bank/core/widget/donationTypeDropDown.dart';
 import 'package:blood_bank/core/widget/governorate_drop_down.dart';
 import 'package:blood_bank/feature/home/domain/entities/needer_request_entity.dart';
 import 'package:blood_bank/feature/home/presentation/manger/add_need_request_cubit/add_need_request_cubit.dart';
@@ -81,7 +83,12 @@ class NeedRequestState extends State<NeedRequest> {
     ];
   }
 
-  final List<String> _genders = ['Male', 'Female'];
+  List<String> get _genders {
+    return [
+      'male'.tr(context),
+      'female'.tr(context),
+    ];
+  }
 
   Future<bool> _canSubmitNewRequest(String userId) async {
     final querySnapshot = await _firestore
@@ -158,78 +165,6 @@ class NeedRequestState extends State<NeedRequest> {
     );
   }
 
-  DropdownButtonFormField<String> bloodTypeDropDown() {
-    return DropdownButtonFormField<String>(
-      value: bloodType,
-      items: _bloodTypes
-          .map((type) => DropdownMenuItem(
-                value: type,
-                child: Text(type, style: TextStyles.semiBold14),
-              ))
-          .toList(),
-      onChanged: (value) => setState(() {
-        bloodType = value!;
-      }),
-      decoration: InputDecoration(
-        hintText: 'selectBloodType'.tr(context),
-        hintStyle: TextStyles.semiBold14,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      validator: (value) =>
-          value == null ? 'pleaseSelectBloodType'.tr(context) : null,
-    );
-  }
-
-  DropdownButtonFormField<String> donationTypeDropDown() {
-    return DropdownButtonFormField<String>(
-      value: donationType,
-      items: _donationTypes
-          .map((type) => DropdownMenuItem(
-                value: type,
-                child: Text(type, style: TextStyles.semiBold14),
-              ))
-          .toList(),
-      onChanged: (value) => setState(() {
-        donationType = value!;
-      }),
-      decoration: InputDecoration(
-        hintText: 'pleaseSelectDonationType'.tr(context),
-        hintStyle: TextStyles.semiBold14,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      validator: (value) =>
-          value == null ? 'selectDonationType'.tr(context) : null,
-    );
-  }
-
-  // DropdownButtonFormField<String> genderDropDown() {
-  //   return DropdownButtonFormField<String>(
-  //     value: gender,
-  //     items: _genders
-  //         .map((gender) => DropdownMenuItem(
-  //               value: gender,
-  //               child: Text(gender, style: TextStyles.semiBold14),
-  //             ))
-  //         .toList(),
-  //     onChanged: (value) => setState(() {
-  //       gender = value!;
-  //     }),
-  //     decoration: InputDecoration(
-  //       hintText: 'selectGender'.tr(context),
-  //       hintStyle: TextStyles.semiBold14,
-  //       border: OutlineInputBorder(
-  //         borderRadius: BorderRadius.circular(10),
-  //       ),
-  //     ),
-  //     validator: (value) =>
-  //         value == null ? 'pleaseSelectGender'.tr(context) : null,
-  //   );
-  // }
-
   void _submitRequest() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -298,9 +233,10 @@ class NeedRequestState extends State<NeedRequest> {
                   age = num.parse(value!);
                 },
               ),
-              bloodTypeDropDown(),
-              donationTypeDropDown(),
-              // genderDropDown(),
+              // bloodTypeDropDown(),
+
+              BloodTypeDropdown(onBloodTypeSelected: _bloodTypes),
+              DonationTypeDropdown(onTypeSelected: _donationTypes),
 
               GenderDropdown(
                 genders: _genders,
