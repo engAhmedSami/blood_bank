@@ -213,7 +213,7 @@ class BloodRequestCard extends StatelessWidget {
                       width: 28,
                     ),
                     Text(
-                      request['bloodType'] ?? 'n_a'.tr(context),
+                      request['bloodType'].toString().tr(context),
                       style: TextStyles.semiBold14.copyWith(
                         color: Colors.white,
                       ),
@@ -226,7 +226,7 @@ class BloodRequestCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Emergency ${request['bloodType']} Blood Needed',
+                        '${'emergency'.tr(context)} ${request['bloodType'].toString().tr(context)} ${'blood_needed'.tr(context)}',
                         style: TextStyles.bold16
                             .copyWith(color: AppColors.primaryColor),
                       ),

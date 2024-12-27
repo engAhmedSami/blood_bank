@@ -46,7 +46,7 @@ class ProfileView extends StatelessWidget {
                   return CustomProfileAppBar(
                     name: user.name,
                     photoUrl: user.photoUrl,
-                    userState: user.userState,
+                    userState: user.userState.tr(context),
                   );
                 },
               ),
@@ -111,7 +111,8 @@ class ProfileView extends StatelessWidget {
                 final user = snapshot.data!;
                 return BigInfoCard(
                   savedLives: 'lives_saved'.tr(context),
-                  bloodGroup: '${user.bloodType} ${'group'.tr(context)}',
+                  bloodGroup:
+                      '${user.bloodType.tr(context)} ${'group'.tr(context)}',
                   nextDonationDate: 'next_donation_date'.tr(context),
                 );
               },

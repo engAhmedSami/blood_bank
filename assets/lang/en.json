@@ -11,6 +11,7 @@
     "subtitle_on_boarding_four": "Your donation can save many lives make a difference ",
     "sign_up": "Sign Up",
     "login": "Login",
+    "logout": "Logout",
     "Prev": "Prev",
     "next": "Next",
     "Start": "Start",
@@ -175,12 +176,12 @@
         "submit_after_date": "You can submit a new request after",
         "request_submitted_successfully": "Your request has been submitted successfully!",
         "next_eligible_request_date": "Your next eligible request date is"
-      
+       
       
 ,
 
 
-        "emergency_blood_needed": "Emergency {0} Blood Needed",
+        "emergency":"Emergency",
         "n_a": "N/A",
         "unknown_date": "Unknown Date",
         "accept": "Accept",
@@ -233,7 +234,7 @@
     "ab_minus_give": "AB-, AB+",
     "ab_minus_receive": "AB-, A-, B-, O-",
   
-    "bloodTypeAPlus": "A+",
+  "bloodTypeAPlus": "A+",
   "bloodTypeAMinus": "A-",
   "bloodTypeBPlus": "B+",
   "bloodTypeBMinus": "B-",

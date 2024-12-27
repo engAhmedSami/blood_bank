@@ -2,6 +2,7 @@ import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/core/utils/page_rout_builder.dart';
 import 'package:blood_bank/core/widget/coustom_aleart_diloage.dart';
 import 'package:blood_bank/feature/auth/presentation/view/login_view.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
@@ -20,14 +21,14 @@ class LogoutFeature extends StatelessWidget {
       },
       child: Row(
         children: [
-          Icon(Icons.logout, color: AppColors.primaryColor),
-          const SizedBox(width: 10),
           Text(
-            'Logout',
+            'logout'.tr(context),
             style: TextStyles.semiBold16.copyWith(
               color: AppColors.primaryColor,
             ),
           ),
+          Spacer(),
+          Icon(Icons.logout, color: AppColors.primaryColor),
         ],
       ),
     );

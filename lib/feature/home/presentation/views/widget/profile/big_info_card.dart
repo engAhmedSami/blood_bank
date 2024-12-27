@@ -1,6 +1,7 @@
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -41,7 +42,7 @@ class BigInfoCard extends StatelessWidget {
 
         final requests = snapshot.data?.docs ?? [];
 
-        String formattedNextDonationDate = 'Next Donation Date';
+        String formattedNextDonationDate = 'next_donation_date'.tr(context);
         if (requests.isNotEmpty) {
           final nextDonationTimestamp = requests[0]['nextDonationDate'];
 

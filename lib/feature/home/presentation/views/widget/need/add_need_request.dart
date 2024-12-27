@@ -1,6 +1,5 @@
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/core/widget/gender_drop_down.dart';
-import 'package:blood_bank/core/widget/blood_type_drop_down.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/core/widget/custom_request_text_field.dart';
 import 'package:blood_bank/core/widget/donation_type_drop_down.dart';
@@ -232,17 +231,14 @@ class NeedRequestState extends State<NeedRequest> {
                   age = num.parse(value!);
                 },
               ),
-              // bloodTypeDropDown(),
-
-              BloodTypeDropdown(
-                initialBloodType: bloodType,
-                onBloodTypeSelected: (selectedType) {
-                  setState(() {
-                    bloodType = selectedType;
-                  });
-                },
-              ),
-
+              // BloodTypeDropdown(
+              //   initialBloodType: bloodType,
+              //   onBloodTypeSelected: (selectedType) {
+              //     setState(() {
+              //       bloodType = selectedType;
+              //     });
+              //   },
+              // ),
               DonationTypeDropdown(
                 initialType: donationType,
                 onTypeSelected: (selectedType) {
@@ -251,9 +247,7 @@ class NeedRequestState extends State<NeedRequest> {
                   });
                 },
               ),
-
               GenderDropdown(
-                genders: genders,
                 initialGender: gender,
                 onGenderSelected: (value) {
                   setState(() {
@@ -261,7 +255,6 @@ class NeedRequestState extends State<NeedRequest> {
                   });
                 },
               ),
-
               CustomRequestTextField(
                 controller: idCardController,
                 hintText: 'nationalId'.tr(context),
@@ -291,7 +284,7 @@ class NeedRequestState extends State<NeedRequest> {
                 },
               ),
               GovernorateDropdown(
-                selectedGovernorate: address,
+                selectedKey: address,
                 onChanged: (value) {
                   setState(() {
                     address = value;

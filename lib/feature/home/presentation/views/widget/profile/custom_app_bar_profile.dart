@@ -103,7 +103,6 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [

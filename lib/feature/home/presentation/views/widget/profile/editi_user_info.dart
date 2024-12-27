@@ -4,8 +4,10 @@ import 'package:blood_bank/constants.dart';
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/core/services/shared_preferences_sengleton.dart';
 import 'package:blood_bank/core/utils/custom_progrss_hud.dart';
+import 'package:blood_bank/core/widget/blood_type_drop_down.dart';
 import 'package:blood_bank/core/widget/custom_app_bar.dart';
 import 'package:blood_bank/core/widget/custom_text_field.dart';
+import 'package:blood_bank/core/widget/doner_or_neder_state.dart';
 import 'package:blood_bank/core/widget/governorate_drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,30 +30,17 @@ class _UserProfilePageState extends State<UserProfilePage> {
   final TextEditingController _contactNumberController =
       TextEditingController();
   final TextEditingController locationController = TextEditingController();
+  final TextEditingController bloodTypeController = TextEditingController();
+  final TextEditingController donerOrNederController = TextEditingController();
 
   File? _selectedImage;
   String? _uploadedImageUrl;
   bool _isLoading = false;
 
   String? _userId;
-  String? _selectedBloodType;
-  String? _selectedUserState;
-  String? _selectedGender;
-
-  final List<String> _bloodTypes = [
-    'A+',
-    'A-',
-    'B+',
-    'B-',
-    'O+',
-    'O-',
-    'AB+',
-    'AB-'
-  ];
-  final List<String> _userStates = [
-    'Donor',
-    'Need',
-  ];
+  // String? _selectedBloodType;
+  // String? _selectedUserState;
+  // String? _selectedGender;
 
   @override
   void initState() {
@@ -95,10 +84,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
         _contactNumberController.text = data['contactNumber'] ?? '';
         locationController.text = data['location'] ?? '';
         _uploadedImageUrl = data['photoUrl'];
-        _selectedBloodType =
-            _bloodTypes.contains(data['bloodType']) ? data['bloodType'] : null;
-        _selectedUserState =
-            _userStates.contains(data['userState']) ? data['userState'] : null;
+        bloodTypeController.text = data['bloodType'] ?? ''; // تعيين الفصيلة هنا
+        donerOrNederController.text = data['userState'] ?? '';
       }
     } catch (e) {
       failureTopSnackBar(context, ' Error loading data: $e');
@@ -144,13 +131,15 @@ class _UserProfilePageState extends State<UserProfilePage> {
       final updatedData = {
         if (_nameController.text.isNotEmpty) 'name': _nameController.text,
         if (_ageController.text.isNotEmpty) 'age': _ageController.text,
-        if (_selectedBloodType != null) 'bloodType': _selectedBloodType,
+        if (bloodTypeController.text.isNotEmpty)
+          'bloodType': bloodTypeController.text, // حفظ الفصيلة
         if (_contactNumberController.text.isNotEmpty)
           'contactNumber': _contactNumberController.text,
         if (locationController.text.isNotEmpty)
           'location': locationController.text,
         if (_uploadedImageUrl != null) 'photoUrl': _uploadedImageUrl,
-        if (_selectedUserState != null) 'userState': _selectedUserState,
+        if (donerOrNederController.text.isNotEmpty)
+          'userState': donerOrNederController.text,
       };
 
       try {
@@ -183,49 +172,49 @@ class _UserProfilePageState extends State<UserProfilePage> {
     }
   }
 
-  DropdownButtonFormField<String> bloodTypeDropDown() {
-    return DropdownButtonFormField<String>(
-      value: _selectedBloodType,
-      items: _bloodTypes
-          .map((type) => DropdownMenuItem(
-                value: type,
-                child: Text(type),
-              ))
-          .toList(),
-      onChanged: (value) => setState(() {
-        _selectedBloodType = value;
-      }),
-      decoration: InputDecoration(
-        hintText: 'Select Blood Type',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      validator: (value) => value == null ? 'Please select blood type' : null,
-    );
-  }
+  // DropdownButtonFormField<String> bloodTypeDropDown() {
+  //   return DropdownButtonFormField<String>(
+  //     value: _selectedBloodType,
+  //     items: _bloodTypes
+  //         .map((type) => DropdownMenuItem(
+  //               value: type,
+  //               child: Text(type),
+  //             ))
+  //         .toList(),
+  //     onChanged: (value) => setState(() {
+  //       _selectedBloodType = value;
+  //     }),
+  //     decoration: InputDecoration(
+  //       hintText: 'Select Blood Type',
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.circular(10),
+  //       ),
+  //     ),
+  //     validator: (value) => value == null ? 'Please select blood type' : null,
+  //   );
+  // }
 
-  DropdownButtonFormField<String> stateDropDown() {
-    return DropdownButtonFormField<String>(
-      value: _selectedGender,
-      items: _userStates
-          .map((userStates) => DropdownMenuItem(
-                value: userStates,
-                child: Text(userStates),
-              ))
-          .toList(),
-      onChanged: (value) => setState(() {
-        _selectedGender = value;
-      }),
-      decoration: InputDecoration(
-        hintText: 'Select State',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      validator: (value) => value == null ? 'Please select State' : null,
-    );
-  }
+  // DropdownButtonFormField<String> stateDropDown() {
+  //   return DropdownButtonFormField<String>(
+  //     value: _selectedGender,
+  //     items: _userStates
+  //         .map((userStates) => DropdownMenuItem(
+  //               value: userStates,
+  //               child: Text(userStates),
+  //             ))
+  //         .toList(),
+  //     onChanged: (value) => setState(() {
+  //       _selectedGender = value;
+  //     }),
+  //     decoration: InputDecoration(
+  //       hintText: 'Select State',
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.circular(10),
+  //       ),
+  //     ),
+  //     validator: (value) => value == null ? 'Please select State' : null,
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -282,13 +271,38 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     validator: (value) =>
                         value!.isEmpty ? 'Please enter contact number' : null,
                   ),
+                  // const SizedBox(height: 16),
+                  // bloodTypeDropDown(),
                   const SizedBox(height: 16),
-                  bloodTypeDropDown(),
+                  // stateDropDown(),
+                  BloodTypeDropdown(
+                    selectedBloodType: bloodTypeController.text.isNotEmpty
+                        ? bloodTypeController.text
+                        : null, // استخدام القيمة المحفوظة
+                    onChanged: (selectedBloodType) {
+                      setState(() {
+                        bloodTypeController.text =
+                            selectedBloodType ?? ''; // تحديث القيمة المختارة
+                      });
+                    },
+                  ),
+
                   const SizedBox(height: 16),
-                  stateDropDown(),
+                  StateDropdown(
+                    selectedKey: donerOrNederController.text.isNotEmpty
+                        ? donerOrNederController.text
+                        : null, // استخدم القيمة التي تم تحميلها من Firebase
+                    onChanged: (selectedState) {
+                      setState(() {
+                        donerOrNederController.text =
+                            selectedState ?? ''; // تحديث القيمة المختارة
+                      });
+                    },
+                  ),
+
                   const SizedBox(height: 16),
                   GovernorateDropdown(
-                    selectedGovernorate: locationController.text.isNotEmpty
+                    selectedKey: locationController.text.isNotEmpty
                         ? locationController.text
                         : null,
                     onChanged: (value) {
