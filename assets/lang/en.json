@@ -273,9 +273,9 @@
   "Qena": "Qena",
   "Sohag": "Sohag",
   "Luxor": "Luxor",  "select_governorate": "Select Governorate",
-  "please_select_governorate": "Please select a governorate"
+  "please_select_governorate": "Please select a governorate",
 
-
+  "km" : "km"
     
 }
    

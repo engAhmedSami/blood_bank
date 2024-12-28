@@ -1,4 +1,7 @@
+import 'package:blood_bank/core/helper_function/get_user.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
+import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
+import 'package:blood_bank/feature/auth/data/models/user_model.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -23,15 +26,36 @@ class SeeAll extends StatelessWidget {
               itemBuilder: (context, index) {
                 final request = requests[index].data();
                 return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      request['photoUrl'] ??
-                          'https://i.stack.imgur.com/l60Hf.png',
-                    ),
+                  leading: StreamBuilder<UserModel>(
+                    stream: getUserStream(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                            child: CoustomCircularProgressIndicator());
+                      }
+
+                      if (snapshot.hasError) {
+                        return Center(
+                            child:
+                                Text('error: ${snapshot.error}'.tr(context)));
+                      }
+
+                      if (!snapshot.hasData) {
+                        return Center(
+                            child: Text('no_user_data_available'.tr(context)));
+                      }
+
+                      final user = snapshot.data!;
+
+                      return CircleAvatar(
+                        radius: 25,
+                        backgroundImage: NetworkImage(user.photoUrl ?? ''),
+                      );
+                    },
                   ),
                   title: Text(request['name'] ?? 'No Name'),
                   subtitle: _buildSubtitle(request, context),
-                  trailing: _buildTrailing(request),
+                  trailing: _buildTrailing(request, context),
                 );
               },
             );
@@ -47,11 +71,11 @@ class SeeAll extends StatelessWidget {
 
   Widget _buildSubtitle(Map<String, dynamic> request, BuildContext context) {
     return Text(
-      '${'blood_types'.tr(context)}: ${request['bloodType'] ?? 'N/A'}', // Translated string
+      '${'blood_types'.tr(context)}: ${request['bloodType'].toString().tr(context)}', // Translated string
     );
   }
 
-  Widget _buildTrailing(Map<String, dynamic> request) {
-    return Text('${request['distance'] ?? '0'} km');
+  Widget _buildTrailing(Map<String, dynamic> request, BuildContext context) {
+    return Text('${request['distance'] ?? '0'} ${'km'.tr(context)}');
   }
 }

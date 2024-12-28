@@ -241,7 +241,9 @@
   "select_governorate": "اختر المحافظة",
   "please_select_governorate": "الرجاء اختيار المحافظة",
   "selectBloodType": "اختر فصيلة الدم",
-  "pleaseSelectBloodType": "الرجاء تحديد فصيلة الدم"
+  "pleaseSelectBloodType": "الرجاء تحديد فصيلة الدم",
+  "km" : "كم"
+ 
 
 
 

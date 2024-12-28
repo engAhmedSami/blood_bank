@@ -171,7 +171,7 @@ class BloodTypeDropdown extends StatelessWidget {
       }).toList(),
       onChanged: onChanged, // تحديث القيمة عند التغيير
       decoration: InputDecoration(
-        labelText: 'state'.tr(context),
+        labelText: 'bloodType'.tr(context),
         labelStyle:
             TextStyles.semiBold14.copyWith(color: AppColors.backgroundColor),
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -189,7 +189,8 @@ class BloodTypeDropdown extends StatelessWidget {
         ),
       ),
       icon: Icon(Icons.arrow_drop_down, color: AppColors.primaryColor),
-      validator: (value) => value == null ? 'user_state'.tr(context) : null,
+      validator: (value) =>
+          value == null ? 'pleaseSelectBloodType'.tr(context) : null,
       dropdownColor: AppColors.backgroundColor,
     );
   }

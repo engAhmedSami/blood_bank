@@ -157,12 +157,12 @@ class DonationTypeDropdownState extends State<DonationTypeDropdown> {
       decoration: InputDecoration(
         labelText: 'selectDonationType'.tr(context),
         labelStyle: TextStyles.semiBold14.copyWith(
-          color: AppColors.lightPrimaryColor,
+          color: AppColors.backgroundColor,
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: AppColors.lightPrimaryColor),
+          borderSide: BorderSide(color: AppColors.backgroundColor),
         ),
       ),
       validator: (value) =>
