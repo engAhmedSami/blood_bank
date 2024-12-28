@@ -1,8 +1,10 @@
 import 'dart:developer';
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
+import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
 import 'package:blood_bank/core/widget/governorate_drop_down.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'blood_group_selector.dart';
@@ -28,8 +30,12 @@ class _FindDonorsState extends State<FindDonors> {
     log("Location: $location");
 
     if (selectedBloodGroup == null || location == null || location!.isEmpty) {
-      failureTopSnackBar(context, ' Please fill all the fields');
-
+      failureTopSnackBar(
+        context,
+        'please_fill_all_fields'.tr(
+          context,
+        ),
+      );
       return;
     }
 
@@ -56,8 +62,7 @@ class _FindDonorsState extends State<FindDonors> {
       });
     } catch (e) {
       log("Error fetching donors: $e");
-
-      failureTopSnackBar(context, 'Failed to fetch donors: $e');
+      failureTopSnackBar(context, 'failed_to_fetch_donors'.tr(context));
     } finally {
       setState(() {
         isLoading = false;
@@ -77,8 +82,8 @@ class _FindDonorsState extends State<FindDonors> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 30),
-              const Text(
-                "Choose Blood Group",
+              Text(
+                "choose_blood_group".tr(context),
                 style: TextStyles.semiBold19,
               ),
               const SizedBox(height: 30),
@@ -95,8 +100,8 @@ class _FindDonorsState extends State<FindDonors> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "Blood Unit Needed",
+                  Text(
+                    "blood_unit_needed".tr(context),
                     style: TextStyles.semiBold16,
                   ),
                   UnitsDropdown(
@@ -110,8 +115,8 @@ class _FindDonorsState extends State<FindDonors> {
                 ],
               ),
               const SizedBox(height: 20),
-              const Text(
-                "Enter your location",
+              Text(
+                "enter_location".tr(context),
                 style: TextStyles.semiBold16,
               ),
               const SizedBox(height: 8),
@@ -126,8 +131,9 @@ class _FindDonorsState extends State<FindDonors> {
               const SizedBox(height: 60),
               CustomButton(
                 onPressed: findDonors,
-                text: 'Find Donors',
+                text: 'find_donors_button'.tr(context),
               ),
+              const SizedBox(height: 16),
               if (isLoading)
                 const Center(child: CoustomCircularProgressIndicator())
               else if (donors.isNotEmpty)
@@ -135,18 +141,46 @@ class _FindDonorsState extends State<FindDonors> {
                   children: donors.map((donor) {
                     return Card(
                       margin: const EdgeInsets.symmetric(vertical: 8.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 6, // تأثير الظل
+
+                      color: Colors.white,
                       child: ListTile(
-                        title: Text(donor['name'] ?? "Unknown"),
+                        contentPadding:
+                            const EdgeInsets.all(16), // إضافة padding داخلي
+                        leading: CircleAvatar(
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.white, // لون الأيقونة
+                          ),
+                        ),
+                        title: Text(
+                          donor['name'] ?? "Unknown",
+                          style: TextStyles.semiBold16.copyWith(
+                              color:
+                                  AppColors.primaryColor), // يمكن تغيير اللون
+                        ),
                         subtitle: Text(
-                            'Location: ${donor['address'] ?? "Unknown"}, Blood Group: ${donor['bloodType'] ?? "Unknown"}'), // التفاصيل
-                        trailing: Text('${donor['units'] ?? "0"} units'),
+                          '${"location".tr(context)}: ${donor['address'].toString().tr(context)}, ${"blood_group".tr(context)}: ${donor['bloodType'].toString().tr(context)}',
+                          style: TextStyles.regular13.copyWith(
+                              color:
+                                  AppColors.primaryColor), // يمكن تغيير اللون
+                        ),
+                        trailing: Text(
+                          '${donor['units'] ?? "0"} ${"units".tr(context)}',
+                          style: TextStyles.semiBold14.copyWith(
+                              color:
+                                  AppColors.primaryColor), // يمكن تغيير اللون
+                        ),
                       ),
                     );
                   }).toList(),
                 )
               else
-                const Center(
-                  child: Text("No donors found for your criteria."),
+                Center(
+                  child: Text("no_donors_found".tr(context)),
                 ),
             ],
           ),
@@ -159,8 +193,8 @@ class _FindDonorsState extends State<FindDonors> {
 AppBar buildAppBar(BuildContext context) {
   return AppBar(
     backgroundColor: Colors.white,
-    title: const Text(
-      "Find Donors",
+    title: Text(
+      "find_donors".tr(context),
       style: TextStyles.bold19,
     ),
     centerTitle: true,

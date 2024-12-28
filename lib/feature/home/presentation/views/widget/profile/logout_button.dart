@@ -39,10 +39,10 @@ class LogoutFeature extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return CustomAlertDialog(
-          title: 'Confirm Logout',
-          content: 'Are you sure you want to logout?',
-          confirmText: 'Logout',
-          cancelText: 'Cancel',
+          title: 'Confirm Logout'.tr(context),
+          content: 'Are you sure you want to logout?'.tr(context),
+          confirmText: 'logout'.tr(context),
+          cancelText: 'cancel'.tr(context),
           onConfirm: () async {
             await _performLogout(context); // Perform logout
           },

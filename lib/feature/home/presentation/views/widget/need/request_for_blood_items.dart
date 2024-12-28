@@ -4,6 +4,7 @@ import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:blood_bank/core/widget/coustom_dialog.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/need/blood_request_card.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/svg.dart';
@@ -31,8 +32,8 @@ class BloodRequest extends StatelessWidget {
           final requests = snapshot.data?.docs ?? [];
           if (requests.isEmpty) {
             return CoustomDialog(
-              title: 'thanks for your contribution',
-              content: 'No requests available at the moment.',
+              title: 'thanks for your contribution'.tr(context),
+              content: 'No requests available at the moment.'.tr(context),
             );
 
             // const Center(
