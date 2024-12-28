@@ -269,16 +269,16 @@ class DonerRequestState extends State<DonerRequest> {
                   }),
               CustomRequestTextField(
                 controller: idCardController,
-                hintText: 'National ID Number',
+                hintText: 'nationalId'.tr(context),
                 textInputType: TextInputType.number,
                 validator: (value) =>
-                    value!.isEmpty ? 'Please enter your ID number' : null,
+                    value!.isEmpty ? 'idCardError'.tr(context) : null,
                 onSaved: (value) {
                   idCard = num.parse(value!);
                 },
               ),
               datePickerField(
-                label: 'Last Donation Date',
+                label: 'last_donation_date'.tr(context),
                 selectedDate: lastDonationDate,
                 onDateSelected: (date) {
                   setState(() {
@@ -288,7 +288,7 @@ class DonerRequestState extends State<DonerRequest> {
                 isNextDonationDate: false,
               ),
               datePickerField(
-                label: 'Next Donation Date',
+                label: 'next_donation_date'.tr(context),
                 selectedDate: nextDonationDate,
                 onDateSelected: (date) {
                   setState(() {
@@ -299,7 +299,7 @@ class DonerRequestState extends State<DonerRequest> {
               ),
               CustomRequestTextField(
                 controller: medicalConditionsController,
-                hintText: 'Medical Conditions',
+                hintText: 'medicalConditions'.tr(context),
                 maxLines: 3,
                 onSaved: (value) {
                   medicalConditions = value!;
@@ -307,20 +307,21 @@ class DonerRequestState extends State<DonerRequest> {
               ),
               CustomRequestTextField(
                 controller: unitsController,
-                hintText: 'Units Required',
+                hintText: 'UnitsRequired'.tr(context),
                 textInputType: TextInputType.number,
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter the units required' : null,
+                validator: (value) => value!.isEmpty
+                    ? 'Please enter the units required'.tr(context)
+                    : null,
                 onSaved: (value) {
                   units = num.parse(value!);
                 },
               ),
               CustomRequestTextField(
                 controller: contactController,
-                hintText: 'Contact Number',
+                hintText: 'contactNumber'.tr(context),
                 textInputType: TextInputType.phone,
                 validator: (value) =>
-                    value!.isEmpty ? 'Please enter your contact number' : null,
+                    value!.isEmpty ? 'contactNumberError'.tr(context) : null,
                 onSaved: (value) {
                   contact = num.parse(value!);
                 },
@@ -335,7 +336,7 @@ class DonerRequestState extends State<DonerRequest> {
               // ),
               CustomRequestTextField(
                 controller: notesController,
-                hintText: 'Notes',
+                hintText: 'Notes'.tr(context),
                 maxLines: 3,
                 onSaved: (value) {
                   notes = value!;
@@ -343,9 +344,9 @@ class DonerRequestState extends State<DonerRequest> {
               ),
               CustomRequestTextField(
                 controller: hospitalNameController,
-                hintText: 'Hospital Name',
+                hintText: 'hospitalName'.tr(context),
                 validator: (value) =>
-                    value!.isEmpty ? 'Please enter the hospital name' : null,
+                    value!.isEmpty ? 'hospitalNameError'.tr(context) : null,
                 onSaved: (value) {
                   hospitalName = value!;
                 },
@@ -353,15 +354,16 @@ class DonerRequestState extends State<DonerRequest> {
               CustomRequestTextField(
                   controller: distanceController,
                   textInputType: TextInputType.number,
-                  hintText: 'Distance',
-                  validator: (value) =>
-                      value!.isEmpty ? 'Please enter the distance' : null,
+                  hintText: 'Distance'.tr(context),
+                  validator: (value) => value!.isEmpty
+                      ? 'Please enter the distance'.tr(context)
+                      : null,
                   onSaved: (value) {
                     distance = num.parse(value!);
                   }),
               const SizedBox(height: 16),
               CustomButton(
-                text: 'Submit Request',
+                text: 'Submit Request'.tr(context),
                 onPressed: _submitRequest,
               ),
               const SizedBox(height: 16),
@@ -382,7 +384,7 @@ class DonerRequestState extends State<DonerRequest> {
       initialValue: selectedDate,
       validator: (value) {
         if (value == null) {
-          return 'Please select a date';
+          return 'pleaseSelectDate'.tr(context);
         }
         return null;
       },

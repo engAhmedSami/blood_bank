@@ -242,10 +242,12 @@
   "please_select_governorate": "الرجاء اختيار المحافظة",
   "selectBloodType": "اختر فصيلة الدم",
   "pleaseSelectBloodType": "الرجاء تحديد فصيلة الدم",
-  "km" : "كم"
- 
-
-
-
+  "km" : "كم",
+ "UnitsRequired": "الوحدات المطلوبة",
+  "Please enter the units required": "الرجاء إدخال الوحدات المطلوبة",
+ "Notes": "ملاحظات",
+ "Please enter the distance": "الرجاء إدخال المسافة",
+ "Submit Request": "إرسال الطلب",
+"Distance": "المسافة"
 
 }

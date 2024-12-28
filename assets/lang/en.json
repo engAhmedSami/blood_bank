@@ -125,7 +125,8 @@
     "tap_here_to_update_your_profile_information": "Tap here to update your profile information.",
     "state": "State" 
     ,
-
+    "UnitsRequired" : "Units Required",
+    "Please enter the units required" : "Please enter the units required",
     "pleaseSelectDate": "Please select a date" 
     ,  "patientName": "Patient Name",
     "age": "Age",
@@ -145,12 +146,13 @@
     "pleaseSelectGender": "Please select gender", 
        "pleaseSelectDonationType": "Please select donation type",
     "selectDonationType": "Select Donation Type",   
-    
-
+    "Notes": "Notes",
+    "Distance": "Distance",
+    "Please enter the distance" : "Please enter the distance",
 "selectBloodType":"select Blood Type",
 "pleaseSelectBloodType":"please Select Blood Type",
       "donationDetails": "You can see all details about {name}'s request by going to the requested screen",
-
+"Submit Request": "Submit Request",
 
 
 
