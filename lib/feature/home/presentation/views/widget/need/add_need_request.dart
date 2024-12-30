@@ -1,4 +1,5 @@
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
+import 'package:blood_bank/core/widget/blood_type_drop_down.dart';
 import 'package:blood_bank/core/widget/gender_drop_down.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/core/widget/custom_request_text_field.dart';
@@ -231,14 +232,14 @@ class NeedRequestState extends State<NeedRequest> {
                   age = num.parse(value!);
                 },
               ),
-              // BloodTypeDropdown(
-              //   initialBloodType: bloodType,
-              //   onBloodTypeSelected: (selectedType) {
-              //     setState(() {
-              //       bloodType = selectedType;
-              //     });
-              //   },
-              // ),
+              BloodTypeDropdown(
+                selectedBloodType: bloodType,
+                onChanged: (selectedType) {
+                  setState(() {
+                    bloodType = selectedType;
+                  });
+                },
+              ),
               DonationTypeDropdown(
                 initialType: donationType,
                 onTypeSelected: (selectedType) {
