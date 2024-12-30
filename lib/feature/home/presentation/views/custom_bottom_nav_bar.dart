@@ -25,6 +25,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   final controller = PageController();
   bool shouldAnimateLottie = false;
   Timer? animationTimer;
+  int animationCount = 0; // عداد الأنيميشن
 
   @override
   void initState() {
@@ -33,19 +34,27 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
   }
 
   void _startAnimationCycle() {
-    // Play animation twice, then wait for 3 minutes
+    // تشغيل الأنيميشن ثلاث مرات، ثم التوقف
     _playAnimationTwice();
     animationTimer = Timer.periodic(const Duration(minutes: 3), (timer) {
-      _playAnimationTwice();
+      if (animationCount < 3) {
+        _playAnimationTwice();
+      } else {
+        animationTimer?.cancel(); // إيقاف التايمر بعد ثلاث مرات
+      }
     });
   }
 
   void _playAnimationTwice() async {
+    if (animationCount >= 3) return; // إيقاف الأنيميشن بعد 3 مرات
+    setState(() {
+      shouldAnimateLottie = true;
+      animationCount++; // زيادة العداد
+    });
+    await Future.delayed(const Duration(seconds: 3)); // الأنيميشن الأول
+    await Future.delayed(const Duration(milliseconds: 500)); // فاصل قصير
     setState(() => shouldAnimateLottie = true);
-    await Future.delayed(const Duration(seconds: 3)); // First animation
-    await Future.delayed(const Duration(milliseconds: 500)); // Short pause
-    setState(() => shouldAnimateLottie = true);
-    await Future.delayed(const Duration(seconds: 3)); // Second animation
+    await Future.delayed(const Duration(seconds: 3)); // الأنيميشن الثاني
     setState(() => shouldAnimateLottie = false);
   }
 
