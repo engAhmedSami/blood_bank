@@ -298,7 +298,8 @@
   "sohag": "Sohag",
   "luxor": "Luxor",  "select_governorate": "Select Governorate",
   "please_select_governorate": "Please select a governorate",
-
+  
+"chat_bot": "Chat Bot",
   "km" : "km"
     
 }

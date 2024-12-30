@@ -32,6 +32,7 @@ dependencies:
   cloud_firestore: ^5.5.1
   connectivity_plus: ^6.1.1
   cupertino_icons: ^1.0.8
+  dart_openai: ^5.1.0
   dartz: ^0.10.1
   dash_chat_2: ^0.0.21
   database_repository: ^2.0.1

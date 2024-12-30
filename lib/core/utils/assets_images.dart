@@ -42,6 +42,10 @@ class Assets {
   /// assets/images/chat.svg
   static const String imagesChat = "assets/images/chat.svg";
 
+  /// Assets for imagesChatbot
+  /// assets/images/chatbot.svg
+  static const String imagesChatbot = "assets/images/chatbot.svg";
+
   /// Assets for imagesCircle
   /// assets/images/circle.svg
   static const String imagesCircle = "assets/images/circle.svg";
@@ -141,6 +145,10 @@ class Assets {
   /// Assets for imagesOnBordingOnBordingTwo
   /// assets/images/on_bording/on_bording_two.svg
   static const String imagesOnBordingOnBordingTwo = "assets/images/on_bording/on_bording_two.svg";
+
+  /// Assets for imagesPnglogo
+  /// assets/images/pnglogo.png
+  static const String imagesPnglogo = "assets/images/pnglogo.png";
 
   /// Assets for imagesProfile
   /// assets/images/profile.svg

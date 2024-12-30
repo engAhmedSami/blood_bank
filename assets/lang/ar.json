@@ -275,8 +275,10 @@
 "Delete" : "حذف",
 "All notifications deleted": "تم حذف جميع التنبيهات",
 "Delete All Notifications": "حذف جميع التنبيهات",
+"chat_bot": "الدردشة",
 "Are you sure you want to delete all notifications?": "هل أنت متأكد أنك تريد حذف جميع التنبيهات؟",
 "units": "وحدات"
+
 
 
 }
