@@ -1,4 +1,5 @@
-import 'package:blood_bank/core/utils/app_colors.dart';
+import 'package:blood_bank/core/utils/app_text_style.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +18,7 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
   final TextEditingController _messageController = TextEditingController();
   ChatUser? _currentUser;
   String? _currentSessionId;
+  Gemini? gemini;
 
   final ChatUser _chatGPTUser = ChatUser(
     id: "Dono-r",
@@ -24,48 +26,31 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
     profileImage: "assets/images/pnglogo.png",
   );
 
-  Gemini? gemini;
-
-  // Add ScrollController to control the scroll position
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
+    _initializeGemini();
+    _fetchCurrentUser();
+  }
 
+  void _initializeGemini() {
     Gemini.init(
       apiKey: 'AIzaSyChNcCkS_ZV366LoPNKXR6rwtQfU0BIbXE',
       enableDebugging: true,
     );
-
     gemini = Gemini.instance;
-    _fetchCurrentUser();
-  }
-
-  // Scroll to the bottom after adding a message
-  void _scrollToBottom() {
-    // Ensure scroll happens after frame is built
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.hasClients) {
-        _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
-      }
-    });
   }
 
   Future<void> _fetchCurrentUser() async {
     try {
       final User? firebaseUser = FirebaseAuth.instance.currentUser;
-
       if (firebaseUser != null) {
-        final DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        final userDoc = await FirebaseFirestore.instance
             .collection('users')
             .doc(firebaseUser.uid)
             .get();
-
         if (userDoc.exists) {
           final userData = userDoc.data() as Map<String, dynamic>;
           setState(() {
@@ -76,17 +61,15 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
                   userData['photoUrl'] ?? "assets/images/default-avatar.png",
             );
           });
-          _loadMessages();
+          _loadLastSession();
         }
-      } else {
-        debugPrint("No Firebase user found.");
       }
-    } catch (error) {
-      debugPrint("Error fetching user: $error");
+    } catch (e) {
+      debugPrint("Error fetching user: $e");
     }
   }
 
-  Future<void> _loadMessages() async {
+  Future<void> _loadLastSession() async {
     try {
       final sessionSnapshot = await FirebaseFirestore.instance
           .collection('sessions')
@@ -98,45 +81,86 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
       if (sessionSnapshot.docs.isNotEmpty) {
         final sessionData = sessionSnapshot.docs.first;
         _currentSessionId = sessionData.id;
-
-        final messagesSnapshot = await FirebaseFirestore.instance
-            .collection('sessions')
-            .doc(_currentSessionId)
-            .collection('messages')
-            .orderBy('createdAt')
-            .get();
-
-        setState(() {
-          _messages.addAll(messagesSnapshot.docs.map((doc) {
-            final data = doc.data();
-            return ChatMessage.fromJson(data);
-          }).toList());
-        });
-
-        // Scroll to the bottom after loading messages
-        _scrollToBottom();
+        await _loadMessages(_currentSessionId!);
       } else {
-        _createNewSession();
+        debugPrint("No sessions found. Create a new session if needed.");
       }
-    } catch (error) {
-      debugPrint("Error loading messages: $error");
+    } catch (e) {
+      debugPrint("Error loading session: $e");
+    }
+  }
+
+  Future<void> _loadMessages(String sessionId) async {
+    try {
+      final messagesSnapshot = await FirebaseFirestore.instance
+          .collection('sessions')
+          .doc(sessionId)
+          .collection('messages')
+          .orderBy('createdAt')
+          .get();
+
+      setState(() {
+        _messages.clear();
+        _messages.addAll(messagesSnapshot.docs.map((doc) {
+          final data = doc.data();
+          return ChatMessage.fromJson(data);
+        }).toList());
+      });
+      _scrollToBottom();
+    } catch (e) {
+      debugPrint("Error loading messages: $e");
     }
   }
 
   Future<void> _createNewSession() async {
-    try {
-      final newSession =
-          await FirebaseFirestore.instance.collection('sessions').add({
-        'userId': _currentUser?.id,
-        'createdAt': Timestamp.now(),
-      });
+    if (_messages.isNotEmpty) {
+      final sessionNameController = TextEditingController();
 
-      setState(() {
-        _currentSessionId = newSession.id;
-        _messages.clear();
-      });
-    } catch (error) {
-      debugPrint("Error creating session: $error");
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Name Your Session"),
+          content: TextField(
+            controller: sessionNameController,
+            decoration: const InputDecoration(hintText: "Enter session name"),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final sessionName = sessionNameController.text.trim();
+                if (sessionName.isNotEmpty) {
+                  try {
+                    final newSession = await FirebaseFirestore.instance
+                        .collection('sessions')
+                        .add({
+                      'userId': _currentUser?.id,
+                      'name': sessionName,
+                      'createdAt': Timestamp.now(),
+                    });
+
+                    setState(() {
+                      _currentSessionId = newSession.id;
+                      _messages.clear();
+                    });
+                    Navigator.pop(context);
+                  } catch (e) {
+                    debugPrint("Error creating session: $e");
+                  }
+                }
+              },
+              child: const Text("Save"),
+            ),
+          ],
+        ),
+      );
+    } else {
+      debugPrint("Cannot create a new session. No messages to save.");
     }
   }
 
@@ -149,8 +173,8 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
           .doc(_currentSessionId)
           .collection('messages')
           .add(message.toJson());
-    } catch (error) {
-      debugPrint("Error saving message: $error");
+    } catch (e) {
+      debugPrint("Error saving message: $e");
     }
   }
 
@@ -168,9 +192,8 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
       _messageController.clear();
     });
 
-    _saveMessage(userMessage);
+    await _saveMessage(userMessage);
 
-    // Scroll to the bottom after the user sends a message
     _scrollToBottom();
 
     try {
@@ -191,25 +214,64 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
         _messages.add(chatGPTMessage);
       });
 
-      _saveMessage(chatGPTMessage);
+      await _saveMessage(chatGPTMessage);
 
-      // Scroll to the bottom after adding the response message
       _scrollToBottom();
-    } catch (error) {
-      debugPrint("Error communicating with Gemini: $error");
-
+    } catch (e) {
+      debugPrint("Error communicating with Gemini: $e");
       setState(() {
-        _messages.add(
-          ChatMessage(
-            user: _chatGPTUser,
-            createdAt: DateTime.now(),
-            text: "Sorry, something went wrong. Please try again later.",
-          ),
-        );
+        _messages.add(ChatMessage(
+          user: _chatGPTUser,
+          createdAt: DateTime.now(),
+          text: "Sorry, something went wrong. Please try again later.",
+        ));
       });
-
       _scrollToBottom();
     }
+  }
+
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
+
+  void _showSessionList() async {
+    final sessionsSnapshot = await FirebaseFirestore.instance
+        .collection('sessions')
+        .where('userId', isEqualTo: _currentUser?.id)
+        .get();
+
+    final sessions = sessionsSnapshot.docs;
+
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return ListView.builder(
+          itemCount: sessions.length,
+          itemBuilder: (context, index) {
+            final session = sessions[index];
+            return ListTile(
+              title: Text(
+                  session['name'] ?? "Session ${session.id.substring(0, 6)}"),
+              onTap: () {
+                setState(() {
+                  _currentSessionId = session.id;
+                });
+                Navigator.pop(context);
+                _loadMessages(session.id);
+              },
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -221,31 +283,31 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return _currentUser == null
-        ? const Center(child: CircularProgressIndicator())
-        : Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  controller: _scrollController, // Attach the controller here
-                  padding: const EdgeInsets.all(8.0),
-                  itemCount: _messages.length,
-                  reverse: false,
-                  itemBuilder: (context, index) {
-                    final message = _messages[index];
-                    return _buildMessage(message);
-                  },
-                ),
-              ),
-              _buildMessageInput(),
-            ],
-          );
+    return Scaffold(
+      appBar: buildAppBar(context),
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              controller: _scrollController,
+              padding: const EdgeInsets.all(8.0),
+              itemCount: _messages.length,
+              reverse: false,
+              itemBuilder: (context, index) {
+                final message = _messages[index];
+                return _buildMessage(message);
+              },
+            ),
+          ),
+          _buildMessageInput(),
+        ],
+      ),
+    );
   }
 
   Widget _buildMessage(ChatMessage message) {
     final isCurrentUser = message.user.id == _currentUser?.id;
-    final userProfileImage =
-        _currentUser?.profileImage ?? 'assets/images/default-avatar.png';
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -253,48 +315,41 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
         mainAxisAlignment:
             isCurrentUser ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          if (!isCurrentUser) ...[
+          // عرض صورة المستخدم (على اليسار للمستخدم الآخر وعلى اليمين للمستخدم الحالي)
+          if (!isCurrentUser)
             CircleAvatar(
-              backgroundImage: AssetImage(message.user.profileImage ??
-                  'assets/images/default-avatar.png'),
+              backgroundImage: AssetImage(
+                message.user.profileImage ?? 'assets/images/default-avatar.png',
+              ),
               radius: 20,
             ),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: isCurrentUser ? Colors.blue[100] : Colors.grey[300],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  message.text,
-                  style: const TextStyle(fontSize: 14),
-                ),
+          const SizedBox(width: 8),
+
+          // عرض النص في مربع مع تزيين مناسب
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: isCurrentUser ? Colors.blue[100] : Colors.grey[300],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Text(
+                message.text,
+                style: const TextStyle(fontSize: 14),
               ),
             ),
-          ],
-          if (isCurrentUser) ...[
-            const SizedBox(width: 8),
-            Flexible(
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: isCurrentUser ? Colors.blue[100] : Colors.grey[300],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  message.text,
-                  style: const TextStyle(fontSize: 14),
-                ),
-              ),
-            ),
-            const SizedBox(width: 8),
+          ),
+
+          const SizedBox(width: 8),
+
+          // عرض صورة المستخدم (على اليمين للمستخدم الحالي)
+          if (isCurrentUser)
             CircleAvatar(
-              backgroundImage: NetworkImage(userProfileImage),
+              backgroundImage: NetworkImage(
+                message.user.profileImage ?? 'assets/images/default-avatar.png',
+              ),
               radius: 20,
             ),
-          ],
         ],
       ),
     );
@@ -305,13 +360,6 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
       decoration: BoxDecoration(
         color: Colors.grey.shade100,
         borderRadius: BorderRadius.circular(25),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade300,
-            blurRadius: 5,
-            offset: Offset(0, 3),
-          ),
-        ],
       ),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       margin: const EdgeInsets.all(10),
@@ -327,31 +375,49 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
               ),
             ),
           ),
-          const SizedBox(width: 8),
-          GestureDetector(
-            onTap: () {
-              _sendMessage(_messageController.text);
-            },
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: const BoxDecoration(
-                color: AppColors.primaryColor,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 5,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: const Icon(
-                Icons.send_sharp,
-                color: Colors.white,
-              ),
-            ),
+          IconButton(
+            onPressed: () => _sendMessage(_messageController.text),
+            icon: const Icon(Icons.send_sharp),
+            color: Colors.blue,
           ),
         ],
       ),
+    );
+  }
+
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.white,
+      title: Text(
+        "chat_bot".tr(context),
+        style: TextStyles.bold19,
+      ),
+      centerTitle: true,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios_new_rounded),
+        onPressed: () => Navigator.pop(context),
+      ),
+      actions: [
+        PopupMenuButton<String>(
+          onSelected: (value) {
+            if (value == 'new_chat') {
+              _createNewSession();
+            } else if (value == 'view_chats') {
+              _showSessionList();
+            }
+          },
+          itemBuilder: (context) => [
+            const PopupMenuItem(
+              value: 'new_chat',
+              child: Text("Start New Chat"),
+            ),
+            const PopupMenuItem(
+              value: 'view_chats',
+              child: Text("View Previous Chats"),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

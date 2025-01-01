@@ -2,11 +2,11 @@ import 'dart:async';
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:blood_bank/core/utils/page_rout_builder.dart';
-import 'package:blood_bank/feature/home/presentation/views/caht_bot_view.dart';
 import 'package:blood_bank/feature/home/presentation/views/doner_view.dart';
 import 'package:blood_bank/feature/home/presentation/views/home_view.dart';
 import 'package:blood_bank/feature/home/presentation/views/need_view.dart';
 import 'package:blood_bank/feature/home/presentation/views/profile_view.dart';
+import 'package:blood_bank/feature/home/presentation/views/widget/chat_bot/chat_bot_view_body.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -133,7 +133,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       shape: const CircleBorder(),
       onPressed: () {
         Navigator.of(context).push(
-          buildPageRoute(const CahtBotView()),
+          buildPageRoute(const ChatBotViewBody()),
         );
       },
       backgroundColor: AppColors.primaryColor,
