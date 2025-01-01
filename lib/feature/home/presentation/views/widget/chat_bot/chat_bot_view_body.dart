@@ -1,4 +1,4 @@
-import 'package:blood_bank/core/widget/custom_text_field.dart';
+import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -302,21 +302,53 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
 
   Widget _buildMessageInput() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        borderRadius: BorderRadius.circular(25),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.all(10),
       child: Row(
         children: [
           Expanded(
-            child: CustomTextFormField(
+            child: TextFormField(
               controller: _messageController,
-              hintText: "Type a message...",
-              textInputType: TextInputType.text,
+              decoration: InputDecoration(
+                hintText: "Type a message...",
+                hintStyle: TextStyle(color: Colors.grey.shade600),
+                border: InputBorder.none,
+              ),
             ),
           ),
-          IconButton(
-            icon: const Icon(Icons.send_sharp),
-            onPressed: () {
+          const SizedBox(width: 8),
+          GestureDetector(
+            onTap: () {
               _sendMessage(_messageController.text);
             },
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: const BoxDecoration(
+                color: AppColors.primaryColor,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: const Icon(
+                Icons.send_sharp,
+                color: Colors.white,
+              ),
+            ),
           ),
         ],
       ),
