@@ -106,6 +106,14 @@ class Assets {
   /// assets/images/logodoner.svg
   static const String imagesLogodoner = "assets/images/logodoner.svg";
 
+  /// Assets for imagesMobileApp
+  /// assets/images/mobile-app.png
+  static const String imagesMobileApp = "assets/images/mobile-app.png";
+
+  /// Assets for imagesMobileconform
+  /// assets/images/mobileconform.svg
+  static const String imagesMobileconform = "assets/images/mobileconform.svg";
+
   /// Assets for imagesNblood
   /// assets/images/nblood.svg
   static const String imagesNblood = "assets/images/nblood.svg";
@@ -189,5 +197,9 @@ class Assets {
   /// Assets for imagesSplashLogo
   /// assets/images/splash/logo.svg
   static const String imagesSplashLogo = "assets/images/splash/logo.svg";
+
+  /// Assets for imagesVerfiy
+  /// assets/images/verfiy.svg
+  static const String imagesVerfiy = "assets/images/verfiy.svg";
 }
 

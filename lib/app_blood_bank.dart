@@ -1,3 +1,4 @@
+import 'package:blood_bank/feature/auth/presentation/view/verfied_email_view.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:blood_bank/feature/localization/cubit/locale_cubit.dart';
 import 'package:blood_bank/feature/splash/presentation/views/splash_initializer.dart';
@@ -39,7 +40,7 @@ class BloodBank extends StatelessWidget {
               return supportedLocales.first;
             },
             debugShowCheckedModeBanner: false,
-            home: SplashInitializer(),
+            home: VerfiedEmailView(),
           );
         },
       ),
