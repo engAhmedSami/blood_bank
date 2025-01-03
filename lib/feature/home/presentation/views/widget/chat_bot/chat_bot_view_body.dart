@@ -454,6 +454,7 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
       child: Row(
         mainAxisAlignment:
             isCurrentUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (!isCurrentUser)
             CircleAvatar(
@@ -461,49 +462,37 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
                   'assets/images/default-avatar.png'),
               radius: 20,
             ),
-          const SizedBox(width: 8),
-          Flexible(
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: isCurrentUser ? Colors.blue[100] : Colors.grey[300],
-                borderRadius: BorderRadius.circular(10),
-              ),
+          Expanded(
+            child: Padding(
+              padding: isCurrentUser
+                  ? const EdgeInsets.only(right: 4)
+                  : const EdgeInsets.only(left: 4),
               child: Column(
                 crossAxisAlignment: isCurrentUser
                     ? CrossAxisAlignment.end
                     : CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    isCurrentUser
-                        ? 'You'
-                        : (message.user.firstName ?? 'Unknown'),
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color:
+                          isCurrentUser ? Colors.blue[100] : Colors.grey[300],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      message.text,
+                      style: const TextStyle(fontSize: 14),
+                    ),
                   ),
                   const SizedBox(height: 4),
-                  Row(
-                    mainAxisAlignment: isCurrentUser
-                        ? MainAxisAlignment.end
-                        : MainAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          message.text,
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        DateFormat('hh:mm a').format(message.createdAt),
-                        style: TextStyle(fontSize: 10, color: Colors.grey),
-                      ),
-                    ],
+                  Text(
+                    DateFormat('hh:mm a').format(message.createdAt),
+                    style: TextStyle(fontSize: 10, color: Colors.grey),
                   ),
                 ],
               ),
             ),
           ),
-          const SizedBox(width: 8),
           if (isCurrentUser)
             CircleAvatar(
               backgroundImage: NetworkImage(message.user.profileImage ??
