@@ -6,7 +6,7 @@ import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' as intl;
 
 class ChatBotViewBody extends StatefulWidget {
   const ChatBotViewBody({super.key});
@@ -426,22 +426,25 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
     return Scaffold(
       appBar: buildAppBar(context),
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              controller: _scrollController,
-              padding: const EdgeInsets.all(8.0),
-              itemCount: _messages.length,
-              reverse: false,
-              itemBuilder: (context, index) {
-                final message = _messages[index];
-                return _buildMessage(message);
-              },
+      body: Directionality(
+        textDirection: TextDirection.ltr, // Set text direction to LTR
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                controller: _scrollController,
+                padding: const EdgeInsets.all(8.0),
+                itemCount: _messages.length,
+                reverse: false,
+                itemBuilder: (context, index) {
+                  final message = _messages[index];
+                  return _buildMessage(message);
+                },
+              ),
             ),
-          ),
-          _buildMessageInput(),
-        ],
+            _buildMessageInput(),
+          ],
+        ),
       ),
     );
   }
@@ -486,7 +489,7 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    DateFormat('hh:mm a').format(message.createdAt),
+                    intl.DateFormat('hh:mm a').format(message.createdAt),
                     style: TextStyle(fontSize: 10, color: Colors.grey),
                   ),
                 ],
