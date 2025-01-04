@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:blood_bank/constants.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
@@ -137,11 +139,13 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                     onPressed: () {},
                     image: Assets.imagesFacebook,
                   ),
-                  const SizedBox(width: 24),
-                  SocialLoginButton(
-                    onPressed: () {},
-                    image: Assets.imagesApple,
-                  ),
+                  // const SizedBox(width: 24),
+                  Platform.isIOS
+                      ? SocialLoginButton(
+                          onPressed: () {},
+                          image: Assets.imagesApple,
+                        )
+                      : SizedBox(),
                 ],
               ),
             ],
