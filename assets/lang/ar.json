@@ -277,6 +277,22 @@
 "Delete All Notifications": "حذف جميع التنبيهات",
 "chat_bot": "الدردشة",
 "Are you sure you want to delete all notifications?": "هل أنت متأكد أنك تريد حذف جميع التنبيهات؟",
+"Name Your Session": "اسم جلستك",
+"Enter session name": "أدخل اسم الجلسة",
+"Create Session": "إنشاء جلسة",
+"Failed to create session. Please try again.": "فشل إنشاء الجلسة. يرجى المحاولة مرة أخرى.",
+"Session name cannot be empty!": "لا يمكن ان يكون اسم الجلسة فارغًا!",
+"Sorry, something went wrong. Please try again later.": "عذرًا، حدث خطأ ما. يرجى المحاولة مرة أخرى لاحقًا.",
+"Choose an Action": "اختر إجراء",
+"Previous Chats": "الدردشات السابقة",
+"Would you like to start a new session or view previous chats?": "هل ترغب في بحث جديد أم عرض الدردشات السابقة؟",
+"New Session": "جلسة جديدة",
+"Type a message...": "...اكتب رسالة",
+"new_chat": "جلسة جديدة",
+"view_chats": "عرض الدردشات",
+"Start New Chat": "بدء دردشة جديدة",
+"View Previous Chats": "عرض الدردشات السابقة",
+"Save": "حفظ",
 "units": "وحدات"
 
 

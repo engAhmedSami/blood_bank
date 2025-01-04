@@ -53,7 +53,17 @@
     "Are you sure you want to delete all notifications?": "Are you sure you want to delete all notifications?",
 
 
-
+"Save": "Save",
+"Sorry, something went wrong. Please try again later.": "Sorry, something went wrong. Please try again later.",
+"Previous Chats": "Old Chats",
+"Choose an Action": "Choose an Action",
+"Would you like to start a new session or view previous chats?": "Would you like to start a new session or view previous chats?",
+"New Session": "New Session",
+"Type a message..." : "Type a message...",
+"new_chat": "New Chat",
+"view_chats": "View Chats",
+"Start New Chat": "Start New Chat",
+"View Previous Chats": "View Previous Chats",
 
 
 
@@ -298,7 +308,12 @@
   "sohag": "Sohag",
   "luxor": "Luxor",  "select_governorate": "Select Governorate",
   "please_select_governorate": "Please select a governorate",
-  
+  "Name Your Session": "Name Your Session",
+  "Enter session name": "Enter session name",
+    "Create Session": "Create Session",
+    "Failed to create session. Please try again.": "Failed to create session. Please try again.",
+
+  "Session name cannot be empty!": "Session name cannot be empty!",
 "chat_bot": "Chat Bot",
   "km" : "km"
     

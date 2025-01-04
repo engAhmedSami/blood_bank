@@ -121,17 +121,18 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Name Your Session"),
+        title: Text("Name Your Session".tr(context)),
         content: TextField(
           controller: sessionNameController,
-          decoration: const InputDecoration(hintText: "Enter session name"),
+          decoration:
+              InputDecoration(hintText: "Enter session name".tr(context)),
         ),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: const Text("Cancel"),
+            child: Text("cancel".tr(context)),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -161,23 +162,24 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
                 } catch (e) {
                   debugPrint("Error creating session: $e");
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content:
-                          Text("Failed to create session. Please try again."),
+                    SnackBar(
+                      content: Text(
+                          "Failed to create session. Please try again."
+                              .tr(context)),
                       backgroundColor: Colors.red,
                     ),
                   );
                 }
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Session name cannot be empty!"),
+                  SnackBar(
+                    content: Text("Session name cannot be empty!".tr(context)),
                     backgroundColor: Colors.orange,
                   ),
                 );
               }
             },
-            child: const Text("Save"),
+            child: Text("Save".tr(context)),
           ),
         ],
       ),
@@ -243,7 +245,8 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
         _messages.add(ChatMessage(
           user: _chatGPTUser,
           createdAt: DateTime.now(),
-          text: "Sorry, something went wrong. Please try again later.",
+          text: "Sorry, something went wrong. Please try again later."
+              .tr(context),
         ));
       });
       _scrollToBottom();
@@ -280,8 +283,8 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                "Previous Chats",
+              Text(
+                "Previous Chats".tr(context),
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
@@ -351,16 +354,17 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                "Choose an Action",
+              Text(
+                "Choose an Action".tr(context),
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
-                "Would you like to start a new session or view previous chats?",
+              Text(
+                "Would you like to start a new session or view previous chats?"
+                    .tr(context),
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
@@ -376,7 +380,7 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
                       },
                       icon:
                           const Icon(Icons.add, color: AppColors.primaryColor),
-                      label: const Text("New Session"),
+                      label: Text("New Session".tr(context)),
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 10),
@@ -395,7 +399,7 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
                       },
                       icon: const Icon(Icons.history,
                           color: AppColors.primaryColor),
-                      label: const Text("Previous"),
+                      label: Text("Previous Chats".tr(context)),
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 10),
@@ -521,7 +525,7 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
             child: TextFormField(
               controller: _messageController,
               decoration: InputDecoration(
-                hintText: "Type a message...",
+                hintText: "Type a message...".tr(context),
                 hintStyle: TextStyle(color: Colors.grey.shade600),
                 border: InputBorder.none,
               ),
@@ -549,17 +553,19 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
       actions: [
         PopupMenuButton<String>(
           onSelected: (value) {
-            if (value == 'new_chat') {
+            if (value == 'new_chat'.tr(context)) {
               _createNewSession();
-            } else if (value == 'view_chats') {
+            } else if (value == 'view_chats'.tr(context)) {
               _showSessionList();
             }
           },
           itemBuilder: (context) => [
-            const PopupMenuItem(
-                value: 'new_chat', child: Text("Start New Chat")),
-            const PopupMenuItem(
-                value: 'view_chats', child: Text("View Previous Chats")),
+            PopupMenuItem(
+                value: 'new_chat'.tr(context),
+                child: Text("Start New Chat".tr(context))),
+            PopupMenuItem(
+                value: 'view_chats'.tr(context),
+                child: Text("View Previous Chats".tr(context))),
           ],
         ),
       ],
