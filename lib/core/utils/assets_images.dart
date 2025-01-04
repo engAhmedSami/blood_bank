@@ -70,6 +70,14 @@ class Assets {
   /// assets/images/facebook.svg
   static const String imagesFacebook = "assets/images/facebook.svg";
 
+  /// Assets for imagesFinallogo
+  /// assets/images/finallogo.svg
+  static const String imagesFinallogo = "assets/images/finallogo.svg";
+
+  /// Assets for imagesFinallogoinside
+  /// assets/images/finallogoinside.svg
+  static const String imagesFinallogoinside = "assets/images/finallogoinside.svg";
+
   /// Assets for imagesFinddoners
   /// assets/images/finddoners.svg
   static const String imagesFinddoners = "assets/images/finddoners.svg";
@@ -105,14 +113,6 @@ class Assets {
   /// Assets for imagesLogodoner
   /// assets/images/logodoner.svg
   static const String imagesLogodoner = "assets/images/logodoner.svg";
-
-  /// Assets for imagesMobileApp
-  /// assets/images/mobile-app.png
-  static const String imagesMobileApp = "assets/images/mobile-app.png";
-
-  /// Assets for imagesMobileconform
-  /// assets/images/mobileconform.svg
-  static const String imagesMobileconform = "assets/images/mobileconform.svg";
 
   /// Assets for imagesNblood
   /// assets/images/nblood.svg

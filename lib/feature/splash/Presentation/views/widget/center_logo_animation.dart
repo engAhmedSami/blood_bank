@@ -30,7 +30,7 @@ class CenterLogoAnimation extends StatelessWidget {
                   // SvgPicture.asset(Assets.imagesSplashLogo),
                   const SizedBox(height: 20),
                   SvgPicture.asset(
-                    Assets.imagesDonersplash,
+                    Assets.imagesFinallogoinside,
                     width: 200,
                   ),
                 ],
