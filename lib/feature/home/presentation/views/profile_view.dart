@@ -15,6 +15,7 @@ import 'package:blood_bank/feature/home/presentation/views/widget/profile/settin
 import 'package:blood_bank/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shorebird_code_push/shorebird_code_push.dart';
+import 'package:restart_app/restart_app.dart'; // أضف هذه الاستيرادة
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -68,10 +69,6 @@ class ProfileView extends StatelessWidget {
                     SettingsSwitch(
                       title: 'notification'.tr(context),
                       keyName: 'notification',
-                    ),
-                    SettingsSwitch(
-                      title: 'allow_tracking'.tr(context),
-                      keyName: 'allow_tracking',
                     ),
                     SettingsItem(
                       title: 'manage_address'.tr(context),
@@ -169,6 +166,8 @@ class ProfileView extends StatelessWidget {
                       content: Text('update_downloaded'.tr(context)),
                     ),
                   );
+                  // عرض Dialog يطلب إعادة التشغيل
+                  _showRestartDialog(context);
                 } on UpdateException catch (e) {
                   // استخدام المتغير 'e' لعرض رسالة الخطأ
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -187,6 +186,34 @@ class ProfileView extends StatelessWidget {
                 }
               },
               child: Text('update_now'.tr(context)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // دالة لعرض Dialog يطلب إعادة التشغيل
+  void _showRestartDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('restart_required'.tr(context)),
+          content: Text('restart_required_message'.tr(context)),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // إغلاق Dialog
+              },
+              child: Text('later'.tr(context)),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // إغلاق Dialog
+                Restart.restartApp(); // إعادة تشغيل التطبيق
+              },
+              child: Text('restart_now'.tr(context)),
             ),
           ],
         );

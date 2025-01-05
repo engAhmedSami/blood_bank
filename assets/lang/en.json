@@ -72,6 +72,12 @@
 "update_available": "Update Available",
 "later": "Later",
 
+  "restart_required": "Restart Required",
+  "restart_required_message": "The app needs to restart to apply the update. Would you like to restart now?",
+  "restart_now": "Restart Now",
+
+
+
 
 
 
