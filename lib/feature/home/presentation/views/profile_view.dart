@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:blood_bank/core/helper_function/get_user.dart';
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
@@ -12,12 +14,15 @@ import 'package:blood_bank/feature/home/presentation/views/widget/profile/settin
 import 'package:blood_bank/feature/home/presentation/views/widget/profile/settings_switch.dart';
 import 'package:blood_bank/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shorebird_code_push/shorebird_code_push.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final shorebirdUpdater = ShorebirdUpdater(); // تهيئة ShorebirdUpdater
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -78,8 +83,22 @@ class ProfileView extends StatelessWidget {
                       onTap: () => _showLanguagePicker(context),
                     ),
                     SettingsItem(
-                      title: 'contact_details'.tr(context),
+                      title: 'Check for updates'.tr(context),
                       icon: Icons.arrow_forward_ios,
+                      onTap: () async {
+                        final status = await shorebirdUpdater.checkForUpdate();
+                        log('Update status: $status'); // طباعة حالة التحديث
+                        if (status == UpdateStatus.outdated) {
+                          log('Showing update dialog'); // طباعة رسالة تأكيد
+                          _showUpdateDialog(context, shorebirdUpdater);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('no_updates_available'.tr(context)),
+                            ),
+                          );
+                        }
+                      },
                     ),
                     const SizedBox(height: 20),
                     LogoutFeature(),
@@ -120,6 +139,58 @@ class ProfileView extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  // دالة لعرض Dialog للتحديث
+  void _showUpdateDialog(
+      BuildContext context, ShorebirdUpdater shorebirdUpdater) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('update_available'.tr(context)),
+          content: Text('update_available_message'.tr(context)),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // إغلاق Dialog
+              },
+              child: Text('later'.tr(context)),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context); // إغلاق Dialog
+                try {
+                  // تنزيل التحديث
+                  await shorebirdUpdater.update();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('update_downloaded'.tr(context)),
+                    ),
+                  );
+                } on UpdateException catch (e) {
+                  // استخدام المتغير 'e' لعرض رسالة الخطأ
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('update_failed: ${e.message}'.tr(context)),
+                    ),
+                  );
+                } catch (e) {
+                  // استخدام المتغير 'e' لعرض رسالة الخطأ
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content:
+                          Text('update_failed: ${e.toString()}'.tr(context)),
+                    ),
+                  );
+                }
+              },
+              child: Text('update_now'.tr(context)),
+            ),
+          ],
+        );
+      },
     );
   }
 

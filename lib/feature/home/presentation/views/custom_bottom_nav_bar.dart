@@ -129,11 +129,13 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
 
   Widget _buildFloatingActionButton() {
     return FloatingActionButton(
-      elevation: 10,
+      elevation: 15,
       shape: const CircleBorder(),
       onPressed: () {
         Navigator.of(context).push(
-          buildPageRoute(const ChatBotViewBody()),
+          buildPageRoute(
+            const ChatBotViewBody(),
+          ),
         );
       },
       backgroundColor: AppColors.primaryColor,
@@ -153,7 +155,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       icon: SvgPicture.asset(
         asset,
         colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
-        height: 30,
+        height: 28,
       ),
       selectedIcon: SvgPicture.asset(
         asset,

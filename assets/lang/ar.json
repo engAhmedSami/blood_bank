@@ -293,6 +293,13 @@
 "Start New Chat": "بدء دردشة جديدة",
 "View Previous Chats": "عرض الدردشات السابقة",
 "Save": "حفظ",
+"Check for updates": "التحقق من التحديثات",
+"update_downloaded": "تم تحميل التحديثات",
+"updat_failed": "فشل في تحميل التحديثات",
+"no_updates_available": "لا توجد تحديثات متاحة",
+"update_now": "تحديث الان",
+"later": "لاحقًا",
+"update_available": "تحديث متاح",
 "units": "وحدات"
 
 
