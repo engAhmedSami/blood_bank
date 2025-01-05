@@ -68,11 +68,11 @@ class ProfileViewState extends State<ProfileView> {
       _showRestartSnackBar(context);
     } on UpdateException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('update_failed: ${e.message}'.tr(context))),
+        SnackBar(content: Text('update_error: ${e.message}'.tr(context))),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('update_failed: ${e.toString()}'.tr(context))),
+        SnackBar(content: Text('update_error: ${e.toString()}'.tr(context))),
       );
     }
   }

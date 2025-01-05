@@ -71,6 +71,14 @@
 "update_now": "Update Now",
 "update_available": "Update Available",
 "later": "Later",
+"up_to_date": "Up To Date",
+"update_unavailable": "Update Unavailable",
+"error_checking_for_update": "Error checking for update",
+"update_error": "Update Error",
+"update_available_message": "An update is available. Would you like to update now?",
+"update_downloaded_restart": "Update downloaded. Would you like to restart now?",
+"Restart" : "Restart",
+
 
   "restart_required": "Restart Required",
   "restart_required_message": "The app needs to restart to apply the update. Would you like to restart now?",

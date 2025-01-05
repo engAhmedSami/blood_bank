@@ -303,6 +303,13 @@
 "restart_required": "تطلب إعادة تشغيل",
 "restart_required_message": "يحتاج التطبيق إلى إعادة التشغيل لتطبيق التحديث. هل ترغب في إعادة التشغيل الآن؟",
 "restart_now": "إعادة تشغيل الان",
+"up_to_date": "متحدث",
+"update_unavailable": "تحديث غير متاح",
+"error_checking_for_update": "خطاء في التحقق من التحديثات",
+"update_error": "خطاء في التحديثات",
+"update_available_message": "يوجد تحديث متاح. هل ترغب في التحديث الان؟",
+"update_downloaded_restart": "تم تحميل التحديثات. هل ترغب في إعادة التشغيل الان؟",
+"Restart": "إعادة التشغيل الان",
 "units": "وحدات"
 
 
