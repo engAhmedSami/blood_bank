@@ -112,14 +112,14 @@ class _CustomProfileAppBarState extends State<CustomProfileAppBar> {
           width: MediaQuery.of(context).size.width,
           height: widget.preferredSize.height,
         ),
-        Positioned(
-          top: 30,
-          left: 10,
-          child: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-            onPressed: () {},
-          ),
-        ),
+        // Positioned(
+        //   top: 30,
+        //   left: 10,
+        //   child: IconButton(
+        //     icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+        //     onPressed: () {},
+        //   ),
+        // ),
         Positioned(
           top: 30,
           right: 10,

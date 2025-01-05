@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:blood_bank/constants.dart';
 import 'package:blood_bank/core/helper_function/get_user.dart';
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
@@ -12,18 +11,115 @@ import 'package:blood_bank/feature/home/presentation/views/widget/profile/big_in
 import 'package:blood_bank/feature/home/presentation/views/widget/profile/custom_app_bar_profile.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/profile/settings_item.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/profile/settings_switch.dart';
-import 'package:blood_bank/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shorebird_code_push/shorebird_code_push.dart';
-import 'package:restart_app/restart_app.dart'; // أضف هذه الاستيرادة
+import 'package:restart_app/restart_app.dart'; // Import the restart_app package
 
-class ProfileView extends StatelessWidget {
+class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final shorebirdUpdater = ShorebirdUpdater(); // تهيئة ShorebirdUpdater
+  ProfileViewState createState() => ProfileViewState();
+}
 
+class ProfileViewState extends State<ProfileView> {
+  final shorebirdUpdater = ShorebirdUpdater();
+  bool _isCheckingForUpdates = false;
+  UpdateTrack currentTrack = UpdateTrack.stable;
+
+  Future<void> _checkForUpdate() async {
+    if (_isCheckingForUpdates) return;
+
+    try {
+      setState(() => _isCheckingForUpdates = true);
+      final status = await shorebirdUpdater.checkForUpdate(track: currentTrack);
+      if (!mounted) return;
+
+      switch (status) {
+        case UpdateStatus.upToDate:
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('up_to_date'.tr(context))),
+          );
+        case UpdateStatus.outdated:
+          _showUpdateDialog(context, shorebirdUpdater);
+        case UpdateStatus.restartRequired:
+          _showRestartSnackBar(context); // Show a SnackBar to restart the app
+        case UpdateStatus.unavailable:
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('update_unavailable'.tr(context))),
+          );
+      }
+    } catch (error) {
+      debugPrint('Error checking for update: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('error_checking_for_update'.tr(context))),
+      );
+    } finally {
+      setState(() => _isCheckingForUpdates = false);
+    }
+  }
+
+  Future<void> _downloadUpdate(ShorebirdUpdater updater) async {
+    try {
+      await updater.update(track: currentTrack);
+      if (!mounted) return;
+
+      // Show a SnackBar to inform the user that the update is downloaded
+      _showRestartSnackBar(context);
+    } on UpdateException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('update_failed: ${e.message}'.tr(context))),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('update_failed: ${e.toString()}'.tr(context))),
+      );
+    }
+  }
+
+  void _showUpdateDialog(BuildContext context, ShorebirdUpdater updater) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('update_available'.tr(context)),
+          content: Text('update_available_message'.tr(context)),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('later'.tr(context)),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                await _downloadUpdate(updater);
+              },
+              child: Text('update_now'.tr(context)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showRestartSnackBar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('update_downloaded_restart'.tr(context)),
+        action: SnackBarAction(
+          label: 'Restart',
+          onPressed: () {
+            Restart.restartApp(); // Restart the app
+          },
+        ),
+        duration:
+            const Duration(seconds: 10), // Keep the SnackBar visible longer
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -82,20 +178,7 @@ class ProfileView extends StatelessWidget {
                     SettingsItem(
                       title: 'Check for updates'.tr(context),
                       icon: Icons.arrow_forward_ios,
-                      onTap: () async {
-                        final status = await shorebirdUpdater.checkForUpdate();
-                        log('Update status: $status'); // طباعة حالة التحديث
-                        if (status == UpdateStatus.outdated) {
-                          log('Showing update dialog'); // طباعة رسالة تأكيد
-                          _showUpdateDialog(context, shorebirdUpdater);
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('no_updates_available'.tr(context)),
-                            ),
-                          );
-                        }
-                      },
+                      onTap: _checkForUpdate,
                     ),
                     const SizedBox(height: 20),
                     LogoutFeature(),
@@ -136,88 +219,6 @@ class ProfileView extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  // دالة لعرض Dialog للتحديث
-  void _showUpdateDialog(
-      BuildContext context, ShorebirdUpdater shorebirdUpdater) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('update_available'.tr(context)),
-          content: Text('update_available_message'.tr(context)),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // إغلاق Dialog
-              },
-              child: Text('later'.tr(context)),
-            ),
-            TextButton(
-              onPressed: () async {
-                Navigator.pop(context); // إغلاق Dialog
-                try {
-                  // تنزيل التحديث
-                  await shorebirdUpdater.update();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('update_downloaded'.tr(context)),
-                    ),
-                  );
-                  // عرض Dialog يطلب إعادة التشغيل
-                  _showRestartDialog(context);
-                } on UpdateException catch (e) {
-                  // استخدام المتغير 'e' لعرض رسالة الخطأ
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('update_failed: ${e.message}'.tr(context)),
-                    ),
-                  );
-                } catch (e) {
-                  // استخدام المتغير 'e' لعرض رسالة الخطأ
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content:
-                          Text('update_failed: ${e.toString()}'.tr(context)),
-                    ),
-                  );
-                }
-              },
-              child: Text('update_now'.tr(context)),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  // دالة لعرض Dialog يطلب إعادة التشغيل
-  void _showRestartDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('restart_required'.tr(context)),
-          content: Text('restart_required_message'.tr(context)),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // إغلاق Dialog
-              },
-              child: Text('later'.tr(context)),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // إغلاق Dialog
-                Restart.restartApp(); // إعادة تشغيل التطبيق
-              },
-              child: Text('restart_now'.tr(context)),
-            ),
-          ],
-        );
-      },
     );
   }
 
