@@ -100,6 +100,7 @@ flutter:
     - assets/lang/ar.json
     - assets/service_account_file.json
     - assets/chatbot.json
+    - shorebird.yaml
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
