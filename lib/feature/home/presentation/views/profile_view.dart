@@ -335,7 +335,8 @@ class ProfileViewState extends State<ProfileView> with WidgetsBindingObserver {
               stream: getUserStream(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(
+                      child: CoustomCircularProgressIndicator());
                 }
 
                 if (snapshot.hasError) {
