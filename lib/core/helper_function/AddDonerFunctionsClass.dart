@@ -25,11 +25,13 @@ class AddDonerFunctions {
   final TextEditingController distanceController;
   final TextEditingController bloodTypeController;
   final TextEditingController genderController;
+  final TextEditingController lastdonationdateController;
 
   AddDonerFunctions({
     required this.context,
     required this.firestore,
     required this.user,
+    required this.lastdonationdateController,
     required this.formKey,
     required this.nameController,
     required this.ageController,
@@ -166,6 +168,7 @@ class AddDonerFunctions {
     ageController.clear();
     idCardController.clear();
     medicalConditionsController.clear();
+    lastdonationdateController.clear();
     contactController.clear();
     hospitalNameController.clear();
     bloodTypeController.clear();

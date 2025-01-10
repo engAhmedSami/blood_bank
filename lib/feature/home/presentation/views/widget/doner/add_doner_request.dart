@@ -40,6 +40,8 @@ class DonerRequestState extends State<DonerRequest> {
   final TextEditingController distanceController = TextEditingController();
   final TextEditingController bloodTypeController = TextEditingController();
   final TextEditingController genderController = TextEditingController();
+  final TextEditingController lastdonationdateController =
+      TextEditingController();
 
   late AddDonerFunctions _addDonerFunction;
 
@@ -53,6 +55,7 @@ class DonerRequestState extends State<DonerRequest> {
       formKey: _formKey,
       nameController: nameController,
       ageController: ageController,
+      lastdonationdateController: lastdonationdateController,
       idCardController: idCardController,
       medicalConditionsController: medicalConditionsController,
       contactController: contactController,
@@ -144,6 +147,7 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               DatePickerField(
+                controller: lastdonationdateController,
                 hintStyle: TextStyle(
                   color: AppColors.primaryColor,
                 ),
@@ -155,18 +159,18 @@ class DonerRequestState extends State<DonerRequest> {
                 },
                 isNextDonationDate: false,
               ),
-              DatePickerField(
-                hintStyle: TextStyle(
-                  color: AppColors.primaryColor,
-                ),
-                context: context,
-                label: 'next_donation_date'.tr(context),
-                selectedDate: null,
-                onDateSelected: (date) {
-                  log('Next Donation Date: $date');
-                },
-                isNextDonationDate: true,
-              ),
+              // DatePickerField(
+              //   hintStyle: TextStyle(
+              //     color: AppColors.primaryColor,
+              //   ),
+              //   context: context,
+              //   label: 'next_donation_date'.tr(context),
+              //   selectedDate: null,
+              //   onDateSelected: (date) {
+              //     log('Next Donation Date: $date');
+              //   },
+              //   isNextDonationDate: true,
+              // ),
               CustomRequestTextField(
                 hintStyle: TextStyle(
                   color: AppColors.primaryColor,
