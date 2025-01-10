@@ -1,7 +1,7 @@
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
-class CoustomDialog extends StatelessWidget {
+class CustomDialog extends StatelessWidget {
   final String? title; // Optional Title text for the dialog
   final String? content; // Optional Content text for the dialog
   final String? confirmText; // Optional text for the confirm button
@@ -9,7 +9,7 @@ class CoustomDialog extends StatelessWidget {
   final Color? confirmButtonColor; // Optional color for confirm button
   final Color? cancelButtonColor; // Optional color for cancel button
 
-  const CoustomDialog({
+  const CustomDialog({
     super.key,
     this.title,
     this.content,
@@ -34,7 +34,7 @@ class CoustomDialog extends StatelessWidget {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return CoustomDialog(
+          return CustomDialog(
             title: title,
             content: content,
             confirmText: confirmText,

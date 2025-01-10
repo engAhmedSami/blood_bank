@@ -90,7 +90,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(
-                child: CoustomDialog(
+                child: CustomDialog(
               content: 'you dont have notifications yet'.tr(context),
               title: 'Alert for Notification'.tr(context),
             ));

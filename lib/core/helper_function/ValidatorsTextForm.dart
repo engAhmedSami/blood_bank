@@ -22,25 +22,27 @@ class Validators {
   }
 
   static String? validateIdCard(String? value, BuildContext context) {
-    if (value == null || value.isEmpty) {
-      log('ID Card validation failed: Field is empty');
-      return 'idCardError'.tr(context);
-    }
-
-    // Check if the value is a valid integer
-    if (int.tryParse(value) == null) {
-      log('ID Card validation failed: Not a valid integer');
-      return 'ID Card must be a number'.tr(context);
-    }
-
-    // Check if the value has more than 11 digits
-    if (value.length > 11) {
-      log('ID Card validation failed: Exceeds 11 digits');
-      return 'ID Card must be at most 11 digits'.tr(context);
-    }
-
-    log('ID Card validation passed: $value');
     return null;
+
+    // if (value == null || value.isEmpty) {
+    //   log('ID Card validation failed: Field is empty');
+    //   return 'idCardError'.tr(context);
+    // }
+
+    // // Check if the value is a valid integer
+    // if (int.tryParse(value) == null) {
+    //   log('ID Card validation failed: Not a valid integer');
+    //   return 'ID Card must be a number'.tr(context);
+    // }
+
+    // // Check if the value has more than 11 digits
+    // if (value.length > 11) {
+    //   log('ID Card validation failed: Exceeds 11 digits');
+    //   return 'ID Card must be at most 11 digits'.tr(context);
+    // }
+
+    // log('ID Card validation passed: $value');
+    // return null;
   }
 
   static String? validateContactNumber(String? value, BuildContext context) {

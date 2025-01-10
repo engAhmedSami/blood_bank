@@ -31,7 +31,7 @@ class BloodRequest extends StatelessWidget {
 
           final requests = snapshot.data?.docs ?? [];
           if (requests.isEmpty) {
-            return CoustomDialog(
+            return CustomDialog(
               title: 'thanks for your contribution'.tr(context),
               content: 'No requests available at the moment.'.tr(context),
             );

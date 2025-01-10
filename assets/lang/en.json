@@ -249,6 +249,10 @@
 
 
 ,
+  "donation_request_alert": "Donation Request Alert",
+  "must_wait_days": "You must wait {remainingDays} more days before submitting a new donation request.",
+  "next_eligible_date": "Your next eligible donation date is: {nextDonationDate}."
+,
 
 
 

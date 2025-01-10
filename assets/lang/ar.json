@@ -289,6 +289,25 @@
 "Would you like to start a new session or view previous chats?": "هل ترغب في بحث جديد أم عرض الدردشات السابقة؟",
 "New Session": "جلسة جديدة",
 "Type a message...": "...اكتب رسالة",
+
+
+
+
+
+
+
+
+
+
+
+  "donation_request_alert": "تنبيه طلب التبرع",
+  "must_wait_days": "يجب أن تنتظر {remainingDays} أيام أخرى قبل تقديم طلب تبرع جديد.",
+  "next_eligible_date": "تاريخ التبرع التالي المتاح لك هو: {nextDonationDate}."
+
+,
+
+
+
 "new_chat": "جلسة جديدة",
 "view_chats": "عرض الدردشات",
 "Start New Chat": "بدء دردشة جديدة",

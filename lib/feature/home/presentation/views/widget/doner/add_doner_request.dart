@@ -244,8 +244,8 @@ class DonerRequestState extends State<DonerRequest> {
                 text: 'Submit Request'.tr(context),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!
-                        .save(); // This will trigger onSaved for all fields
+                    _formKey.currentState!.save();
+
                     _addDonerFunction.submitRequest(
                       name: nameController.text,
                       age: num.parse(ageController.text),

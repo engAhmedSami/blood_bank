@@ -1,7 +1,8 @@
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
-import 'package:blood_bank/core/utils/app_text_style.dart';
+import 'package:blood_bank/core/widget/coustom_dialog.dart';
 import 'package:blood_bank/feature/home/domain/entities/doner_request_entity.dart';
 import 'package:blood_bank/feature/home/presentation/manger/add_doner_request_cubit/add_doner_request_cubit.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -51,48 +52,50 @@ class AddDonerFunctions {
         .get();
 
     if (querySnapshot.docs.isEmpty) {
-      return true; // No previous requests found
+      return true; // No previous requests found, allow submission
     }
 
     final existingRequest = querySnapshot.docs.first.data();
-    final Timestamp? lastRequestTimestamp =
+    final Timestamp? lastDonationTimestamp =
         existingRequest['lastRequestDate'] as Timestamp?;
-    final Timestamp? nextDonationTimestamp =
-        existingRequest['nextDonationDate'] as Timestamp?;
 
     final DateTime now = DateTime.now();
-    DateTime? nextDonationDate;
 
-    if (nextDonationTimestamp != null) {
-      nextDonationDate = nextDonationTimestamp.toDate();
-    }
+    if (lastDonationTimestamp != null) {
+      final DateTime lastDonationDate = lastDonationTimestamp.toDate();
+      final Duration difference = now.difference(lastDonationDate);
+      const int requiredDays = 100; // Minimum days between donations
 
-    if (lastRequestTimestamp != null) {
-      final DateTime lastRequestDate = lastRequestTimestamp.toDate();
-      if (lastRequestDate.year == now.year &&
-          lastRequestDate.month == now.month &&
-          lastRequestDate.day == now.day) {
-        String additionalMessage = '';
-        if (nextDonationDate != null && now.isBefore(nextDonationDate)) {
-          additionalMessage =
-              '\nAnd your next eligible request date is ${nextDonationDate.toLocal().toString().split(' ')[0]}.';
-        }
+      if (difference.inDays < requiredDays) {
+        final int remainingDays = requiredDays - difference.inDays;
+        final DateTime nextDonationDate =
+            lastDonationDate.add(const Duration(days: requiredDays));
 
-        successTopSnackBar(
-            context, 'You have already submitted a request $additionalMessage');
-        return false;
+        // Show alert dialog with remaining days and next donation date
+        showDialog(
+          context: context,
+          builder: (context) {
+            return CustomDialog(
+              title: 'donation_request_alert'.tr(context), // Localized title
+              confirmText: 'ok'.tr(context), // Localized confirm button text
+              content: '${'must_wait_days'.trWithParams(context, {
+                    'remainingDays':
+                        remainingDays.toString(), // Dynamic parameter
+                  })}\n\n${'next_eligible_date'.trWithParams(context, {
+                    'nextDonationDate': nextDonationDate
+                        .toLocal()
+                        .toString()
+                        .split(' ')[0], // Dynamic parameter
+                  })}',
+            );
+          },
+        );
+
+        return false; // Prevent submission
       }
     }
 
-    // If current date is before `nextDonationDate`
-    if (nextDonationDate != null && now.isBefore(nextDonationDate)) {
-      successTopSnackBar(context,
-          'You can submit a new request after ${nextDonationDate.toLocal().toString().split(' ')[0]}');
-
-      return false;
-    }
-
-    return true; // Allow submitting a new request
+    return true; // Allow submission
   }
 
   void submitRequest({
@@ -167,31 +170,5 @@ class AddDonerFunctions {
     hospitalNameController.clear();
     bloodTypeController.clear();
     genderController.clear();
-  }
-
-  DropdownButtonFormField<String> genderDropDown(List<String> genders) {
-    return DropdownButtonFormField<String>(
-      value: genderController.text.isNotEmpty ? genderController.text : null,
-      items: genders
-          .map((gender) => DropdownMenuItem(
-                value: gender,
-                child: Text(
-                  gender,
-                  style: TextStyles.semiBold14,
-                ),
-              ))
-          .toList(),
-      onChanged: (value) {
-        genderController.text = value ?? '';
-      },
-      decoration: InputDecoration(
-        hintText: 'Select Gender',
-        hintStyle: TextStyles.semiBold14,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      validator: (value) => value == null ? 'Please select gender' : null,
-    );
   }
 }
