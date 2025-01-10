@@ -1,4 +1,6 @@
+import 'package:blood_bank/core/widget/coustom_aleart_diloage.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/doner/DonnerDetailsScreen.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +17,10 @@ class DonationTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(data['name'] ?? 'No Name'),
-      subtitle: Text('Hospital: ${data['hospitalName'] ?? 'No Hospital'}'),
+      title: Text(data['name'] ?? 'no_name'.tr(context)), // Localized fallback
+      subtitle: Text(
+        '${'hospital'.tr(context)}: ${data['hospitalName'] ?? 'no_hospital'.tr(context)}', // Localized strings
+      ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -106,28 +110,23 @@ class DonationTile extends StatelessWidget {
   }
 
   // Delete donation
+
   void _deleteDonation(BuildContext context, String donationId) async {
     // Show a confirmation dialog
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: const Text('Delete Donation'),
-          content: const Text('Are you sure you want to delete this donation?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context, false); // Cancel deletion
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context, true); // Confirm deletion
-              },
-              child: const Text('Delete'),
-            ),
-          ],
+        return CustomAlertDialog(
+          title: 'delete_donation'.tr(context),
+          content: 'confirm_delete_donation'.tr(context),
+          confirmText: 'delete'.tr(context),
+          cancelText: 'cancel'.tr(context),
+          onConfirm: () {
+            Navigator.pop(context, true); // Confirm deletion
+          },
+          onCancel: () {
+            Navigator.pop(context, false); // Cancel deletion
+          },
         );
       },
     );

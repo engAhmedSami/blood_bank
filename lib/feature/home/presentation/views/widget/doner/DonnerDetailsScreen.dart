@@ -1,7 +1,8 @@
 import 'package:blood_bank/core/utils/app_colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // Import the intl package
 import 'package:blood_bank/feature/localization/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class DonnerDetailsScreen extends StatelessWidget {
   final Map<String, dynamic> donationData;
@@ -104,18 +105,11 @@ class DonnerDetailsScreen extends StatelessWidget {
             _buildDetailItem(context, 'gender', donationData['gender']),
             _buildDetailItem(
                 context, 'id_card', donationData['idCard'].toString()),
+            // _buildDetailItem(context, 'last_donation_date',
+            //     donationData['lastRequestDate'].toString()),
             _buildDetailItem(
-              context,
-              'last_donation_date',
-              _formatDate(donationData['lastDonationDate']) ??
-                  'not_available'.tr(context), // Localized fallback
-            ),
-            _buildDetailItem(
-              context,
-              'last_request_date',
-              _formatDate(donationData['lastRequestDate']) ??
-                  'not_available'.tr(context), // Localized fallback
-            ),
+                context, 'last_donation_date', donationData['lastRequestDate']),
+
             _buildDetailItem(context, 'medical_conditions',
                 donationData['medicalConditions']),
             _buildDetailItem(context, 'notes', donationData['notes']),
@@ -127,8 +121,10 @@ class DonnerDetailsScreen extends StatelessWidget {
     );
   }
 
-  // Build a single detail item
-  Widget _buildDetailItem(BuildContext context, String labelKey, String value) {
+  Widget _buildDetailItem(
+      BuildContext context, String labelKey, dynamic value) {
+    String formattedValue = _formatDate(value); // Format the value
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -148,7 +144,7 @@ class DonnerDetailsScreen extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Text(
-              value,
+              formattedValue,
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.white,
@@ -160,30 +156,24 @@ class DonnerDetailsScreen extends StatelessWidget {
     );
   }
 
-  // Helper function to format dates
+  String _formatDate(dynamic value) {
+    try {
+      DateTime date;
 
-  String? _formatDate(dynamic date) {
-    if (date == null) return null;
-
-    DateTime? parsedDate;
-
-    if (date is String) {
-      try {
-        // Remove the "UTC+2" part and parse the date
-        final cleanedDateString = date.replaceAll(RegExp(r' UTC[+-]\d+'), '');
-        final dateFormat = DateFormat("MMMM d, y 'at' h:mm:ss");
-        parsedDate = dateFormat.parse(cleanedDateString);
-      } catch (e) {
-        print('Error parsing date: $e');
-        return null; // Return null if parsing fails
+      // Check if the value is a Timestamp
+      if (value is Timestamp) {
+        date = value.toDate();
+      } else if (value is String) {
+        date = DateTime.parse(value);
+      } else {
+        return value.toString(); // Fallback for unsupported types
       }
-    } else if (date is DateTime) {
-      parsedDate = date;
+
+      // Format the date as "day - month - year"
+      return DateFormat('dd - MM - yyyy').format(date);
+    } catch (e) {
+      // Return the raw value in case of an error
+      return value.toString();
     }
-
-    if (parsedDate == null) return null;
-
-    // Format the date in a user-friendly way
-    return DateFormat('MMMM d, y • h:mm a').format(parsedDate);
   }
 }

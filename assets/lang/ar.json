@@ -231,6 +231,15 @@
   "AB-": "أ ب-",
 
 
+
+  "delete_donation": "حذف التبرع",
+  "confirm_delete_donation": "هل أنت متأكد أنك تريد حذف هذا التبرع؟",
+  "delete": "حذف",
+
+
+  "hospital": "المستشفى",
+
+
           "wholeBlood": "الدم الكامل",
         "plasma": "البلازما",
         "platelets": "الصفائح الدموية",
