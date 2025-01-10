@@ -41,6 +41,7 @@ abstract class TextStyles {
   );
 
   static const TextStyle bold19 = TextStyle(
+    color: Colors.white,
     fontWeight: FontWeight.bold,
     fontSize: 19,
     fontFamily: 'iwanzaza',

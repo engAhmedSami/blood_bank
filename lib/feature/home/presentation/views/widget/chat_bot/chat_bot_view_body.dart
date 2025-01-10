@@ -1,5 +1,6 @@
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
+import 'package:blood_bank/core/widget/coustom_aleart_diloage.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
@@ -36,7 +37,7 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
     _initializeGemini();
     _fetchCurrentUser();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _showSessionChoiceDialog();
+      _showSessionChoiceDialog(context);
     });
   }
 
@@ -118,23 +119,145 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
   Future<void> _createNewSession() async {
     final sessionNameController = TextEditingController();
 
+    // showDialog(
+    //   context: context,
+    //   builder: (context) => AlertDialog(
+    //     title: Text("Name Your Session".tr(context)),
+    //     content: TextField(
+    //       controller: sessionNameController,
+    //       decoration:
+    //           InputDecoration(hintText: "Enter session name".tr(context)),
+    //     ),
+    //     actions: [
+    //       TextButton(
+    //         onPressed: () {
+    //           Navigator.pop(context);
+    //         },
+    //         child: Text("cancel".tr(context)),
+    //       ),
+    //       ElevatedButton(
+    //         onPressed: () async {
+    //           final sessionName = sessionNameController.text.trim();
+    //           if (sessionName.isNotEmpty) {
+    //             try {
+    //               final newSession = await FirebaseFirestore.instance
+    //                   .collection('sessions')
+    //                   .add({
+    //                 'userId': _currentUser?.id,
+    //                 'name': sessionName,
+    //                 'createdAt': Timestamp.now(),
+    //               });
+
+    //               setState(() {
+    //                 _currentSessionId = newSession.id;
+    //                 _messages.clear();
+    //               });
+    //               Navigator.pop(context);
+    //               ScaffoldMessenger.of(context).showSnackBar(
+    //                 SnackBar(
+    //                   content:
+    //                       Text("Session '$sessionName' created successfully!"),
+    //                   backgroundColor: Colors.green,
+    //                 ),
+    //               );
+    //             } catch (e) {
+    //               debugPrint("Error creating session: $e");
+    //               ScaffoldMessenger.of(context).showSnackBar(
+    //                 SnackBar(
+    //                   content: Text(
+    //                       "Failed to create session. Please try again."
+    //                           .tr(context)),
+    //                   backgroundColor: Colors.red,
+    //                 ),
+    //               );
+    //             }
+    //           } else {
+    //             ScaffoldMessenger.of(context).showSnackBar(
+    //               SnackBar(
+    //                 content: Text("Session name cannot be empty!".tr(context)),
+    //                 backgroundColor: Colors.orange,
+    //               ),
+    //             );
+    //           }
+    //         },
+    //         child: Text("Save".tr(context)),
+    //       ),
+    //     ],
+    //   ),
+    // );
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Name Your Session".tr(context)),
+        backgroundColor: Colors.white, // White background
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15), // Rounded corners
+        ),
+        title: Row(
+          children: [
+            Icon(
+              Icons.edit, // Use an edit icon for naming a session
+              color: AppColors.primaryColor, // Primary color for icon
+            ),
+            const SizedBox(width: 10), // Spacing between icon and text
+            Text(
+              "Name Your Session".tr(context), // Localized title
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: AppColors.primaryColor, // Primary color for text
+              ),
+            ),
+          ],
+        ),
         content: TextField(
           controller: sessionNameController,
-          decoration:
-              InputDecoration(hintText: "Enter session name".tr(context)),
+          decoration: InputDecoration(
+            hintText: "Enter session name".tr(context), // Localized hint
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8), // Rounded input field
+              borderSide: BorderSide(
+                  color: AppColors.primaryColor), // Primary color border
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  color: AppColors.primaryColor), // Primary color when focused
+            ),
+          ),
         ),
+        actionsAlignment: MainAxisAlignment.center, // Center-align buttons
         actions: [
           TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor:
+                  Colors.grey[300], // Light grey background for cancel button
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8), // Rounded corners
+              ),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 20, vertical: 12), // Button padding
+            ),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pop(context); // Close the dialog
             },
-            child: Text("cancel".tr(context)),
+            child: Text(
+              "cancel".tr(context), // Localized cancel button text
+              style: const TextStyle(
+                color: Colors.black, // Dark text for contrast
+                fontSize: 16,
+              ),
+            ),
           ),
-          ElevatedButton(
+          TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor:
+                  AppColors.primaryColor, // Primary color for save button
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8), // Rounded corners
+              ),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 20, vertical: 12), // Button padding
+            ),
             onPressed: () async {
               final sessionName = sessionNameController.text.trim();
               if (sessionName.isNotEmpty) {
@@ -151,12 +274,12 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
                     _currentSessionId = newSession.id;
                     _messages.clear();
                   });
-                  Navigator.pop(context);
+                  Navigator.pop(context); // Close the dialog
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content:
                           Text("Session '$sessionName' created successfully!"),
-                      backgroundColor: Colors.green,
+                      backgroundColor: Colors.green, // Success color
                     ),
                   );
                 } catch (e) {
@@ -164,9 +287,10 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                          "Failed to create session. Please try again."
-                              .tr(context)),
-                      backgroundColor: Colors.red,
+                        "Failed to create session. Please try again."
+                            .tr(context),
+                      ),
+                      backgroundColor: Colors.red, // Error color
                     ),
                   );
                 }
@@ -174,12 +298,18 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text("Session name cannot be empty!".tr(context)),
-                    backgroundColor: Colors.orange,
+                    backgroundColor: Colors.orange, // Warning color
                   ),
                 );
               }
             },
-            child: Text("Save".tr(context)),
+            child: Text(
+              "Save".tr(context), // Localized save button text
+              style: const TextStyle(
+                color: Colors.white, // White text for contrast
+                fontSize: 16,
+              ),
+            ),
           ),
         ],
       ),
@@ -272,6 +402,7 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
     final sessions = sessionsSnapshot.docs;
 
     showModalBottomSheet(
+      backgroundColor: Colors.white,
       context: context,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -298,6 +429,7 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
                     final createdAt = session['createdAt']?.toDate();
 
                     return Card(
+                      color: Colors.white,
                       margin: const EdgeInsets.symmetric(vertical: 8),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -305,23 +437,38 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
                       elevation: 2,
                       child: ListTile(
                         leading: CircleAvatar(
-                          backgroundColor: Colors.blue[100],
-                          child: const Icon(Icons.chat, color: Colors.blue),
+                          backgroundColor: AppColors.primaryColor
+                              .withOpacity(0.1), // Light primary color
+                          child: Icon(
+                            Icons.chat,
+                            color: AppColors
+                                .primaryColor, // Primary color for icon
+                          ),
                         ),
                         title: Text(
                           sessionName,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
+                            color: AppColors
+                                .primaryColor, // Primary color for text
                           ),
                         ),
                         subtitle: createdAt != null
                             ? Text(
-                                "Created on: ${createdAt.toString().split(' ')[0]}",
-                                style: const TextStyle(fontSize: 12),
+                                "Created on: ${intl.DateFormat('MMM d, y').format(createdAt)}", // Formatted date
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey[600], // Subtitle color
+                                ),
                               )
                             : null,
-                        trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                        trailing: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 18,
+                          color:
+                              AppColors.primaryColor, // Primary color for icon
+                        ),
                         onTap: () {
                           setState(() {
                             _currentSessionId = session.id;
@@ -341,114 +488,24 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
     );
   }
 
-  void _showSessionChoiceDialog() {
+  void _showSessionChoiceDialog(BuildContext context) {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "Choose an Action".tr(context),
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                "Would you like to start a new session or view previous chats?"
-                    .tr(context),
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, color: Colors.grey),
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        _createNewSession();
-                      },
-                      icon:
-                          const Icon(Icons.add, color: AppColors.primaryColor),
-                      label: Text("New Session".tr(context)),
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        _showSessionList();
-                      },
-                      icon: const Icon(Icons.history,
-                          color: AppColors.primaryColor),
-                      label: Text("Previous Chats".tr(context)),
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    _messageController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar(context),
-      backgroundColor: Colors.white,
-      body: Directionality(
-        textDirection: TextDirection.ltr, // Set text direction to LTR
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                controller: _scrollController,
-                padding: const EdgeInsets.all(8.0),
-                itemCount: _messages.length,
-                reverse: false,
-                itemBuilder: (context, index) {
-                  final message = _messages[index];
-                  return _buildMessage(message);
-                },
-              ),
-            ),
-            _buildMessageInput(),
-          ],
-        ),
+      builder: (context) => CustomAlertDialog(
+        title: "Choose an Action".tr(context),
+        content: "Would you like to start a new session or view previous chats?"
+            .tr(context),
+        confirmText: "New Session".tr(context),
+        cancelText: "Previous Chats".tr(context),
+        onConfirm: () {
+          Navigator.pop(context);
+          _createNewSession();
+        },
+        onCancel: () {
+          Navigator.pop(context);
+          _showSessionList();
+        },
       ),
     );
   }
@@ -534,7 +591,7 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
           IconButton(
             onPressed: () => _sendMessage(_messageController.text),
             icon: const Icon(Icons.send_sharp),
-            color: Colors.blue,
+            color: AppColors.primaryColor,
           ),
         ],
       ),
@@ -543,11 +600,17 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
-      title: Text("chat_bot".tr(context), style: TextStyles.bold19),
+      backgroundColor: AppColors.backgroundColor,
+      title: Text(
+        "chat_bot".tr(context),
+        style: TextStyles.bold19,
+      ),
       centerTitle: true,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios_new_rounded),
+        icon: const Icon(
+          Icons.arrow_back,
+          color: Colors.white,
+        ),
         onPressed: () => Navigator.pop(context),
       ),
       actions: [
@@ -561,14 +624,109 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
           },
           itemBuilder: (context) => [
             PopupMenuItem(
-                value: 'new_chat'.tr(context),
-                child: Text("Start New Chat".tr(context))),
+              value: 'new_chat'.tr(context),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.add,
+                    color: AppColors.primaryColor, // Use your primary color
+                  ),
+                  const SizedBox(width: 10), // Spacing between icon and text
+                  Text(
+                    "Start New Chat".tr(context),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: AppColors.primaryColor, // Use your primary color
+                    ),
+                  ),
+                ],
+              ),
+            ),
             PopupMenuItem(
-                value: 'view_chats'.tr(context),
-                child: Text("View Previous Chats".tr(context))),
+              value: 'view_chats'.tr(context),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.history,
+                    color: AppColors.primaryColor, // Use your primary color
+                  ),
+                  const SizedBox(width: 10), // Spacing between icon and text
+                  Text(
+                    "View Previous Chats".tr(context),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: AppColors.primaryColor, // Use your primary color
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+          icon: Icon(
+            Icons.more_vert,
+            color: AppColors.primaryColor, // Use your primary color
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10), // Rounded corners
+          ),
+          elevation: 4, // Add shadow
+          color: Colors.white, // Background color of the menu
+        )
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _messageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: buildAppBar(context),
+      backgroundColor: Colors.white,
+      body: Directionality(
+        textDirection: TextDirection.ltr, // Set text direction to LTR
+        child: Stack(
+          children: [
+            // Background Watermark
+            Positioned.fill(
+              child: Opacity(
+                opacity: 0.2, // Adjust transparency (0.0 to 1.0)
+                child: Center(
+                  child: Image.asset(
+                    'assets/images/finallllllllogo.png', // Path to your app icon
+                    width: 200, // Adjust size as needed
+                    height: 200,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ),
+            // Main Content
+            Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    padding: const EdgeInsets.all(8.0),
+                    itemCount: _messages.length,
+                    reverse: false,
+                    itemBuilder: (context, index) {
+                      final message = _messages[index];
+                      return _buildMessage(message);
+                    },
+                  ),
+                ),
+                _buildMessageInput(),
+              ],
+            ),
           ],
         ),
-      ],
+      ),
     );
   }
 }
