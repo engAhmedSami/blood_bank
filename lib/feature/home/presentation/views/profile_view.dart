@@ -1,20 +1,258 @@
+import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:shorebird_code_push/shorebird_code_push.dart';
+import 'package:restart_app/restart_app.dart';
+import 'package:blood_bank/constants.dart';
 import 'package:blood_bank/core/helper_function/get_user.dart';
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/profile/logout_button.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:blood_bank/feature/localization/cubit/locale_cubit.dart';
-import 'package:flutter/material.dart';
 import 'package:blood_bank/feature/auth/data/models/user_model.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/profile/big_info_card.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/profile/custom_app_bar_profile.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/profile/settings_item.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/profile/settings_switch.dart';
-import 'package:blood_bank/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-class ProfileView extends StatelessWidget {
+class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
+
+  @override
+  ProfileViewState createState() => ProfileViewState();
+}
+
+class ProfileViewState extends State<ProfileView> with WidgetsBindingObserver {
+  final shorebirdUpdater = ShorebirdUpdater();
+  bool _isCheckingForUpdates = false;
+  UpdateTrack currentTrack = UpdateTrack.stable;
+  bool _notificationsEnabled = true;
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _checkNotificationPermission();
+    _initializeNotifications();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _checkNotificationPermission();
+    }
+  }
+
+  // تهيئة الإشعارات المحلية
+  void _initializeNotifications() {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    const InitializationSettings initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid);
+
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
+
+  // التحقق من حالة إذن الإشعارات
+  Future<void> _checkNotificationPermission() async {
+    final status = await Permission.notification.status;
+    if (status.isPermanentlyDenied) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enable notifications in device settings.'),
+          action: SnackBarAction(
+            label: 'Open Settings',
+            onPressed: () {
+              openAppSettings(); // فتح إعدادات الجهاز
+            },
+          ),
+        ),
+      );
+    }
+    setState(() {
+      _notificationsEnabled = status.isGranted;
+    });
+  }
+
+  // طلب إذن الإشعارات
+  Future<void> _requestNotificationPermission() async {
+    final status = await Permission.notification.request();
+    if (status.isGranted) {
+      // الإذن مُمنَح
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Notification permission granted!')),
+      );
+    } else if (status.isDenied) {
+      // الإذن مرفوض
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Notification permission denied!')),
+      );
+    } else if (status.isPermanentlyDenied) {
+      // الإذن مرفوض بشكل دائم (يحتاج إلى فتح الإعدادات)
+      openAppSettings();
+    }
+  }
+
+  // تفعيل/تعطيل الإشعارات
+  Future<void> _toggleNotifications(bool value) async {
+    final status = await Permission.notification.status;
+
+    if (value && (status.isDenied || status.isPermanentlyDenied)) {
+      // إذا كان الإذن معطلاً، اطلب من المستخدم تمكينه
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enable notifications in device settings.'),
+          action: SnackBarAction(
+            label: 'Open Settings',
+            onPressed: () {
+              openAppSettings(); // فتح إعدادات الجهاز
+            },
+          ),
+        ),
+      );
+      setState(() {
+        _notificationsEnabled = false; // إعادة تعيين القيمة إلى false
+      });
+      return;
+    }
+
+    setState(() {
+      _notificationsEnabled = value;
+    });
+
+    final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+
+    if (value) {
+      // تفعيل الإشعارات
+      await _requestNotificationPermission(); // طلب إذن الإشعارات
+      await firebaseMessaging
+          .subscribeToTopic('all_users'); // اشترك في موضوع (Topic)
+    } else {
+      // تعطيل الإشعارات
+      await firebaseMessaging
+          .unsubscribeFromTopic('all_users'); // ألغِ الاشتراك من الموضوع
+
+      // إعلام المستخدم بفتح إعدادات الجهاز لتعطيل الإذن بشكل كامل
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+              'To fully disable notifications, please disable them in device settings.'),
+          action: SnackBarAction(
+            label: 'Open Settings',
+            onPressed: () {
+              openAppSettings(); // فتح إعدادات الجهاز
+            },
+          ),
+        ),
+      );
+    }
+  }
+
+  // التحقق من التحديثات
+  Future<void> _checkForUpdate() async {
+    if (_isCheckingForUpdates) return;
+
+    try {
+      setState(() => _isCheckingForUpdates = true);
+      final status = await shorebirdUpdater.checkForUpdate(track: currentTrack);
+      if (!mounted) return;
+
+      switch (status) {
+        case UpdateStatus.upToDate:
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('up_to_date'.tr(context))),
+          );
+        case UpdateStatus.outdated:
+          _showUpdateDialog(context, shorebirdUpdater);
+        case UpdateStatus.restartRequired:
+          _showRestartSnackBar(context); // عرض رسالة لإعادة التشغيل
+        case UpdateStatus.unavailable:
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('update_unavailable'.tr(context))),
+          );
+      }
+    } catch (error) {
+      debugPrint('Error checking for update: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('error_checking_for_update'.tr(context))),
+      );
+    } finally {
+      setState(() => _isCheckingForUpdates = false);
+    }
+  }
+
+  // تنزيل التحديث
+  Future<void> _downloadUpdate(ShorebirdUpdater updater) async {
+    try {
+      await updater.update(track: currentTrack);
+      if (!mounted) return;
+
+      // عرض رسالة لإعادة التشغيل بعد تنزيل التحديث
+      _showRestartSnackBar(context);
+    } on UpdateException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('update_failed: ${e.message}'.tr(context))),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('update_failed: ${e.toString()}'.tr(context))),
+      );
+    }
+  }
+
+  // عرض نافذة حوار للتحديث
+  void _showUpdateDialog(BuildContext context, ShorebirdUpdater updater) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('update_available'.tr(context)),
+          content: Text('update_available_message'.tr(context)),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('later'.tr(context)),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                await _downloadUpdate(updater);
+              },
+              child: Text('update_now'.tr(context)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // عرض رسالة لإعادة التشغيل
+  void _showRestartSnackBar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('update_downloaded_restart'.tr(context)),
+        action: SnackBarAction(
+          label: 'Restart',
+          onPressed: () {
+            Restart.restartApp(); // إعادة تشغيل التطبيق
+          },
+        ),
+        duration: const Duration(seconds: 10), // مدة عرض الرسالة
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +284,7 @@ class ProfileView extends StatelessWidget {
                   return CustomProfileAppBar(
                     name: user.name,
                     photoUrl: user.photoUrl,
-                    userState: user.userState,
+                    userState: user.userState.tr(context),
                   );
                 },
               ),
@@ -59,14 +297,14 @@ class ProfileView extends StatelessWidget {
                     SettingsSwitch(
                       title: 'available_to_donate'.tr(context),
                       keyName: 'available_to_donate',
+                      value: true, // يمكنك تغيير هذه القيمة
+                      onChanged: (value) {},
                     ),
                     SettingsSwitch(
                       title: 'notification'.tr(context),
                       keyName: 'notification',
-                    ),
-                    SettingsSwitch(
-                      title: 'allow_tracking'.tr(context),
-                      keyName: 'allow_tracking',
+                      value: _notificationsEnabled,
+                      onChanged: _toggleNotifications,
                     ),
                     SettingsItem(
                       title: 'manage_address'.tr(context),
@@ -78,8 +316,9 @@ class ProfileView extends StatelessWidget {
                       onTap: () => _showLanguagePicker(context),
                     ),
                     SettingsItem(
-                      title: 'contact_details'.tr(context),
+                      title: 'Check for updates'.tr(context),
                       icon: Icons.arrow_forward_ios,
+                      onTap: _checkForUpdate,
                     ),
                     const SizedBox(height: 20),
                     LogoutFeature(),
@@ -111,7 +350,8 @@ class ProfileView extends StatelessWidget {
                 final user = snapshot.data!;
                 return BigInfoCard(
                   savedLives: 'lives_saved'.tr(context),
-                  bloodGroup: '${user.bloodType} ${'group'.tr(context)}',
+                  bloodGroup:
+                      '${user.bloodType.tr(context)} ${'group'.tr(context)}',
                   nextDonationDate: 'next_donation_date'.tr(context),
                 );
               },
@@ -122,6 +362,7 @@ class ProfileView extends StatelessWidget {
     );
   }
 
+  // عرض نافذة اختيار اللغة
   void _showLanguagePicker(BuildContext context) {
     showModalBottomSheet(
       context: context,

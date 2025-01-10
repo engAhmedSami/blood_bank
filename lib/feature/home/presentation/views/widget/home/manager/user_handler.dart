@@ -35,8 +35,8 @@ class UserHandler extends StatelessWidget {
             return HomeHeader(
               name: user.name,
               photoUrl: user.photoUrl,
-              userState: user.userState,
-              bloodType: user.bloodType,
+              userState: user.userState.tr(context),
+              bloodType: user.bloodType.tr(context),
             );
           },
         ),

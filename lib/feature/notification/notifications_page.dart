@@ -1,7 +1,8 @@
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
-import 'package:blood_bank/core/widget/CoustomDialog.dart';
-import 'package:blood_bank/core/widget/coustomAleartDiloage.dart';
+import 'package:blood_bank/core/widget/coustom_dialog.dart';
+import 'package:blood_bank/core/widget/coustom_aleart_diloage.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'sql_helper_notification.dart';
@@ -48,8 +49,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('All notifications deleted'),
+      SnackBar(
+        content: Text('All notifications deleted'.tr(context)),
       ),
     );
   }
@@ -59,10 +60,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
       context: context,
       builder: (context) {
         return CustomAlertDialog(
-          title: 'Delete All Notifications',
-          content: 'Are you sure you want to delete all notifications?',
-          confirmText: 'Delete',
-          cancelText: 'Cancel',
+          title: 'Delete All Notifications'.tr(context),
+          content:
+              'Are you sure you want to delete all notifications?'.tr(context),
+          confirmText: 'Delete'.tr(context),
+          cancelText: 'cancel'.tr(context),
           onConfirm: () {
             Navigator.pop(context, true);
           },
@@ -87,10 +89,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
           }
 
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(
+            return Center(
                 child: CoustomDialog(
-              content: 'you don\'t have notifications yet',
-              title: 'Alert for Notification',
+              content: 'you dont have notifications yet'.tr(context),
+              title: 'Alert for Notification'.tr(context),
             ));
           }
 
@@ -113,13 +115,13 @@ class _NotificationsPageState extends State<NotificationsPage> {
                         await _deleteNotification(id);
                       },
                       backgroundColor: AppColors.primaryColor,
-                      child: const Column(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.delete, color: Colors.white),
                           SizedBox(height: 4),
                           Text(
-                            'Delete',
+                            'Delete'.tr(context),
                             style: TextStyle(color: Colors.white),
                           ),
                         ],
@@ -154,7 +156,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
       backgroundColor: Colors.white,
       centerTitle: true,
       title: Text(
-        'Notifications',
+        'Notifications'.tr(context),
         style: TextStyles.semiBold19.copyWith(color: Colors.black),
       ),
       leading: IconButton(

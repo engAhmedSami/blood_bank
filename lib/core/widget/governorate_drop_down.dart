@@ -4,77 +4,124 @@ import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:blood_bank/core/utils/app_colors.dart';
 
 class GovernorateDropdown extends StatelessWidget {
-  final String? selectedGovernorate;
-  final ValueChanged<String?> onChanged;
+  final String? selectedKey; // المفتاح المحدد مسبقًا
+  final ValueChanged<String?> onChanged; // حدث عند تغيير القيمة
 
   const GovernorateDropdown({
     super.key,
-    this.selectedGovernorate,
+    this.selectedKey,
     required this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
+    // خريطة المحافظات بالمفاتيح والأيقونات
     final List<Map<String, dynamic>> governorates = [
-      {'name': 'Cairo'.tr(context), 'icon': Icons.location_city},
-      {'name': 'Alexandria'.tr(context), 'icon': Icons.beach_access},
-      {'name': 'Giza'.tr(context), 'icon': Icons.terrain},
-      {'name': 'Dakahlia'.tr(context), 'icon': Icons.agriculture},
-      {'name': 'Red Sea'.tr(context), 'icon': Icons.water},
-      {'name': 'Beheira'.tr(context), 'icon': Icons.grass},
-      {'name': 'Fayoum'.tr(context), 'icon': Icons.search},
-      {'name': 'Gharbia'.tr(context), 'icon': Icons.wb_sunny},
-      {'name': 'Ismailia'.tr(context), 'icon': Icons.flag},
-      {'name': 'Menofia'.tr(context), 'icon': Icons.house},
-      {'name': 'Minya'.tr(context), 'icon': Icons.location_on},
-      {'name': 'Qaliubiya'.tr(context), 'icon': Icons.map},
-      {'name': 'New Valley'.tr(context), 'icon': Icons.eco},
-      {'name': 'Suez'.tr(context), 'icon': Icons.anchor},
-      {'name': 'Aswan'.tr(context), 'icon': Icons.landscape},
-      {'name': 'Assiut'.tr(context), 'icon': Icons.park},
-      {'name': 'Beni Suef'.tr(context), 'icon': Icons.nature},
-      {'name': 'Port Said'.tr(context), 'icon': Icons.directions_boat},
-      {'name': 'Damietta'.tr(context), 'icon': Icons.anchor},
-      {'name': 'Sharkia'.tr(context), 'icon': Icons.filter_vintage},
-      {'name': 'South Sinai'.tr(context), 'icon': Icons.filter_drama},
-      {'name': 'Kafr El Sheikh'.tr(context), 'icon': Icons.flare},
-      {'name': 'Matrouh'.tr(context), 'icon': Icons.filter_hdr},
-      {'name': 'North Sinai'.tr(context), 'icon': Icons.ac_unit},
-      {'name': 'Qena'.tr(context), 'icon': Icons.location_city},
-      {'name': 'Sohag'.tr(context), 'icon': Icons.terrain},
-      {'name': 'Luxor'.tr(context), 'icon': Icons.temple_buddhist},
+      {
+        'key': 'cairo',
+        'name': 'cairo'.tr(context),
+        'icon': Icons.location_city
+      },
+      {
+        'key': 'alexandria',
+        'name': 'alexandria'.tr(context),
+        'icon': Icons.beach_access
+      },
+      {'key': 'giza', 'name': 'giza'.tr(context), 'icon': Icons.terrain},
+      {
+        'key': 'dakahlia',
+        'name': 'dakahlia'.tr(context),
+        'icon': Icons.agriculture
+      },
+      {'key': 'red sea', 'name': 'red sea'.tr(context), 'icon': Icons.water},
+      {'key': 'beheira', 'name': 'beheira'.tr(context), 'icon': Icons.grass},
+      {'key': 'fayoum', 'name': 'fayoum'.tr(context), 'icon': Icons.search},
+      {'key': 'gharbia', 'name': 'gharbia'.tr(context), 'icon': Icons.wb_sunny},
+      {'key': 'ismailia', 'name': 'ismailia'.tr(context), 'icon': Icons.flag},
+      {'key': 'menofia', 'name': 'menofia'.tr(context), 'icon': Icons.house},
+      {'key': 'minya', 'name': 'minya'.tr(context), 'icon': Icons.location_on},
+      {'key': 'qaliubiya', 'name': 'qaliubiya'.tr(context), 'icon': Icons.map},
+      {
+        'key': 'new valley',
+        'name': 'new valley'.tr(context),
+        'icon': Icons.eco
+      },
+      {'key': 'suez', 'name': 'suez'.tr(context), 'icon': Icons.anchor},
+      {'key': 'aswan', 'name': 'aswan'.tr(context), 'icon': Icons.landscape},
+      {'key': 'assiut', 'name': 'assiut'.tr(context), 'icon': Icons.park},
+      {
+        'key': 'beni suef',
+        'name': 'beni suef'.tr(context),
+        'icon': Icons.nature
+      },
+      {
+        'key': 'port said',
+        'name': 'port said'.tr(context),
+        'icon': Icons.directions_boat
+      },
+      {'key': 'damietta', 'name': 'damietta'.tr(context), 'icon': Icons.anchor},
+      {
+        'key': 'sharkia',
+        'name': 'sharkia'.tr(context),
+        'icon': Icons.filter_vintage
+      },
+      {
+        'key': 'south sinai',
+        'name': 'south sinai'.tr(context),
+        'icon': Icons.filter_drama
+      },
+      {
+        'key': 'kafr el sheikh',
+        'name': 'kafr el sheikh'.tr(context),
+        'icon': Icons.flare
+      },
+      {
+        'key': 'matrouh',
+        'name': 'matrouh'.tr(context),
+        'icon': Icons.filter_hdr
+      },
+      {
+        'key': 'north sinai',
+        'name': 'north sinai'.tr(context),
+        'icon': Icons.ac_unit
+      },
+      {'key': 'qena', 'name': 'qena'.tr(context), 'icon': Icons.location_city},
+      {'key': 'sohag', 'name': 'sohag'.tr(context), 'icon': Icons.terrain},
+      {
+        'key': 'luxor',
+        'name': 'luxor'.tr(context),
+        'icon': Icons.temple_buddhist
+      },
     ];
 
     return DropdownButtonFormField<String>(
-      value: selectedGovernorate,
-      items: governorates
-          .map(
-            (governorate) => DropdownMenuItem<String>(
-              value: governorate['name'] as String,
-              child: Row(
-                children: [
-                  Icon(
-                    governorate['icon'] as IconData,
-                    color: AppColors.lightPrimaryColor,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    governorate['name'] as String,
-                    style: TextStyles.semiBold14.copyWith(
-                      color: AppColors.lightPrimaryColor,
-                    ),
-                  ),
-                ],
+      value: selectedKey, // القيمة المحددة حاليًا
+      items: governorates.map((governorate) {
+        return DropdownMenuItem<String>(
+          value: governorate['key'] as String, // تخزين المفتاح
+          child: Row(
+            children: [
+              Icon(
+                governorate['icon'] as IconData, // الأيقونة
+                color: AppColors.lightPrimaryColor,
+                size: 20,
               ),
-            ),
-          )
-          .toList(),
-      onChanged: onChanged,
+              const SizedBox(width: 10),
+              Text(
+                governorate['name'] as String, // الاسم المترجم
+                style: TextStyles.semiBold14.copyWith(
+                  color: AppColors.lightPrimaryColor,
+                ),
+              ),
+            ],
+          ),
+        );
+      }).toList(),
+      onChanged: onChanged, // تحديث القيمة عند التغيير
       decoration: InputDecoration(
         labelText: 'select_governorate'.tr(context),
         labelStyle:
-            TextStyles.semiBold14.copyWith(color: AppColors.lightPrimaryColor),
+            TextStyles.semiBold14.copyWith(color: AppColors.backgroundColor),
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),

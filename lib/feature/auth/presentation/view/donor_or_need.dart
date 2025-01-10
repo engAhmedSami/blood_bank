@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:blood_bank/constants.dart';
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/core/services/firestor_service.dart';
@@ -13,7 +14,6 @@ import 'package:blood_bank/core/services/shared_preferences_sengleton.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
 
 class DonorOrNeed extends StatefulWidget {
   const DonorOrNeed({super.key});
@@ -23,9 +23,9 @@ class DonorOrNeed extends StatefulWidget {
 }
 
 class _DonorOrNeedState extends State<DonorOrNeed> {
-  String? selectedOption;
-  bool isLoading = true; // حالة التحميل عند التحقق من حالة المستخدم
-  bool isSaving = false; // حالة التحميل عند حفظ البيانات
+  String? selectedKey; // المفتاح الذي سيتم تخزينه
+  bool isLoading = true; // حالة التحقق من بيانات المستخدم
+  bool isSaving = false; // حالة الحفظ
   final FirestorService firestoreService = FirestorService();
 
   @override
@@ -38,11 +38,11 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
     final user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-      // جلب حالة المستخدم بناءً على uid
+      // التحقق مما إذا كانت حالة المستخدم قد تم تخزينها مسبقًا
       bool isUserStateSelected =
           Prefs.getBool('${user.uid}_$kIsUserStateSelected');
       if (isUserStateSelected) {
-        // إذا تم اختيار الحالة مسبقًا، الانتقال مباشرة للصفحة الرئيسية
+        // إذا تم تخزين الحالة مسبقًا، الانتقال للصفحة الرئيسية
         WidgetsBinding.instance.addPostFrameCallback((_) {
           Navigator.of(context).pushReplacement(
             buildPageRoute(const CustomBottomNavBar()),
@@ -50,103 +50,67 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
         });
       } else {
         setState(() {
-          isLoading = false; // إنهاء حالة التحميل عند التحقق
+          isLoading = false;
         });
       }
     } else {
       setState(() {
-        isLoading = false; // إنهاء حالة التحميل إذا لم يتم تسجيل دخول المستخدم
+        isLoading = false;
       });
     }
   }
 
-  Future<void> _saveSelectionToPrefs(String option) async {
-    selectedOption = option;
-    setState(() {}); // تحديث الواجهة
-  }
-
   Future<void> saveUserState() async {
-    if (selectedOption != null) {
-      setState(() {
-        isSaving = true; // بدء حالة الحفظ
-      });
+    if (selectedKey == null) {
+      failureTopSnackBar(context, 'please_select_an_option'.tr(context));
+      return;
+    }
 
-      try {
-        final user = FirebaseAuth.instance.currentUser;
-        if (user != null) {
-          // تحديث الحقل userState في Firestore
-          await firestoreService.updateData(
-            path: 'users',
-            docuementId: user.uid,
-            data: {
-              'userState': selectedOption,
-            },
-          );
+    setState(() {
+      isSaving = true;
+    });
 
-          // قراءة البيانات الحالية من Prefs
-          final currentUserData = Prefs.getString(kUserData);
-          Map<String, dynamic> userData = {};
-          if (currentUserData.isNotEmpty) {
-            userData = jsonDecode(currentUserData);
-          }
+    try {
+      final user = FirebaseAuth.instance.currentUser;
 
-          // تحديث بيانات userState في Prefs
-          userData['userState'] = selectedOption;
-          Prefs.setString(kUserData, jsonEncode(userData));
-
-          // حفظ حالة الاختيار باستخدام Prefs مع uid
-          Prefs.setBool('${user.uid}_$kIsUserStateSelected', true);
-
-          if (!mounted) return;
-
-          // succesTopSnackBar(
-          //   context,
-          //   'User state updated successfully',
-          // );
-          successTopSnackBar(
-            context,
-            'user_state_updated_successfully'.tr(context),
-          );
-
-          // الانتقال إلى الصفحة الرئيسية مع إيقاف اللودينج
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.of(context).pushReplacement(
-              buildPageRoute(const CustomBottomNavBar()),
-            );
-          });
-        } else {
-          // failuerTopSnackBar(
-          //   context,
-          //   'User not ',
-          // );
-          failureTopSnackBar(
-            context,
-            'user_not'.tr(context),
-          );
-        }
-      } catch (e) {
-        failureTopSnackBar(
-          context,
-          'failed_to_update_user_state$e'.tr(context),
+      if (user != null) {
+        // حفظ المفتاح في Firestore
+        await firestoreService.updateData(
+          path: 'users',
+          docuementId: user.uid,
+          data: {'userState': selectedKey},
         );
-      } finally {
-        // تعيين حالة الحفظ إلى false فقط إذا لم يتم التنقل
-        if (mounted) {
-          setState(() {
-            isSaving = false;
-          });
-        }
-      }
-    } else {
-      // failuerTopSnackBar(
-      //   context,
-      //   '${'Please select an option'}.tr(context)',
-      // );
 
-      failureTopSnackBar(
-        context,
-        'please_select_an_option'.tr(context),
-      );
+        // تحديث البيانات في SharedPreferences
+        final currentUserData = Prefs.getString(kUserData);
+        Map<String, dynamic> userData = {};
+        if (currentUserData.isNotEmpty) {
+          userData = jsonDecode(currentUserData);
+        }
+
+        userData['userState'] = selectedKey;
+        Prefs.setString(kUserData, jsonEncode(userData));
+        Prefs.setBool('${user.uid}_$kIsUserStateSelected', true);
+
+        successTopSnackBar(
+          context,
+          'user_state_updated_successfully'.tr(context),
+        );
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.of(context).pushReplacement(
+            buildPageRoute(const CustomBottomNavBar()),
+          );
+        });
+      } else {
+        failureTopSnackBar(context, 'user_not'.tr(context));
+      }
+    } catch (e) {
+      failureTopSnackBar(context, 'failed_to_update_user_state'.tr(context));
+    } finally {
+      setState(() {
+        isSaving = false;
+      });
     }
   }
 
@@ -157,7 +121,7 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
     if (isLoading) {
       return const Scaffold(
         body: Center(
-          child: CoustomCircularProgressIndicator(), // عرض مؤشر التحميل
+          child: CoustomCircularProgressIndicator(),
         ),
       );
     }
@@ -193,18 +157,22 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
                       PreferenceButton(
                         image: Assets.imagesNeed,
                         label: "need".tr(context),
-                        isSelected: selectedOption == "Need",
+                        isSelected: selectedKey == "need",
                         onPressed: () {
-                          _saveSelectionToPrefs("Need");
+                          setState(() {
+                            selectedKey = "need"; // فقط يتم تحديث المفتاح
+                          });
                         },
                       ),
                       SizedBox(width: width * 0.1),
                       PreferenceButton(
                         image: Assets.imagesDoner,
                         label: "donor".tr(context),
-                        isSelected: selectedOption == "Donor",
+                        isSelected: selectedKey == "donor",
                         onPressed: () {
-                          _saveSelectionToPrefs("Donor");
+                          setState(() {
+                            selectedKey = "donor"; // فقط يتم تحديث المفتاح
+                          });
                         },
                       ),
                     ],
@@ -212,20 +180,20 @@ class _DonorOrNeedState extends State<DonorOrNeed> {
                 ),
                 const Spacer(),
                 CustomButton(
-                  onPressed: saveUserState, // تعطيل الزر أثناء الحفظ
+                  onPressed: saveUserState, // الحفظ يحدث عند الضغط على الزر
                   text: isSaving ? "Saving...".tr(context) : "next".tr(context),
                 ),
                 const SizedBox(height: 80),
               ],
             ),
           ),
-          if (isSaving) // حالة الحفظ
+          if (isSaving)
             Container(
               color: Colors.black.withValues(
                 alpha: 0.5,
               ),
               child: const Center(
-                child: CircularProgressIndicator(),
+                child: CoustomCircularProgressIndicator(),
               ),
             ),
         ],

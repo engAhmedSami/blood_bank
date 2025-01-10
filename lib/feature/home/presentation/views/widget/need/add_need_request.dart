@@ -1,10 +1,9 @@
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
-import 'package:blood_bank/core/utils/app_text_style.dart';
-import 'package:blood_bank/core/widget/GenderDropdown.dart';
-import 'package:blood_bank/core/widget/bloodTypeDropDown.dart';
+import 'package:blood_bank/core/widget/blood_type_drop_down.dart';
+import 'package:blood_bank/core/widget/gender_drop_down.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/core/widget/custom_request_text_field.dart';
-import 'package:blood_bank/core/widget/donationTypeDropDown.dart';
+import 'package:blood_bank/core/widget/donation_type_drop_down.dart';
 import 'package:blood_bank/core/widget/governorate_drop_down.dart';
 import 'package:blood_bank/feature/home/domain/entities/needer_request_entity.dart';
 import 'package:blood_bank/feature/home/presentation/manger/add_need_request_cubit/add_need_request_cubit.dart';
@@ -62,7 +61,7 @@ class NeedRequestState extends State<NeedRequest> {
     });
   }
 
-  List<String> get _bloodTypes {
+  List<String> get bloodTypes {
     return [
       'bloodTypeAPlus'.tr(context),
       'bloodTypeAMinus'.tr(context),
@@ -75,7 +74,7 @@ class NeedRequestState extends State<NeedRequest> {
     ];
   }
 
-  List<String> get _donationTypes {
+  List<String> get donationTypes {
     return [
       'wholeBlood'.tr(context),
       'plasma'.tr(context),
@@ -83,7 +82,7 @@ class NeedRequestState extends State<NeedRequest> {
     ];
   }
 
-  List<String> get _genders {
+  List<String> get genders {
     return [
       'male'.tr(context),
       'female'.tr(context),
@@ -236,14 +235,13 @@ class NeedRequestState extends State<NeedRequest> {
               // bloodTypeDropDown(),
 
               BloodTypeDropdown(onBloodTypeSelected: _bloodTypes),
-
               DonationTypeDropdown(onTypeSelected: _donationTypes),
 
               GenderDropdown(
-                genders: _genders,
-                onGenderSelected: (gender) {
+                initialGender: gender,
+                onGenderSelected: (value) {
                   setState(() {
-                    gender = gender;
+                    gender = value;
                   });
                 },
               ),
@@ -280,7 +278,7 @@ class NeedRequestState extends State<NeedRequest> {
               ),
 
               GovernorateDropdown(
-                selectedGovernorate: address,
+                selectedKey: address,
                 onChanged: (value) {
                   setState(() {
                     address = value;

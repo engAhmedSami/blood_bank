@@ -1,6 +1,7 @@
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,6 +19,23 @@ class BigInfoCard extends StatelessWidget {
     required this.bloodGroup,
     required this.nextDonationDate,
   });
+
+  void _handleNextDonationDate(BuildContext context, DocumentSnapshot request) {
+    final data = request.data() as Map<String, dynamic>?; // Explicit cast
+    if (data != null && data.containsKey('lastRequestDate')) {
+      final nextDonationTimestamp = data['lastRequestDate'];
+      if (nextDonationTimestamp != null && nextDonationTimestamp is Timestamp) {
+        DateTime nextDonationDateTime = nextDonationTimestamp.toDate();
+        // Check if the next donation date has passed by at least one day
+        if (nextDonationDateTime
+            .isBefore(DateTime.now().subtract(const Duration(days: 1)))) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _promptUserToSetNewDate(context, request);
+          });
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,18 +58,38 @@ class BigInfoCard extends StatelessWidget {
         }
 
         final requests = snapshot.data?.docs ?? [];
+        debugPrint('Number of requests: ${requests.length}');
 
-        String formattedNextDonationDate = 'Next Donation Date';
+        String formattedNextDonationDate = 'next_donation_date'.tr(context);
+        bool isTodayDonationDay = false;
+
         if (requests.isNotEmpty) {
-          final nextDonationTimestamp = requests[0]['nextDonationDate'];
+          final request = requests[0];
+          debugPrint('Request data: ${request.data()}');
+          _handleNextDonationDate(context, request);
 
-          if (nextDonationTimestamp != null &&
-              nextDonationTimestamp is Timestamp) {
-            DateTime nextDonationDateTime = nextDonationTimestamp.toDate();
+          final data = request.data() as Map<String, dynamic>?; // Explicit cast
+          if (data != null && data.containsKey('lastRequestDate')) {
+            final nextDonationTimestamp = data['lastRequestDate'];
+            if (nextDonationTimestamp != null &&
+                nextDonationTimestamp is Timestamp) {
+              DateTime nextDonationDateTime = nextDonationTimestamp.toDate();
+              formattedNextDonationDate =
+                  DateFormat('yyyy-MM-dd').format(nextDonationDateTime);
+
+              // Check if today is the donation day
+              if (nextDonationDateTime.year == DateTime.now().year &&
+                  nextDonationDateTime.month == DateTime.now().month &&
+                  nextDonationDateTime.day == DateTime.now().day) {
+                isTodayDonationDay = true;
+              }
+            }
+          } else {
             formattedNextDonationDate =
-                DateFormat('yyyy-MM-dd').format(nextDonationDateTime);
+                'no_next_donation_scheduled'.tr(context);
           }
         }
+
         return Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
@@ -71,8 +109,11 @@ class BigInfoCard extends StatelessWidget {
               InfoColumn(title: savedLives, image: Assets.imagesLifesaved),
               InfoColumn(title: bloodGroup, image: Assets.imagesBlood),
               InfoColumn(
-                title: formattedNextDonationDate,
+                title: isTodayDonationDay
+                    ? 'Today is your donation day!'
+                    : formattedNextDonationDate,
                 image: Assets.imagesNextdonation,
+                isTodayDonationDay: isTodayDonationDay,
               ),
             ],
           ),
@@ -80,16 +121,58 @@ class BigInfoCard extends StatelessWidget {
       },
     );
   }
+
+  void _promptUserToSetNewDate(BuildContext context, DocumentSnapshot request) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Donation Day Passed'),
+        content: const Text(
+            'Your donation day has passed. Would you like to set a new donation date?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              FirebaseFirestore.instance
+                  .collection('donerRequest')
+                  .doc(request.id)
+                  .delete()
+                  .then((_) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text('Request deleted successfully.')),
+                );
+                Navigator.pop(context); // Close the dialog
+              }).catchError((error) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Error: $error')),
+                );
+              });
+            },
+            child: const Text('Skip'),
+          ),
+          TextButton(
+            onPressed: () {
+              // Add your navigation logic here
+              Navigator.pop(context); // Close the dialog
+            },
+            child: const Text('Set New Date'),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class InfoColumn extends StatelessWidget {
   final String title;
   final String image;
+  final bool isTodayDonationDay;
 
   const InfoColumn({
     super.key,
     required this.title,
     required this.image,
+    this.isTodayDonationDay = false,
   });
 
   @override
@@ -98,7 +181,13 @@ class InfoColumn extends StatelessWidget {
       children: [
         SvgPicture.asset(image, height: 30),
         const SizedBox(height: 8),
-        Text(title, textAlign: TextAlign.center, style: TextStyles.semiBold13),
+        Text(
+          title,
+          textAlign: TextAlign.center,
+          style: isTodayDonationDay
+              ? TextStyles.semiBold13.copyWith(color: Colors.red)
+              : TextStyles.semiBold13,
+        ),
       ],
     );
   }

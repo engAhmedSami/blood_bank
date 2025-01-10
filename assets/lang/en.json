@@ -11,6 +11,8 @@
     "subtitle_on_boarding_four": "Your donation can save many lives make a difference ",
     "sign_up": "Sign Up",
     "login": "Login",
+    "logout": "Logout",
+    "cancel": "Cancel",
     "Prev": "Prev",
     "next": "Next",
     "Start": "Start",
@@ -29,7 +31,8 @@
     "Let’s login for explore continues" : "Let’s login for explore continues.",
     "Forgot Password" : "Forgot Password",
     "Don't have an account" : "Don't have an account? ",
-
+     "Confirm Logout" : "Confirm Logout",
+    "Are you sure you want to logout?" : "Are you sure you want to logout?",
 "signed_in_successfully": "Signed in successfully!",
 
     "account_created_successfully": "Account created successfully, verify your account",
@@ -39,8 +42,47 @@
     "resend_verification_email": "Resend Verification Email",
     "please_verify_email_address": "Please verify your email address.",
         "activeRequest": "You have an active request. Please complete it before submitting a new one.",
+    "Alert for Notification": "Alert for Notification",
+    "you dont have notifications yet": "you don't have notifications yet",
+    "thanks for your contribution": "Thanks for your contribution",
+    "No requests available at the moment": "No requests available at the moment.",
+    "Delete": "Delete",
+    "Notifications": "Notifications",
+    "All notifications deleted": "All notifications deleted",
+    "Delete All Notifications": "Delete All Notifications",
+    "Are you sure you want to delete all notifications?": "Are you sure you want to delete all notifications?",
 
 
+"Save": "Save",
+"Sorry, something went wrong. Please try again later.": "Sorry, something went wrong. Please try again later.",
+"Previous Chats": "Old Chats",
+"Choose an Action": "Choose an Action",
+"Would you like to start a new session or view previous chats?": "Would you like to start a new session or view previous chats?",
+"New Session": "New Session",
+"Type a message..." : "Type a message...",
+"new_chat": "New Chat",
+"view_chats": "View Chats",
+"Start New Chat": "Start New Chat",
+"View Previous Chats": "View Previous Chats",
+"Check for updates": "Check for updates",
+"update_downloaded": "Update Downloaded",
+"updat_failed": "Update Failed",
+"no_updates_available": "No updates available",
+"update_now": "Update Now",
+"update_available": "Update Available",
+"later": "Later",
+"up_to_date": "Up To Date",
+"update_unavailable": "Update Unavailable",
+"error_checking_for_update": "Error checking for update",
+"update_error": "Update Error",
+"update_available_message": "An update is available. Would you like to update now?",
+"update_downloaded_restart": "Update downloaded. Would you like to restart now?",
+"Restart" : "Restart",
+
+
+  "restart_required": "Restart Required",
+  "restart_required_message": "The app needs to restart to apply the update. Would you like to restart now?",
+  "restart_now": "Restart Now",
 
 
 
@@ -124,7 +166,8 @@
     "tap_here_to_update_your_profile_information": "Tap here to update your profile information.",
     "state": "State" 
     ,
-
+    "UnitsRequired" : "Units Required",
+    "Please enter the units required" : "Please enter the units required",
     "pleaseSelectDate": "Please select a date" 
     ,  "patientName": "Patient Name",
     "age": "Age",
@@ -144,14 +187,26 @@
     "pleaseSelectGender": "Please select gender", 
        "pleaseSelectDonationType": "Please select donation type",
     "selectDonationType": "Select Donation Type",   
-    
-
+    "Notes": "Notes",
+    "Distance": "Distance",
+    "Please enter the distance" : "Please enter the distance",
 "selectBloodType":"select Blood Type",
 "pleaseSelectBloodType":"please Select Blood Type",
       "donationDetails": "You can see all details about {name}'s request by going to the requested screen",
+"Submit Request": "Submit Request",
 
 
-
+"choose_blood_group": "Choose Blood Group",
+"blood_unit_needed": "Blood Unit Needed",
+"enter_location": "Enter your location",
+"find_donors_button": "Find Donors",
+"please_fill_all_fields": "Please fill all the fields.",
+"failed_to_fetch_donors": "Failed to fetch donors.",
+"no_donors_found": "No donors found for your criteria.",
+"unknown": "Unknown",
+"location": "Location",
+"blood_group": "Blood Group",
+"units": "units",
 
 
 
@@ -175,12 +230,12 @@
         "submit_after_date": "You can submit a new request after",
         "request_submitted_successfully": "Your request has been submitted successfully!",
         "next_eligible_request_date": "Your next eligible request date is"
-      
+       
       
 ,
 
 
-        "emergency_blood_needed": "Emergency {0} Blood Needed",
+        "emergency":"Emergency",
         "n_a": "N/A",
         "unknown_date": "Unknown Date",
         "accept": "Accept",
@@ -233,7 +288,7 @@
     "ab_minus_give": "AB-, AB+",
     "ab_minus_receive": "AB-, A-, B-, O-",
   
-    "bloodTypeAPlus": "A+",
+  "bloodTypeAPlus": "A+",
   "bloodTypeAMinus": "A-",
   "bloodTypeBPlus": "B+",
   "bloodTypeBMinus": "B-",
@@ -245,36 +300,43 @@
   "plasma": "Plasma",
   "platelets": "Platelets",
   "male": "Male",
-  "female": "Female",  "Cairo": "Cairo",
-  "Alexandria": "Alexandria",
-  "Giza": "Giza",
-  "Dakahlia": "Dakahlia",
-  "Red Sea": "Red Sea",
-  "Beheira": "Beheira",
-  "Fayoum": "Fayoum",
-  "Gharbia": "Gharbia",
-  "Ismailia": "Ismailia",
-  "Menofia": "Menofia",
-  "Minya": "Minya",
-  "Qaliubiya": "Qaliubiya",
-  "New Valley": "New Valley",
-  "Suez": "Suez",
-  "Aswan": "Aswan",
-  "Assiut": "Assiut",
-  "Beni Suef": "Beni Suef",
-  "Port Said": "Port Said",
-  "Damietta": "Damietta",
-  "Sharkia": "Sharkia",
-  "South Sinai": "South Sinai",
-  "Kafr El Sheikh": "Kafr El Sheikh",
-  "Matrouh": "Matrouh",
-  "North Sinai": "North Sinai",
-  "Qena": "Qena",
-  "Sohag": "Sohag",
-  "Luxor": "Luxor",  "select_governorate": "Select Governorate",
-  "please_select_governorate": "Please select a governorate"
+  "female": "Female",  
+  "cairo": "Cairo",
+  "alexandria": "Alexandria",
+  "giza": "Giza",
+  "dakahlia": "Dakahlia",
+  "red sea": "Red Sea",
+  "beheira": "Beheira",
+  "fayoum": "Fayoum",
+  "gharbia": "Gharbia",
+  "ismailia": "Ismailia",
+  "menofia": "Menofia",
+  "minya": "Minya",
+  "qaliubiya": "Qaliubiya",
+  "new valley": "New Valley",
+  "suez": "Suez",
+  "aswan": "Aswan",
+  "assiut": "Assiut",
+  "beni suef": "Beni Suef",
+  "port said": "Port Said",
+  "damietta": "Damietta",
+  "sharkia": "Sharkia",
+  "south sinai": "South Sinai",
+  "kafr el sheikh": "Kafr El Sheikh",
+  "matrouh": "Matrouh",
+  "north sinai": "North Sinai",
+  "qena": "Qena",
+  "sohag": "Sohag",
+  "luxor": "Luxor",  "select_governorate": "Select Governorate",
+  "please_select_governorate": "Please select a governorate",
+  "Name Your Session": "Name Your Session",
+  "Enter session name": "Enter session name",
+    "Create Session": "Create Session",
+    "Failed to create session. Please try again.": "Failed to create session. Please try again.",
 
-
+  "Session name cannot be empty!": "Session name cannot be empty!",
+"chat_bot": "Chat Bot",
+  "km" : "km"
     
 }
    

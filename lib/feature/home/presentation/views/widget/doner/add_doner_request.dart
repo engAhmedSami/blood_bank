@@ -1,13 +1,14 @@
 import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
-import 'package:blood_bank/core/widget/GenderDropdown.dart';
-import 'package:blood_bank/core/widget/bloodTypeDropDown.dart';
+import 'package:blood_bank/core/utils/app_text_style.dart';
+import 'package:blood_bank/core/widget/blood_type_drop_down.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/core/widget/custom_request_text_field.dart';
-import 'package:blood_bank/core/widget/datePickerField.dart';
-import 'package:blood_bank/core/widget/donationTypeDropDown.dart';
+import 'package:blood_bank/core/widget/donation_type_drop_down.dart';
+import 'package:blood_bank/core/widget/gender_drop_down.dart';
 import 'package:blood_bank/core/widget/governorate_drop_down.dart';
 import 'package:blood_bank/feature/home/domain/entities/doner_request_entity.dart';
 import 'package:blood_bank/feature/home/presentation/manger/add_doner_request_cubit/add_doner_request_cubit.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,9 @@ class DonerRequestState extends State<DonerRequest> {
   final TextEditingController idCardController = TextEditingController();
   final TextEditingController hospitalNameController = TextEditingController();
   final TextEditingController distanceController = TextEditingController();
+  final TextEditingController locationController = TextEditingController();
+  final TextEditingController bloodTypeController = TextEditingController();
+  final TextEditingController genderController = TextEditingController();
 
   // Variables initialized with default values
   String name = '';
@@ -77,22 +81,22 @@ class DonerRequestState extends State<DonerRequest> {
     });
   }
 
-  final List<String> _bloodTypes = [
-    'A+',
-    'A-',
-    'B+',
-    'B-',
-    'O+',
-    'O-',
-    'AB+',
-    'AB-'
-  ];
+  // final List<String> _bloodTypes = [
+  //   'A+',
+  //   'A-',
+  //   'B+',
+  //   'B-',
+  //   'O+',
+  //   'O-',
+  //   'AB+',
+  //   'AB-'
+  // ];
 
-  final List<String> _donationTypes = [
-    'Whole Blood',
-    'Plasma',
-    'Platelets',
-  ];
+  // final List<String> _donationTypes = [
+  //   'Whole Blood',
+  //   'Plasma',
+  //   'Platelets',
+  // ];
 
   final List<String> _genders = ['Male', 'Female'];
 
@@ -205,9 +209,9 @@ class DonerRequestState extends State<DonerRequest> {
             children: [
               CustomRequestTextField(
                 controller: nameController,
-                hintText: 'Name',
+                hintText: 'Name'.tr(context),
                 validator: (value) =>
-                    value!.isEmpty ? 'Please enter your name' : null,
+                    value!.isEmpty ? 'please_enter_name'.tr(context) : null,
                 onSaved: (value) {
                   name = value!;
                 },
@@ -216,39 +220,65 @@ class DonerRequestState extends State<DonerRequest> {
                 controller: ageController,
                 textInputType: TextInputType.number,
                 validator: (value) =>
-                    value!.isEmpty ? 'Please enter your age' : null,
-                hintText: 'Age',
+                    value!.isEmpty ? 'ageError'.tr(context) : null,
+                hintText: 'age'.tr(context),
                 onSaved: (value) {
                   age = num.parse(value!);
                 },
               ),
-              BloodTypeDropdown(onBloodTypeSelected: _bloodTypes),
-              DonationTypeDropdown(onTypeSelected: _donationTypes),
+              // bloodTypeDropDown(),
               // donationTypeDropDown(),
               // genderDropDown(),
-
-              GenderDropdown(
-                genders: _genders,
-                onGenderSelected: (gender) {
+              BloodTypeDropdown(
+                selectedBloodType: bloodTypeController.text.isNotEmpty
+                    ? bloodTypeController.text
+                    : null, // استخدام القيمة المحفوظة
+                onChanged: (selectedBloodType) {
                   setState(() {
-                    gender = gender;
+                    bloodType = selectedBloodType;
+                  });
+                },
+              ),
+              DonationTypeDropdown(
+                initialType: donationType,
+                onTypeSelected: (selectedType) {
+                  setState(() {
+                    donationType = selectedType;
                   });
                 },
               ),
 
+              GovernorateDropdown(
+                selectedKey: locationController.text.isNotEmpty
+                    ? locationController.text
+                    : null,
+                onChanged: (value) {
+                  setState(() {
+                    address = value;
+                  });
+                },
+              ),
+              GenderDropdown(
+                  initialGender: genderController.text.isNotEmpty
+                      ? genderController.text
+                      : null,
+                  onGenderSelected: (selectedGender) {
+                    setState(() {
+                      gender = selectedGender;
+                    });
+                  }),
               CustomRequestTextField(
                 controller: idCardController,
-                hintText: 'National ID Number',
+                hintText: 'nationalId'.tr(context),
                 textInputType: TextInputType.number,
                 validator: (value) =>
-                    value!.isEmpty ? 'Please enter your ID number' : null,
+                    value!.isEmpty ? 'idCardError'.tr(context) : null,
                 onSaved: (value) {
                   idCard = num.parse(value!);
                 },
               ),
               datePickerField(
-                context: context,
-                label: 'Last Donation Date',
+                label: 'last_donation_date'.tr(context),
                 selectedDate: lastDonationDate,
                 onDateSelected: (date) {
                   setState(() {
@@ -258,8 +288,7 @@ class DonerRequestState extends State<DonerRequest> {
                 isNextDonationDate: false,
               ),
               datePickerField(
-                context: context,
-                label: 'Next Donation Date',
+                label: 'next_donation_date'.tr(context),
                 selectedDate: nextDonationDate,
                 onDateSelected: (date) {
                   setState(() {
@@ -270,7 +299,7 @@ class DonerRequestState extends State<DonerRequest> {
               ),
               CustomRequestTextField(
                 controller: medicalConditionsController,
-                hintText: 'Medical Conditions',
+                hintText: 'medicalConditions'.tr(context),
                 maxLines: 3,
                 onSaved: (value) {
                   medicalConditions = value!;
@@ -278,35 +307,36 @@ class DonerRequestState extends State<DonerRequest> {
               ),
               CustomRequestTextField(
                 controller: unitsController,
-                hintText: 'Units Required',
+                hintText: 'UnitsRequired'.tr(context),
                 textInputType: TextInputType.number,
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter the units required' : null,
+                validator: (value) => value!.isEmpty
+                    ? 'Please enter the units required'.tr(context)
+                    : null,
                 onSaved: (value) {
                   units = num.parse(value!);
                 },
               ),
               CustomRequestTextField(
                 controller: contactController,
-                hintText: 'Contact Number',
+                hintText: 'contactNumber'.tr(context),
                 textInputType: TextInputType.phone,
                 validator: (value) =>
-                    value!.isEmpty ? 'Please enter your contact number' : null,
+                    value!.isEmpty ? 'contactNumberError'.tr(context) : null,
                 onSaved: (value) {
                   contact = num.parse(value!);
                 },
               ),
-              GovernorateDropdown(
-                selectedGovernorate: address,
-                onChanged: (value) {
-                  setState(() {
-                    address = value;
-                  });
-                },
-              ),
+              // GovernorateDropdown(
+              //   selectedKey: address,
+              //   onChanged: (value) {
+              //     setState(() {
+              //       address = value;
+              //     });
+              //   },
+              // ),
               CustomRequestTextField(
                 controller: notesController,
-                hintText: 'Notes',
+                hintText: 'Notes'.tr(context),
                 maxLines: 3,
                 onSaved: (value) {
                   notes = value!;
@@ -314,9 +344,9 @@ class DonerRequestState extends State<DonerRequest> {
               ),
               CustomRequestTextField(
                 controller: hospitalNameController,
-                hintText: 'Hospital Name',
+                hintText: 'hospitalName'.tr(context),
                 validator: (value) =>
-                    value!.isEmpty ? 'Please enter the hospital name' : null,
+                    value!.isEmpty ? 'hospitalNameError'.tr(context) : null,
                 onSaved: (value) {
                   hospitalName = value!;
                 },
@@ -324,15 +354,16 @@ class DonerRequestState extends State<DonerRequest> {
               CustomRequestTextField(
                   controller: distanceController,
                   textInputType: TextInputType.number,
-                  hintText: 'Distance',
-                  validator: (value) =>
-                      value!.isEmpty ? 'Please enter the distance' : null,
+                  hintText: 'Distance'.tr(context),
+                  validator: (value) => value!.isEmpty
+                      ? 'Please enter the distance'.tr(context)
+                      : null,
                   onSaved: (value) {
                     distance = num.parse(value!);
                   }),
               const SizedBox(height: 16),
               CustomButton(
-                text: 'Submit Request',
+                text: 'Submit Request'.tr(context),
                 onPressed: _submitRequest,
               ),
               const SizedBox(height: 16),
@@ -340,6 +371,139 @@ class DonerRequestState extends State<DonerRequest> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget datePickerField({
+    required String label,
+    required DateTime? selectedDate,
+    required Function(DateTime) onDateSelected,
+    required bool isNextDonationDate,
+  }) {
+    return FormField<DateTime>(
+      initialValue: selectedDate,
+      validator: (value) {
+        if (value == null) {
+          return 'pleaseSelectDate'.tr(context);
+        }
+        return null;
+      },
+      builder: (formFieldState) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomRequestTextField(
+              controller: TextEditingController(
+                text: selectedDate != null
+                    ? selectedDate.toLocal().toString().split(' ')[0]
+                    : '',
+              ),
+              hintText: label,
+              suffixIcon: const Icon(Icons.calendar_today),
+              readOnly: true,
+              onTap: () async {
+                final date = await showDatePicker(
+                  context: context,
+                  initialDate: selectedDate ?? DateTime.now(),
+                  firstDate:
+                      isNextDonationDate ? DateTime.now() : DateTime(2000),
+                  lastDate: isNextDonationDate
+                      ? DateTime.now().add(const Duration(days: 365 * 11))
+                      : DateTime.now(),
+                );
+                if (date != null) {
+                  onDateSelected(date);
+                  formFieldState.didChange(date);
+                }
+              },
+            ),
+            if (formFieldState.hasError)
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0),
+                child: Text(
+                  formFieldState.errorText!,
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+          ],
+        );
+      },
+    );
+  }
+
+  // DropdownButtonFormField<String> bloodTypeDropDown() {
+  //   return DropdownButtonFormField<String>(
+  //     value: bloodType,
+  //     items: _bloodTypes
+  //         .map((type) => DropdownMenuItem(
+  //               value: type,
+  //               child: Text(type, style: TextStyles.semiBold14),
+  //             ))
+  //         .toList(),
+  //     onChanged: (value) => setState(() {
+  //       bloodType = value!;
+  //     }),
+  //     decoration: InputDecoration(
+  //       hintText: 'Select Blood Type',
+  //       hintStyle: TextStyles.semiBold14,
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.circular(10),
+  //       ),
+  //     ),
+  //     validator: (value) => value == null ? 'Please select blood type' : null,
+  //   );
+  // }
+
+  // DropdownButtonFormField<String> donationTypeDropDown() {
+  //   return DropdownButtonFormField<String>(
+  //     value: donationType,
+  //     items: _donationTypes
+  //         .map((type) => DropdownMenuItem(
+  //               value: type,
+  //               child: Text(type, style: TextStyles.semiBold14),
+  //             ))
+  //         .toList(),
+  //     onChanged: (value) => setState(() {
+  //       donationType = value!;
+  //     }),
+  //     decoration: InputDecoration(
+  //       hintText: 'Select Donation Type',
+  //       hintStyle: TextStyles.semiBold14,
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.circular(10),
+  //       ),
+  //     ),
+  //     validator: (value) =>
+  //         value == null ? 'Please select donation type' : null,
+  //   );
+  // }
+
+  DropdownButtonFormField<String> genderDropDown() {
+    return DropdownButtonFormField<String>(
+      value: gender,
+      items: _genders
+          .map((gender) => DropdownMenuItem(
+                value: gender,
+                child: Text(
+                  gender,
+                  style: TextStyles.semiBold14,
+                ),
+              ))
+          .toList(),
+      onChanged: (value) => setState(() {
+        gender = value!;
+      }),
+      decoration: InputDecoration(
+        hintText: 'Select Gender',
+        hintStyle: TextStyles.semiBold14,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      validator: (value) => value == null ? 'Please select gender' : null,
     );
   }
 }

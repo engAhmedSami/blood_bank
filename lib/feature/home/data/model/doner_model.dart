@@ -18,7 +18,7 @@ class DonerModel {
   final String uId;
   final String hospitalName;
   final num distance;
-  final String photoUrl;
+  // final String photoUrl;
 
   DonerModel({
     required this.name,
@@ -37,7 +37,7 @@ class DonerModel {
     required this.gender,
     required this.hospitalName,
     required this.distance,
-    required this.photoUrl,
+    // required this.photoUrl,
     this.lastRequestDate,
   });
   factory DonerModel.fromEntity(DonerRequestEntity addRequestInputEntity) {
@@ -58,7 +58,7 @@ class DonerModel {
       uId: addRequestInputEntity.uId,
       hospitalName: addRequestInputEntity.hospitalName,
       distance: addRequestInputEntity.distance,
-      photoUrl: addRequestInputEntity.photoUrl ?? '',
+      // photoUrl: addRequestInputEntity.photoUrl ?? '',
       lastRequestDate: addRequestInputEntity.lastRequestDate,
     );
   }
@@ -80,7 +80,7 @@ class DonerModel {
       'uId': uId,
       'hospitalName': hospitalName,
       'distance': distance,
-      'photoUrl': photoUrl,
+      // 'photoUrl': photoUrl,
       'lastRequestDate': lastRequestDate
     };
   }

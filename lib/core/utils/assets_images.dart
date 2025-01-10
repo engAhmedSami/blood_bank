@@ -42,6 +42,10 @@ class Assets {
   /// assets/images/chat.svg
   static const String imagesChat = "assets/images/chat.svg";
 
+  /// Assets for imagesChatbot
+  /// assets/images/chatbot.svg
+  static const String imagesChatbot = "assets/images/chatbot.svg";
+
   /// Assets for imagesCircle
   /// assets/images/circle.svg
   static const String imagesCircle = "assets/images/circle.svg";
@@ -65,6 +69,14 @@ class Assets {
   /// Assets for imagesFacebook
   /// assets/images/facebook.svg
   static const String imagesFacebook = "assets/images/facebook.svg";
+
+  /// Assets for imagesFinallogo
+  /// assets/images/finallogo.svg
+  static const String imagesFinallogo = "assets/images/finallogo.svg";
+
+  /// Assets for imagesFinallogoinside
+  /// assets/images/finallogoinside.svg
+  static const String imagesFinallogoinside = "assets/images/finallogoinside.svg";
 
   /// Assets for imagesFinddoners
   /// assets/images/finddoners.svg
@@ -142,6 +154,10 @@ class Assets {
   /// assets/images/on_bording/on_bording_two.svg
   static const String imagesOnBordingOnBordingTwo = "assets/images/on_bording/on_bording_two.svg";
 
+  /// Assets for imagesPnglogo
+  /// assets/images/pnglogo.png
+  static const String imagesPnglogo = "assets/images/pnglogo.png";
+
   /// Assets for imagesProfile
   /// assets/images/profile.svg
   static const String imagesProfile = "assets/images/profile.svg";
@@ -181,5 +197,9 @@ class Assets {
   /// Assets for imagesSplashLogo
   /// assets/images/splash/logo.svg
   static const String imagesSplashLogo = "assets/images/splash/logo.svg";
+
+  /// Assets for imagesVerfiy
+  /// assets/images/verfiy.svg
+  static const String imagesVerfiy = "assets/images/verfiy.svg";
 }
 

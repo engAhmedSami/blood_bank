@@ -296,6 +296,7 @@ class NotificationService {
             'High Importance Notifications',
             importance: Importance.high,
             priority: Priority.high,
+            icon: "@mipmap/launcher_icon",
           ),
           iOS: DarwinNotificationDetails(),
         ),

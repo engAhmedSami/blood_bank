@@ -70,7 +70,10 @@ class VerfiedEmailViewState extends State<VerfiedEmailView> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
-            SvgPicture.asset(Assets.imagesConfirmed, height: 300),
+            SvgPicture.asset(
+              Assets.imagesVerfiy,
+              height: 300,
+            ),
             const SizedBox(height: 50),
             CustomButton(
                 onPressed: () => resendVerificationEmail(context),

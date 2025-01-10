@@ -62,7 +62,7 @@ class RequestsForDonation extends StatelessWidget {
                   final request = reversedRequests[index].data();
 
                   return Padding(
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 12,
                       vertical: 8,
                     ),
@@ -72,9 +72,7 @@ class RequestsForDonation extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withValues(
-                              alpha: 0.4,
-                            ),
+                            color: Colors.black.withValues(alpha: 0.3),
                             blurRadius: 5,
                             offset: const Offset(0, 6),
                           ),
@@ -82,20 +80,6 @@ class RequestsForDonation extends StatelessWidget {
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          // showTopSnackBar(
-                          //   displayDuration: const Duration(seconds: 3),
-                          //   Overlay.of(context),
-                          //   CustomSnackBar.info(
-                          //     backgroundColor: AppColors.backgroundColor,
-                          //     textStyle: const TextStyle(
-                          //       fontWeight: FontWeight.normal,
-                          //       color: Colors.white,
-                          //     ),
-                          //     maxLines: 3,
-                          //     textAlign: TextAlign.center,
-                          //     message: request['name'] ?? 'no_name'.tr(context),
-                          //   ),
-                          // );
                           showTopSnackBar(
                             displayDuration: const Duration(seconds: 3),
                             Overlay.of(context),
@@ -113,11 +97,54 @@ class RequestsForDonation extends StatelessWidget {
                           );
                         },
                         child: ListTile(
-                          leading: CircleAvatar(
-                            radius: 25,
-                            backgroundImage: NetworkImage(
-                              request['photoUrl'] ??
-                                  'https://i.stack.imgur.com/l60Hf.png',
+                          leading: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: FutureBuilder<DocumentSnapshot>(
+                              future: FirebaseFirestore.instance
+                                  .collection('users')
+                                  .doc(request['uId'])
+                                  .get(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Center(
+                                      child:
+                                          CoustomCircularProgressIndicator());
+                                }
+
+                                if (snapshot.hasError) {
+                                  return Center(
+                                      child: Text('error: ${snapshot.error}'
+                                          .tr(context)));
+                                }
+
+                                if (!snapshot.hasData ||
+                                    !snapshot.data!.exists) {
+                                  return CircleAvatar(
+                                    radius: 25,
+                                    backgroundColor: Colors.grey,
+                                    child:
+                                        Icon(Icons.person, color: Colors.white),
+                                  );
+                                }
+
+                                final userData = snapshot.data!.data()
+                                    as Map<String, dynamic>;
+                                final photoUrl = userData['photoUrl'];
+
+                                return CircleAvatar(
+                                  radius: 25,
+                                  backgroundImage:
+                                      photoUrl != null && photoUrl.isNotEmpty
+                                          ? NetworkImage(photoUrl)
+                                          : null,
+                                  backgroundColor: Colors.grey,
+                                  child: photoUrl == null || photoUrl.isEmpty
+                                      ? Icon(Icons.person, color: Colors.white)
+                                      : null,
+                                );
+                              },
                             ),
                           ),
                           title: Text(
@@ -151,7 +178,9 @@ class RequestsForDonation extends StatelessWidget {
                                         height: 35,
                                       ),
                                       Text(
-                                        '${request['bloodType'] ?? 'N/A'}',
+                                        request['bloodType']
+                                            .toString()
+                                            .tr(context),
                                         style: TextStyles.semiBold11.copyWith(
                                           color: Colors.white,
                                         ),
@@ -172,7 +201,7 @@ class RequestsForDonation extends StatelessWidget {
                                         color: const Color(0xff598158),
                                         borderRadius: BorderRadius.circular(8)),
                                     child: Text(
-                                      '${request['distance'] ?? '0'} km',
+                                      '${request['distance'] ?? '0'} ${'km'.tr(context)}',
                                       style: TextStyles.semiBold12
                                           .copyWith(color: Colors.white),
                                     ),

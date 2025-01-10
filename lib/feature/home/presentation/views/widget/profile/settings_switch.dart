@@ -5,11 +5,15 @@ import 'package:blood_bank/core/services/shared_preferences_sengleton.dart'; // 
 class SettingsSwitch extends StatefulWidget {
   final String title;
   final String keyName; // Key for SharedPreferences
+  final bool value; // قيمة الـ Switch
+  final Function(bool) onChanged; // دالة التغيير
 
   const SettingsSwitch({
     super.key,
     required this.title,
     required this.keyName,
+    required this.value,
+    required this.onChanged,
   });
 
   @override
@@ -22,12 +26,14 @@ class _SettingsSwitchState extends State<SettingsSwitch> {
   @override
   void initState() {
     super.initState();
+    _value = widget.value; // تعيين القيمة الأولية
     _loadSwitchValue();
   }
 
   void _loadSwitchValue() {
     setState(() {
-      _value = Prefs.getBool(widget.keyName); // استرجاع القيمة المحفوظة
+      _value = Prefs.getBool(widget.keyName) ??
+          widget.value; // استرجاع القيمة المحفوظة أو استخدام القيمة الافتراضية
     });
   }
 
@@ -51,6 +57,7 @@ class _SettingsSwitchState extends State<SettingsSwitch> {
               _value = value; // تحديث الحالة
             });
             _saveSwitchValue(value); // حفظ القيمة الجديدة
+            widget.onChanged(value); // استدعاء دالة التغيير
           },
           activeColor: AppColors.primaryColor,
         ),
