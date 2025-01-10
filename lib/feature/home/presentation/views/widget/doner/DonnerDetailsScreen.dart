@@ -1,5 +1,6 @@
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart'; // Import the intl package
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 
 class DonnerDetailsScreen extends StatelessWidget {
@@ -13,22 +14,16 @@ class DonnerDetailsScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(Icons.arrow_back),
+          color: Colors.white,
         ),
-        title: Text(
-          'donation_details'.tr(context),
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ), // Localized title
+        title: Text('donation_details'.tr(context),
+            style: TextStyle(
+              color: Colors.white,
+            )), // Localized title
         centerTitle: true,
-        backgroundColor: AppColors.backgroundColor,
+        backgroundColor: AppColors.primaryColor,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -54,7 +49,7 @@ class DonnerDetailsScreen extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      color: AppColors.secondaryColor,
+      color: AppColors.backgroundColor,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -66,7 +61,7 @@ class DonnerDetailsScreen extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: AppColors.primaryColorB,
+                color: Colors.white,
               ),
             ),
             const SizedBox(height: 8),
@@ -75,7 +70,7 @@ class DonnerDetailsScreen extends StatelessWidget {
                   'no_hospital'.tr(context), // Localized fallback
               style: TextStyle(
                 fontSize: 18,
-                color: AppColors.primaryColorB.withOpacity(0.7),
+                color: Colors.white,
               ),
             ),
           ],
@@ -91,7 +86,7 @@ class DonnerDetailsScreen extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      color: AppColors.secondaryColor,
+      color: AppColors.backgroundColor,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -112,23 +107,17 @@ class DonnerDetailsScreen extends StatelessWidget {
             _buildDetailItem(
               context,
               'last_donation_date',
-              donationData['lastDonationDate']?.toString() ??
+              _formatDate(donationData['lastDonationDate']) ??
                   'not_available'.tr(context), // Localized fallback
             ),
             _buildDetailItem(
               context,
               'last_request_date',
-              donationData['lastRequestDate']?.toString() ??
+              _formatDate(donationData['lastRequestDate']) ??
                   'not_available'.tr(context), // Localized fallback
             ),
             _buildDetailItem(context, 'medical_conditions',
                 donationData['medicalConditions']),
-            _buildDetailItem(
-              context,
-              'next_donation_date',
-              donationData['nextDonationDate']?.toString() ??
-                  'not_available'.tr(context), // Localized fallback
-            ),
             _buildDetailItem(context, 'notes', donationData['notes']),
             _buildDetailItem(
                 context, 'units', donationData['units'].toString()),
@@ -152,7 +141,7 @@ class DonnerDetailsScreen extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
-                color: AppColors.primaryColorB,
+                color: Colors.white,
               ),
             ),
           ),
@@ -162,12 +151,39 @@ class DonnerDetailsScreen extends StatelessWidget {
               value,
               style: TextStyle(
                 fontSize: 16,
-                color: AppColors.primaryColorB.withOpacity(0.8),
+                color: Colors.white,
               ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  // Helper function to format dates
+
+  String? _formatDate(dynamic date) {
+    if (date == null) return null;
+
+    DateTime? parsedDate;
+
+    if (date is String) {
+      try {
+        // Remove the "UTC+2" part and parse the date
+        final cleanedDateString = date.replaceAll(RegExp(r' UTC[+-]\d+'), '');
+        final dateFormat = DateFormat("MMMM d, y 'at' h:mm:ss");
+        parsedDate = dateFormat.parse(cleanedDateString);
+      } catch (e) {
+        print('Error parsing date: $e');
+        return null; // Return null if parsing fails
+      }
+    } else if (date is DateTime) {
+      parsedDate = date;
+    }
+
+    if (parsedDate == null) return null;
+
+    // Format the date in a user-friendly way
+    return DateFormat('MMMM d, y • h:mm a').format(parsedDate);
   }
 }
