@@ -1,67 +1,6 @@
-// import 'package:blood_bank/core/widget/custom_request_text_field.dart';
-// import 'package:flutter/material.dart';
-
-// Widget datePickerField({
-//   required BuildContext context,
-//   required String label,
-//   required DateTime? selectedDate,
-//   required Function(DateTime) onDateSelected,
-//   required bool isNextDonationDate,
-// }) {
-//   return FormField<DateTime>(
-//     initialValue: selectedDate,
-//     validator: (value) {
-//       if (value == null) {
-//         return 'Please select a date';
-//       }
-//       return null;
-//     },
-//     builder: (formFieldState) {
-//       return Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           CustomRequestTextField(
-//             controller: TextEditingController(
-//               text: selectedDate != null
-//                   ? selectedDate.toLocal().toString().split(' ')[0]
-//                   : '',
-//             ),
-//             hintText: label,
-//             suffixIcon: const Icon(Icons.calendar_today),
-//             readOnly: true,
-//             onTap: () async {
-//               final date = await showDatePicker(
-//                 context: context,
-//                 initialDate: selectedDate ?? DateTime.now(),
-//                 firstDate: isNextDonationDate ? DateTime.now() : DateTime(2000),
-//                 lastDate: isNextDonationDate
-//                     ? DateTime.now().add(const Duration(days: 365 * 11))
-//                     : DateTime.now(),
-//               );
-//               if (date != null) {
-//                 onDateSelected(date);
-//                 formFieldState.didChange(date);
-//               }
-//             },
-//           ),
-//           if (formFieldState.hasError)
-//             Padding(
-//               padding: const EdgeInsets.only(top: 4.0),
-//               child: Text(
-//                 formFieldState.errorText!,
-//                 style: TextStyle(
-//                   color: Colors.red,
-//                   fontSize: 12,
-//                 ),
-//               ),
-//             ),
-//         ],
-//       );
-//     },
-//   );
-// }
-
+import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/widget/custom_request_text_field.dart';
+import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class DatePickerField extends StatefulWidget {
@@ -70,6 +9,7 @@ class DatePickerField extends StatefulWidget {
   final DateTime? selectedDate;
   final Function(DateTime) onDateSelected;
   final bool isNextDonationDate;
+  final TextStyle? hintStyle; // Added hintStyle parameter
 
   const DatePickerField({
     super.key,
@@ -78,6 +18,7 @@ class DatePickerField extends StatefulWidget {
     required this.selectedDate,
     required this.onDateSelected,
     required this.isNextDonationDate,
+    this.hintStyle, // Added hintStyle parameter
   });
 
   @override
@@ -109,7 +50,7 @@ class _DatePickerFieldState extends State<DatePickerField> {
       initialValue: widget.selectedDate,
       validator: (value) {
         if (value == null) {
-          return 'Please select a date';
+          return 'please_select_date'.tr(context);
         }
         return null;
       },
@@ -120,7 +61,12 @@ class _DatePickerFieldState extends State<DatePickerField> {
             CustomRequestTextField(
               controller: _controller,
               hintText: widget.label,
-              suffixIcon: const Icon(Icons.calendar_today),
+              hintStyle:
+                  widget.hintStyle, // Pass hintStyle to CustomRequestTextField
+              suffixIcon: const Icon(
+                Icons.calendar_today,
+                color: AppColors.primaryColor,
+              ),
               readOnly: true,
               onTap: () async {
                 final date = await showDatePicker(

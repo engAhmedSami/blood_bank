@@ -17,6 +17,7 @@ class CustomRequestTextField extends StatelessWidget {
     this.maxLines,
     this.readOnly = false, // Added readOnly
     this.onTap, // Added onTap
+    this.hintStyle, // Added hintStyle parameter
   });
 
   final String hintText;
@@ -31,6 +32,7 @@ class CustomRequestTextField extends StatelessWidget {
   final int? maxLines;
   final bool readOnly; // Added readOnly
   final VoidCallback? onTap; // Added onTap
+  final TextStyle? hintStyle; // Added hintStyle
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,7 @@ class CustomRequestTextField extends StatelessWidget {
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         hintText: hintText,
+        hintStyle: hintStyle, // Apply hintStyle
         filled: true,
         fillColor: Colors.transparent,
         border: buildBorder(),

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:blood_bank/core/helper_function/AddDonerFunctionsClass.dart';
 import 'package:blood_bank/core/helper_function/ValidatorsTextForm.dart';
+import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/widget/blood_type_drop_down.dart';
 import 'package:blood_bank/core/widget/custom_button.dart';
 import 'package:blood_bank/core/widget/custom_request_text_field.dart';
@@ -77,6 +78,9 @@ class DonerRequestState extends State<DonerRequest> {
             spacing: 10,
             children: [
               CustomRequestTextField(
+                hintStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                ),
                 controller: nameController,
                 hintText: 'Name'.tr(context),
                 validator: (value) => Validators.validateName(value, context),
@@ -85,6 +89,9 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
+                hintStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                ),
                 controller: ageController,
                 textInputType: TextInputType.number,
                 validator: (value) => Validators.validateAge(value, context),
@@ -125,8 +132,11 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
+                hintStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                ),
                 controller: idCardController,
-                hintText: 'nationalId'.tr(context),
+                hintText: '302090********* only 11'.tr(context),
                 textInputType: TextInputType.number,
                 validator: (value) => Validators.validateIdCard(value, context),
                 onSaved: (value) {
@@ -134,6 +144,9 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               DatePickerField(
+                hintStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                ),
                 context: context,
                 label: 'last_donation_date'.tr(context),
                 selectedDate: null,
@@ -143,6 +156,9 @@ class DonerRequestState extends State<DonerRequest> {
                 isNextDonationDate: false,
               ),
               DatePickerField(
+                hintStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                ),
                 context: context,
                 label: 'next_donation_date'.tr(context),
                 selectedDate: null,
@@ -152,6 +168,9 @@ class DonerRequestState extends State<DonerRequest> {
                 isNextDonationDate: true,
               ),
               CustomRequestTextField(
+                hintStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                ),
                 controller: medicalConditionsController,
                 hintText: 'medicalConditions'.tr(context),
                 maxLines: 3,
@@ -160,6 +179,9 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
+                hintStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                ),
                 controller: unitsController,
                 hintText: 'UnitsRequired'.tr(context),
                 textInputType: TextInputType.number,
@@ -170,6 +192,9 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
+                hintStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                ),
                 controller: contactController,
                 hintText: 'contactNumber'.tr(context),
                 textInputType: TextInputType.phone,
@@ -180,6 +205,9 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
+                hintStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                ),
                 controller: notesController,
                 hintText: 'Notes'.tr(context),
                 maxLines: 3,
@@ -188,6 +216,9 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
+                hintStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                ),
                 controller: hospitalNameController,
                 hintText: 'hospitalName'.tr(context),
                 validator: (value) =>
@@ -197,6 +228,9 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
+                  hintStyle: TextStyle(
+                    color: AppColors.primaryColor,
+                  ),
                   controller: distanceController,
                   textInputType: TextInputType.number,
                   hintText: 'Distance'.tr(context),
