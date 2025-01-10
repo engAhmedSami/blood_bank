@@ -232,11 +232,22 @@ class NeedRequestState extends State<NeedRequest> {
                   age = num.parse(value!);
                 },
               ),
-              // bloodTypeDropDown(),
-
-              BloodTypeDropdown(onBloodTypeSelected: _bloodTypes),
-              DonationTypeDropdown(onTypeSelected: _donationTypes),
-
+              BloodTypeDropdown(
+                selectedBloodType: bloodType,
+                onChanged: (selectedType) {
+                  setState(() {
+                    bloodType = selectedType;
+                  });
+                },
+              ),
+              DonationTypeDropdown(
+                initialType: donationType,
+                onTypeSelected: (selectedType) {
+                  setState(() {
+                    donationType = selectedType;
+                  });
+                },
+              ),
               GenderDropdown(
                 initialGender: gender,
                 onGenderSelected: (value) {
@@ -245,7 +256,6 @@ class NeedRequestState extends State<NeedRequest> {
                   });
                 },
               ),
-
               CustomRequestTextField(
                 controller: idCardController,
                 hintText: 'nationalId'.tr(context),
@@ -256,7 +266,6 @@ class NeedRequestState extends State<NeedRequest> {
                   idCard = num.parse(value!);
                 },
               ),
-
               CustomRequestTextField(
                 controller: medicalConditionsController,
                 hintText: 'medicalConditions'.tr(context),
@@ -265,7 +274,6 @@ class NeedRequestState extends State<NeedRequest> {
                   medicalConditions = value!;
                 },
               ),
-
               CustomRequestTextField(
                 controller: contactController,
                 hintText: 'contactNumber'.tr(context),
@@ -276,7 +284,6 @@ class NeedRequestState extends State<NeedRequest> {
                   contact = num.parse(value!);
                 },
               ),
-
               GovernorateDropdown(
                 selectedKey: address,
                 onChanged: (value) {
@@ -285,7 +292,6 @@ class NeedRequestState extends State<NeedRequest> {
                   });
                 },
               ),
-
               CustomRequestTextField(
                 controller: hospitalNameController,
                 hintText: 'hospitalName'.tr(context),
@@ -295,14 +301,11 @@ class NeedRequestState extends State<NeedRequest> {
                   hospitalName = value!;
                 },
               ),
-
               const SizedBox(height: 16),
-
               CustomButton(
                 text: 'addRequest'.tr(context),
                 onPressed: _submitRequest,
               ),
-
               const SizedBox(height: 16),
             ],
           ),
