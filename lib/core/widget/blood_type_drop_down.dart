@@ -104,46 +104,14 @@ class BloodTypeDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> bloodTypes = [
-      {
-        'key': 'bloodTypeAPlus',
-        'name': 'bloodTypeAPlus'.tr(context),
-        'icon': Icons.bloodtype
-      },
-      {
-        'key': 'bloodTypeAMinus',
-        'name': 'bloodTypeAMinus'.tr(context),
-        'icon': Icons.bloodtype
-      },
-      {
-        'key': 'bloodTypeBPlus',
-        'name': 'bloodTypeBPlus'.tr(context),
-        'icon': Icons.bloodtype
-      },
-      {
-        'key': 'bloodTypeBMinus',
-        'name': 'bloodTypeBMinus'.tr(context),
-        'icon': Icons.bloodtype
-      },
-      {
-        'key': 'bloodTypeABPlus',
-        'name': 'bloodTypeABPlus'.tr(context),
-        'icon': Icons.bloodtype
-      },
-      {
-        'key': 'bloodTypeABMinus',
-        'name': 'bloodTypeABMinus'.tr(context),
-        'icon': Icons.bloodtype
-      },
-      {
-        'key': 'bloodTypeOPlus',
-        'name': 'bloodTypeOPlus'.tr(context),
-        'icon': Icons.bloodtype
-      },
-      {
-        'key': 'bloodTypeOMinus',
-        'name': 'bloodTypeOMinus'.tr(context),
-        'icon': Icons.bloodtype
-      },
+      {'key': 'A+', 'name': 'A+'.tr(context), 'icon': Icons.bloodtype},
+      {'key': 'A-', 'name': 'A-'.tr(context), 'icon': Icons.bloodtype},
+      {'key': 'B+', 'name': 'B+'.tr(context), 'icon': Icons.bloodtype},
+      {'key': 'B-', 'name': 'B-'.tr(context), 'icon': Icons.bloodtype},
+      {'key': 'AB+', 'name': 'AB+'.tr(context), 'icon': Icons.bloodtype},
+      {'key': 'AB-', 'name': 'AB-'.tr(context), 'icon': Icons.bloodtype},
+      {'key': 'O+', 'name': 'O+'.tr(context), 'icon': Icons.bloodtype},
+      {'key': 'O-', 'name': 'O-'.tr(context), 'icon': Icons.bloodtype},
     ];
 
     return DropdownButtonFormField<String>(

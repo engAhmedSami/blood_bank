@@ -221,14 +221,14 @@
         "receive_blood_from": "يمكنك تلقي"
 ,
 
-  "bloodTypeAPlus": "أ+",
-  "bloodTypeAMinus": "أ-",
-  "bloodTypeBPlus": "ب+",
-  "bloodTypeBMinus": "ب-",
-  "bloodTypeOPlus": "و+",
-  "bloodTypeOMinus": "و-",
-  "bloodTypeABPlus": "أ ب+",
-  "bloodTypeABMinus": "أ ب-",
+  "A+": "أ+",
+  "A-": "أ-",
+  "B+": "ب+",
+  "B-": "ب-",
+  "O+": "و+",
+  "O-": "و-",
+  "AB+": "أ ب+",
+  "AB-": "أ ب-",
 
 
           "wholeBlood": "الدم الكامل",

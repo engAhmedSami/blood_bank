@@ -63,14 +63,14 @@ class NeedRequestState extends State<NeedRequest> {
 
   List<String> get bloodTypes {
     return [
-      'bloodTypeAPlus'.tr(context),
-      'bloodTypeAMinus'.tr(context),
-      'bloodTypeBPlus'.tr(context),
-      'bloodTypeBMinus'.tr(context),
-      'bloodTypeOPlus'.tr(context),
-      'bloodTypeOMinus'.tr(context),
-      'bloodTypeABPlus'.tr(context),
-      'bloodTypeABMinus'.tr(context),
+      'A+'.tr(context),
+      'A-'.tr(context),
+      'B+'.tr(context),
+      'B-'.tr(context),
+      'O+'.tr(context),
+      'O-'.tr(context),
+      'AB+'.tr(context),
+      'AB-'.tr(context),
     ];
   }
 
