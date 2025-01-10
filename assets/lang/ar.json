@@ -97,6 +97,24 @@
 
 
 
+
+"donation_details": "تفاصيل التبرع",
+"hospital_name": "اسم المستشفى",
+"address": "العنوان",
+"contact": "الاتصال",
+"distance": "المسافة",
+"donation_type": "نوع التبرع",
+"id_card": "رقم الهوية",
+"last_request_date": "تاريخ آخر طلب",
+"medical_conditions": "الحالات الطبية",
+"notes": "ملاحظات",
+"no_hospital": "لا يوجد مستشفى",
+"not_available": "غير متوفر"
+
+,
+
+
+
 "302090********* only 11": "302090********* (فقط 11 رقم)"
 ,
 

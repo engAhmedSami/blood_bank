@@ -1,7 +1,7 @@
 import 'package:blood_bank/core/services/get_it_service.dart';
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
-import 'package:blood_bank/core/widget/CustomDrawer.dart';
+import 'package:blood_bank/feature/home/presentation/views/widget/doner/CustomDonnerDrawer.dart';
 import 'package:blood_bank/feature/home/domain/repos/doner_repo.dart';
 import 'package:blood_bank/feature/home/presentation/views/widget/doner/add_doner_request_view_body_bloc_builder.dart';
 import 'package:blood_bank/feature/home/presentation/manger/add_doner_request_cubit/add_doner_request_cubit.dart';
@@ -42,7 +42,7 @@ class DonerView extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      drawer: CustomDrawer(userId: userId), // Pass userId to CustomDrawer
+      drawer: CustomDonnerDrawer(userId: userId), // Pass userId to CustomDrawer
       body: BlocProvider(
         create: (context) => AddDonerRequestCubit(
           getIt.get<DonerRepo>(),

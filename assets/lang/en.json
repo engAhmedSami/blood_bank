@@ -88,8 +88,19 @@
 
 
 
-
-
+  "donation_details": "Donation Details",
+  "hospital_name": "Hospital Name",
+  "address": "Address",
+  "contact": "Contact",
+  "distance": "Distance",
+  "donation_type": "Donation Type",
+  "id_card": "ID Card",
+  "last_request_date": "Last Request Date",
+  "medical_conditions": "Medical Conditions",
+  "notes": "Notes",
+  "no_hospital": "No Hospital",
+  "not_available": "N/A"
+,
 
 
     "error_occurred": "An error occurred.",
