@@ -112,7 +112,7 @@ class BigInfoCard extends StatelessWidget {
                 InfoColumn(title: bloodGroup, image: Assets.imagesBlood),
                 InfoColumn(
                   title: isTodayDonationDay
-                      ? 'Today is your donation day!'
+                      ? 'Today is your donation day'.tr(context)
                       : formattedNextDonationDate,
                   image: Assets.imagesNextdonation,
                   isTodayDonationDay: isTodayDonationDay,
