@@ -1,3 +1,4 @@
+import 'package:blood_bank/core/widget/coustom_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -271,7 +272,10 @@ class ProfileViewState extends State<ProfileView> with WidgetsBindingObserver {
                   }
 
                   if (snapshot.hasError) {
-                    return Center(child: Text('error_occurred'.tr(context)));
+                    return CustomDialog(
+                      title: 'error_occurred'.tr(context),
+                      content: 'error_occurred: ${snapshot.error}'.tr(context),
+                    );
                   }
 
                   if (!snapshot.hasData) {
@@ -340,7 +344,10 @@ class ProfileViewState extends State<ProfileView> with WidgetsBindingObserver {
                 }
 
                 if (snapshot.hasError) {
-                  return Center(child: Text('error_occurred'.tr(context)));
+                  return CustomDialog(
+                    title: 'error_occurred'.tr(context),
+                    content: 'error_occurred: ${snapshot.error}'.tr(context),
+                  );
                 }
 
                 if (!snapshot.hasData) {

@@ -1,6 +1,7 @@
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
+import 'package:blood_bank/core/widget/coustom_dialog.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,10 @@ class BigInfoCard extends StatelessWidget {
         }
 
         if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+          return CustomDialog(
+            title: 'error_occurred'.tr(context),
+            content: 'error_occurred: ${snapshot.error}'.tr(context),
+          );
         }
 
         final requests = snapshot.data?.docs ?? [];

@@ -1,6 +1,7 @@
 import 'package:blood_bank/core/helper_function/get_user.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
+import 'package:blood_bank/core/widget/coustom_dialog.dart';
 import 'package:blood_bank/feature/auth/data/models/user_model.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -35,9 +36,11 @@ class SeeAll extends StatelessWidget {
                       }
 
                       if (snapshot.hasError) {
-                        return Center(
-                            child:
-                                Text('error: ${snapshot.error}'.tr(context)));
+                        return CustomDialog(
+                          title: 'error_occurred'.tr(context),
+                          content:
+                              'error_occurred: ${snapshot.error}'.tr(context),
+                        );
                       }
 
                       if (!snapshot.hasData) {

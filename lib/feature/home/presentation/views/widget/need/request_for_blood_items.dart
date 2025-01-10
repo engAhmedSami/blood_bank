@@ -26,7 +26,10 @@ class BloodRequest extends StatelessWidget {
           }
 
           if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return CustomDialog(
+              title: 'error_occurred'.tr(context),
+              content: 'error_occurred: ${snapshot.error}'.tr(context),
+            );
           }
 
           final requests = snapshot.data?.docs ?? [];
