@@ -238,12 +238,14 @@
 
 
   "hospital": "المستشفى",
+  "my_requests": "طلباتي",
   "no_requests_found": "لا يوجد طلبات مسجلة لديك",
   "edit_donation_data": "تعديل بيانات التبرع",
 
 
           "wholeBlood": "الدم الكامل",
         "plasma": "البلازما",
+        "need_details": "تفاصبل الطلب",
         "platelets": "الصفائح الدموية",
         "male": "ذكر",
         "female": "أنثى",

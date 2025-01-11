@@ -22,7 +22,7 @@ class CustomNeedDrawer extends StatelessWidget {
               color: AppColors.backgroundColor,
             ),
             child: Text(
-              'my_requests', // Localized title
+              'my_requests'.tr(context), // Localized title
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 24,
@@ -59,7 +59,7 @@ class CustomNeedDrawer extends StatelessWidget {
                 children: requests.map((doc) {
                   final requestData = doc.data() as Map<String, dynamic>;
                   return NeedTile(
-                    requestId: doc.id,
+                    donationId: doc.id,
                     data: requestData,
                   );
                 }).toList(),
