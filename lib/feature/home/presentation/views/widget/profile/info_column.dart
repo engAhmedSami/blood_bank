@@ -6,14 +6,12 @@ class InfoColumn extends StatelessWidget {
   final String title;
   final String image;
   final bool isTodayDonationDay;
-
   const InfoColumn({
     super.key,
     required this.title,
     required this.image,
     this.isTodayDonationDay = false,
   });
-
   @override
   Widget build(BuildContext context) {
     return Column(
