@@ -78,7 +78,7 @@
 "update_available_message": "An update is available. Would you like to update now?",
 "update_downloaded_restart": "Update downloaded. Would you like to restart now?",
 "Restart" : "Restart",
-
+"Today is your donation day": "donation day",
 
   "restart_required": "Restart Required",
   "restart_required_message": "The app needs to restart to apply the update. Would you like to restart now?",
