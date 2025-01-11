@@ -1,8 +1,6 @@
+import 'package:blood_bank/core/helper_function/validators_textform.dart';
 import 'package:blood_bank/core/utils/app_colors.dart';
-
-import 'package:intl/intl.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class NeedDetailsScreen extends StatelessWidget {
@@ -115,42 +113,6 @@ class NeedDetailsScreen extends StatelessWidget {
       ),
     );
   }
-  // Build the header section
-  // Widget _buildHeaderSection(BuildContext context) {
-  //   return Card(
-  //     color: AppColors.backgroundColor,
-  //     elevation: 4,
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.circular(12),
-  //     ),
-  //     child: Padding(
-  //       padding: const EdgeInsets.all(16.0),
-  //       child: Column(
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //           Text(
-  //             needData['patientName'] ??
-  //                 'no_name'.tr(context), // Localized fallback
-  //             style: const TextStyle(
-  //               color: Colors.white,
-  //               fontSize: 24,
-  //               fontWeight: FontWeight.bold,
-  //             ),
-  //           ),
-  //           const SizedBox(height: 8),
-  //           Text(
-  //             needData['hospitalName'] ??
-  //                 'no_hospital'.tr(context), // Localized fallback
-  //             style: TextStyle(
-  //               fontSize: 18,
-  //               color: Colors.white,
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 
   // Build the details section
   Widget _buildDetailsSection(BuildContext context) {
@@ -174,7 +136,8 @@ class NeedDetailsScreen extends StatelessWidget {
             _buildDetailItem(
               context,
               'dateTime',
-              _formatDate(needData['dateTime']), // Format the timestamp
+              Validators.formatDate(
+                  needData['dateTime']), // Use Validators.formatDate
             ),
             _buildDetailItem(
                 context, 'donation_type', needData['donationType']),
@@ -219,26 +182,5 @@ class NeedDetailsScreen extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String _formatDate(dynamic value) {
-    try {
-      DateTime date;
-
-      // Check if the value is a Timestamp
-      if (value is Timestamp) {
-        date = value.toDate();
-      } else if (value is String) {
-        date = DateTime.parse(value);
-      } else {
-        return value.toString(); // Fallback for unsupported types
-      }
-
-      // Format the date as "day - month - year"
-      return DateFormat('dd - MM - yyyy').format(date);
-    } catch (e) {
-      // Return the raw value in case of an error
-      return value.toString();
-    }
   }
 }
