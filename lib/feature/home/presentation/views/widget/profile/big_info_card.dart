@@ -1,7 +1,7 @@
 import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
 import 'package:blood_bank/core/widget/coustom_dialog.dart';
-import 'package:blood_bank/feature/home/presentation/views/widget/profile/InfoColumn.dart';
+import 'package:blood_bank/feature/home/presentation/views/widget/profile/info_column.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +39,7 @@ class BigInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    // double width = MediaQuery.of(context).size.width;
     final currentUserUid = FirebaseAuth.instance.currentUser?.uid;
     if (currentUserUid == null) {
       return const Center(child: Text('No user is logged in'));
