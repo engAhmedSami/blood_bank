@@ -1,11 +1,10 @@
-// ignore: file_names
 import 'dart:developer';
 
-import 'package:blood_bank/core/helper_function/ValidatorsTextForm.dart';
+import 'package:blood_bank/core/helper_function/validators_textform.dart';
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/widget/coustom_aleart_diloage.dart';
 import 'package:blood_bank/core/widget/custom_request_text_field.dart';
-import 'package:blood_bank/feature/home/presentation/views/widget/doner/DonnerDetailsScreen.dart';
+import 'package:blood_bank/feature/home/presentation/views/widget/doner/donner_details_screen.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

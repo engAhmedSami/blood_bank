@@ -437,8 +437,9 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
                       elevation: 2,
                       child: ListTile(
                         leading: CircleAvatar(
-                          backgroundColor: AppColors.primaryColor
-                              .withOpacity(0.1), // Light primary color
+                          backgroundColor: AppColors.primaryColor.withValues(
+                            alpha: 0.1,
+                          ), // Light primary color
                           child: Icon(
                             Icons.chat,
                             color: AppColors

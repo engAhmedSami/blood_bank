@@ -24,10 +24,10 @@ class DatePickerField extends StatefulWidget {
   });
 
   @override
-  _DatePickerFieldState createState() => _DatePickerFieldState();
+  DatePickerFieldState createState() => DatePickerFieldState();
 }
 
-class _DatePickerFieldState extends State<DatePickerField> {
+class DatePickerFieldState extends State<DatePickerField> {
   late TextEditingController _controller;
 
   @override
