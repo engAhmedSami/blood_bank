@@ -1,11 +1,10 @@
-import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:blood_bank/core/widget/coustom_circular_progress_indicator.dart';
 import 'package:blood_bank/core/widget/coustom_dialog.dart';
+import 'package:blood_bank/feature/home/presentation/views/widget/profile/InfoColumn.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -40,6 +39,7 @@ class BigInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     final currentUserUid = FirebaseAuth.instance.currentUser?.uid;
     if (currentUserUid == null) {
       return const Center(child: Text('No user is logged in'));
@@ -107,19 +107,22 @@ class BigInfoCard extends StatelessWidget {
               ),
             ],
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InfoColumn(title: savedLives, image: Assets.imagesLifesaved),
-              InfoColumn(title: bloodGroup, image: Assets.imagesBlood),
-              InfoColumn(
-                title: isTodayDonationDay
-                    ? 'Today is your donation day'.tr(context)
-                    : formattedNextDonationDate,
-                image: Assets.imagesNextdonation,
-                isTodayDonationDay: isTodayDonationDay,
-              ),
-            ],
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InfoColumn(title: savedLives, image: Assets.imagesLifesaved),
+                InfoColumn(title: bloodGroup, image: Assets.imagesBlood),
+                InfoColumn(
+                  title: isTodayDonationDay
+                      ? 'Today is your donation day'.tr(context)
+                      : formattedNextDonationDate,
+                  image: Assets.imagesNextdonation,
+                  isTodayDonationDay: isTodayDonationDay,
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -163,36 +166,6 @@ class BigInfoCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class InfoColumn extends StatelessWidget {
-  final String title;
-  final String image;
-  final bool isTodayDonationDay;
-
-  const InfoColumn({
-    super.key,
-    required this.title,
-    required this.image,
-    this.isTodayDonationDay = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SvgPicture.asset(image, height: 30),
-        const SizedBox(height: 8),
-        Text(
-          title,
-          textAlign: TextAlign.center,
-          style: isTodayDonationDay
-              ? TextStyles.semiBold13.copyWith(color: Colors.red)
-              : TextStyles.semiBold13,
-        ),
-      ],
     );
   }
 }
