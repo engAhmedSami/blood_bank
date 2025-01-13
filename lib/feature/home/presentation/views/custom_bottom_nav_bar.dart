@@ -77,7 +77,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
         child: PageView(
           controller: controller,
           physics: const NeverScrollableScrollPhysics(),
-          children: const [
+          children: [
             HomeView(),
             NeedView(),
             DonerView(),

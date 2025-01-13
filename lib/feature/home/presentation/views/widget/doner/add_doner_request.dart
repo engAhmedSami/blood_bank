@@ -159,18 +159,18 @@ class DonerRequestState extends State<DonerRequest> {
                 },
                 isNextDonationDate: false,
               ),
-              // DatePickerField(
-              //   hintStyle: TextStyle(
-              //     color: AppColors.primaryColor,
-              //   ),
-              //   context: context,
-              //   label: 'next_donation_date'.tr(context),
-              //   selectedDate: null,
-              //   onDateSelected: (date) {
-              //     log('Next Donation Date: $date');
-              //   },
-              //   isNextDonationDate: true,
-              // ),
+              DatePickerField(
+                hintStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                ),
+                context: context,
+                label: 'next_donation_date'.tr(context),
+                selectedDate: null,
+                onDateSelected: (date) {
+                  log('Next Donation Date: $date');
+                },
+                isNextDonationDate: true,
+              ),
               CustomRequestTextField(
                 hintStyle: TextStyle(
                   color: AppColors.primaryColor,

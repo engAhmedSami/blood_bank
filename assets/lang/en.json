@@ -89,6 +89,8 @@
   "delete_donation": "Delete Donation",
   "confirm_delete_donation": "Are you sure you want to delete this donation?",
   "delete": "Delete",
+  "my_requests": "My Requests",
+  "no_requests_found": "No Requests Founded For you",
   "edit_donation_data": "Edit Donation Data",
 
 
@@ -96,6 +98,7 @@
   "hospital_name": "Hospital Name",
   "address": "Address",
   "contact": "Contact",
+  "need_details": "Need Details",
   "distance": "Distance",
   "donation_type": "Donation Type",
   "id_card": "ID Card",
