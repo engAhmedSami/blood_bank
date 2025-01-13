@@ -1,13 +1,13 @@
 import 'package:blood_bank/core/utils/app_colors.dart';
-import 'package:blood_bank/feature/home/presentation/views/widget/doner/donation_tile.dart';
+import 'package:blood_bank/feature/home/presentation/views/widget/need/need_tile.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class CustomDonnerDrawer extends StatelessWidget {
+class CustomNeedDrawer extends StatelessWidget {
   final String userId;
 
-  const CustomDonnerDrawer({super.key, required this.userId});
+  const CustomNeedDrawer({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -16,22 +16,24 @@ class CustomDonnerDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
+          // Drawer Header
           DrawerHeader(
             decoration: BoxDecoration(
               color: AppColors.backgroundColor,
             ),
             child: Text(
-              'my_donations'.tr(context),
-              style: TextStyle(
+              'my_requests'.tr(context), // Localized title
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 24,
               ),
             ),
           ),
+          // StreamBuilder to fetch and display need requests
           StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
-                .collection('donerRequest')
-                .where('uId', isEqualTo: userId)
+                .collection('neederRequest') // Collection for need requests
+                .where('uId', isEqualTo: userId) // Filter by user ID
                 .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -43,18 +45,22 @@ class CustomDonnerDrawer extends StatelessWidget {
               }
 
               if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                return const Center(child: Text('No donations found.'));
+                return Center(
+                  child: Text(
+                    'no_requests_found'.tr(context), // Localized message
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                );
               }
 
-              final donations = snapshot.data!.docs;
+              final requests = snapshot.data!.docs;
 
               return Column(
-                children: donations.map((doc) {
-                  // ignore: non_constant_identifier_names
-                  final DonationData = doc.data() as Map<String, dynamic>;
-                  return DonationTile(
+                children: requests.map((doc) {
+                  final requestData = doc.data() as Map<String, dynamic>;
+                  return NeedTile(
                     donationId: doc.id,
-                    data: DonationData,
+                    data: requestData,
                   );
                 }).toList(),
               );

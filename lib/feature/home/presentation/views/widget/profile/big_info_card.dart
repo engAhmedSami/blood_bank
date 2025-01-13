@@ -39,7 +39,7 @@ class BigInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    // double width = MediaQuery.of(context).size.width;
     final currentUserUid = FirebaseAuth.instance.currentUser?.uid;
     if (currentUserUid == null) {
       return const Center(child: Text('No user is logged in'));
@@ -107,24 +107,21 @@ class BigInfoCard extends StatelessWidget {
               ),
             ],
           ),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InfoColumn(title: savedLives, image: Assets.imagesLifesaved),
-                SizedBox(width: width * 0.1),
-                InfoColumn(title: bloodGroup, image: Assets.imagesBlood),
-                SizedBox(width: width * 0.15),
-                InfoColumn(
-                  title: isTodayDonationDay
-                      ? 'Today is your donation day'.tr(context)
-                      : formattedNextDonationDate,
-                  image: Assets.imagesNextdonation,
-                  isTodayDonationDay: isTodayDonationDay,
-                ),
-              ],
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              InfoColumn(title: savedLives, image: Assets.imagesLifesaved),
+              // SizedBox(width: width * 0.1),
+              InfoColumn(title: bloodGroup, image: Assets.imagesBlood),
+              // SizedBox(width: width * 0.15),
+              InfoColumn(
+                title: isTodayDonationDay
+                    ? 'Today is your donation day'.tr(context)
+                    : formattedNextDonationDate,
+                image: Assets.imagesNextdonation,
+                isTodayDonationDay: isTodayDonationDay,
+              ),
+            ],
           ),
         );
       },

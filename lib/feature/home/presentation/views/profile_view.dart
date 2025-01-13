@@ -391,7 +391,7 @@ class ProfileViewState extends State<ProfileView> with WidgetsBindingObserver {
               const SizedBox(height: 20),
               ListTile(
                 leading: const Icon(Icons.language, color: Colors.white),
-                title: Text('english'.tr(context),
+                title: Text('English',
                     style: const TextStyle(color: Colors.white)),
                 onTap: () {
                   context.read<LocaleCubit>().changeLanguage('en');
@@ -400,7 +400,7 @@ class ProfileViewState extends State<ProfileView> with WidgetsBindingObserver {
               ),
               ListTile(
                 leading: const Icon(Icons.language, color: Colors.white),
-                title: Text('arabic'.tr(context),
+                title: Text('العربية',
                     style: const TextStyle(color: Colors.white)),
                 onTap: () {
                   context.read<LocaleCubit>().changeLanguage('ar');

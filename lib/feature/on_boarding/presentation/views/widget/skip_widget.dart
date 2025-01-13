@@ -44,14 +44,14 @@ class SkipWidget extends StatelessWidget {
                     PopupMenuItem(
                       value: 'en',
                       child: Text(
-                        'english'.tr(context),
+                        'English',
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
                     PopupMenuItem(
                       value: 'ar',
                       child: Text(
-                        'arabic'.tr(context),
+                        'العربية',
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
