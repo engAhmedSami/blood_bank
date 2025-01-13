@@ -49,7 +49,10 @@ class RequestsForDonation extends StatelessWidget {
                     'donation_request'.tr(context),
                     style: TextStyles.semiBold16,
                   ),
-                  SeeAll(requests: reversedRequests),
+                  SeeAll(
+                    requests: reversedRequests,
+                    snapshot: snapshot,
+                  ),
                 ],
               ),
             ),
