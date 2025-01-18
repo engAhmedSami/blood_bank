@@ -1,5 +1,6 @@
 import 'package:blood_bank/core/utils/app_colors.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
+import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:blood_bank/core/widget/coustom_aleart_diloage.dart';
 import 'package:blood_bank/feature/localization/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart' as intl;
 
 class ChatBotViewBody extends StatefulWidget {
@@ -665,7 +667,7 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
           ],
           icon: Icon(
             Icons.more_vert,
-            color: AppColors.primaryColor, // Use your primary color
+            color: Colors.white, // Use your primary color
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10), // Rounded corners
@@ -698,13 +700,15 @@ class ChatBotViewBodyState extends State<ChatBotViewBody> {
               child: Opacity(
                 opacity: 0.2, // Adjust transparency (0.0 to 1.0)
                 child: Center(
-                  child: Image.asset(
-                    'assets/images/finallllllllogo.png', // Path to your app icon
-                    width: 200, // Adjust size as needed
-                    height: 200,
-                    fit: BoxFit.contain,
+                    child: SvgPicture.asset(
+                  Assets.imagesFinallogoinside,
+                  colorFilter: ColorFilter.mode(
+                    AppColors.backgroundColor.withValues(alpha: 0.5),
+                    BlendMode.modulate,
                   ),
-                ),
+                  width: 200,
+                  height: 100,
+                )),
               ),
             ),
             // Main Content
