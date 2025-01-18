@@ -26,6 +26,7 @@ class DonerRequestState extends State<DonerRequest> {
   final _formKey = GlobalKey<FormState>();
   final User? _user = FirebaseAuth.instance.currentUser;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   // Controllers
   final TextEditingController nameController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
@@ -40,8 +41,11 @@ class DonerRequestState extends State<DonerRequest> {
   final TextEditingController distanceController = TextEditingController();
   final TextEditingController bloodTypeController = TextEditingController();
   final TextEditingController genderController = TextEditingController();
-  final TextEditingController lastdonationdateController =
+  final TextEditingController lastDonationDateController =
       TextEditingController();
+  final TextEditingController nextDonationDateController =
+      TextEditingController();
+  final TextEditingController donationTypeController = TextEditingController();
 
   late AddDonerFunctions _addDonerFunction;
 
@@ -55,7 +59,7 @@ class DonerRequestState extends State<DonerRequest> {
       formKey: _formKey,
       nameController: nameController,
       ageController: ageController,
-      lastdonationdateController: lastdonationdateController,
+      lastdonationdateController: lastDonationDateController,
       idCardController: idCardController,
       medicalConditionsController: medicalConditionsController,
       contactController: contactController,
@@ -78,12 +82,10 @@ class DonerRequestState extends State<DonerRequest> {
           key: _formKey,
           autovalidateMode: AutovalidateMode.disabled,
           child: Column(
-            spacing: 10,
+            spacing: 12,
             children: [
               CustomRequestTextField(
-                hintStyle: TextStyle(
-                  color: AppColors.primaryColor,
-                ),
+                hintStyle: TextStyle(color: AppColors.primaryColor),
                 controller: nameController,
                 hintText: 'Name'.tr(context),
                 validator: (value) => Validators.validateName(value, context),
@@ -92,9 +94,7 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
-                hintStyle: TextStyle(
-                  color: AppColors.primaryColor,
-                ),
+                hintStyle: TextStyle(color: AppColors.primaryColor),
                 controller: ageController,
                 textInputType: TextInputType.number,
                 validator: (value) => Validators.validateAge(value, context),
@@ -115,7 +115,8 @@ class DonerRequestState extends State<DonerRequest> {
               DonationTypeDropdown(
                 initialType: null,
                 onTypeSelected: (selectedType) {
-                  log('Donation Type: $selectedType');
+                  donationTypeController.text = selectedType;
+                  log('Donation Type: ${donationTypeController.text}');
                 },
               ),
               GovernorateDropdown(
@@ -128,18 +129,15 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               GenderDropdown(
-                // ignore: non_constant_identifier_names
-                onGenderSelected: (Gender) {
-                  genderController.text = Gender;
+                onGenderSelected: (gender) {
+                  genderController.text = gender;
                   log('Gender: ${genderController.text}');
                 },
               ),
               CustomRequestTextField(
-                hintStyle: TextStyle(
-                  color: AppColors.primaryColor,
-                ),
+                hintStyle: TextStyle(color: AppColors.primaryColor),
                 controller: idCardController,
-                hintText: '302090********* only 11'.tr(context),
+                hintText: '302090********* only 14'.tr(context),
                 textInputType: TextInputType.number,
                 validator: (value) => Validators.validateIdCard(value, context),
                 onSaved: (value) {
@@ -147,34 +145,33 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               DatePickerField(
-                controller: lastdonationdateController,
-                hintStyle: TextStyle(
-                  color: AppColors.primaryColor,
-                ),
+                controller: lastDonationDateController,
+                hintStyle: TextStyle(color: AppColors.primaryColor),
                 context: context,
                 label: 'last_donation_date'.tr(context),
                 selectedDate: null,
                 onDateSelected: (date) {
-                  log('Last Donation Date: $date');
+                  lastDonationDateController.text =
+                      date.toString().split(' ')[0];
+                  log('Last Donation Date: ${lastDonationDateController.text}');
                 },
                 isNextDonationDate: false,
               ),
               DatePickerField(
-                hintStyle: TextStyle(
-                  color: AppColors.primaryColor,
-                ),
+                controller: nextDonationDateController,
+                hintStyle: TextStyle(color: AppColors.primaryColor),
                 context: context,
                 label: 'next_donation_date'.tr(context),
                 selectedDate: null,
                 onDateSelected: (date) {
-                  log('Next Donation Date: $date');
+                  nextDonationDateController.text =
+                      date.toString().split(' ')[0];
+                  log('Next Donation Date: ${nextDonationDateController.text}');
                 },
                 isNextDonationDate: true,
               ),
               CustomRequestTextField(
-                hintStyle: TextStyle(
-                  color: AppColors.primaryColor,
-                ),
+                hintStyle: TextStyle(color: AppColors.primaryColor),
                 controller: medicalConditionsController,
                 hintText: 'medicalConditions'.tr(context),
                 maxLines: 3,
@@ -183,9 +180,7 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
-                hintStyle: TextStyle(
-                  color: AppColors.primaryColor,
-                ),
+                hintStyle: TextStyle(color: AppColors.primaryColor),
                 controller: unitsController,
                 hintText: 'UnitsRequired'.tr(context),
                 textInputType: TextInputType.number,
@@ -196,9 +191,7 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
-                hintStyle: TextStyle(
-                  color: AppColors.primaryColor,
-                ),
+                hintStyle: TextStyle(color: AppColors.primaryColor),
                 controller: contactController,
                 hintText: 'contactNumber'.tr(context),
                 textInputType: TextInputType.phone,
@@ -209,9 +202,7 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
-                hintStyle: TextStyle(
-                  color: AppColors.primaryColor,
-                ),
+                hintStyle: TextStyle(color: AppColors.primaryColor),
                 controller: notesController,
                 hintText: 'Notes'.tr(context),
                 maxLines: 3,
@@ -220,9 +211,7 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
-                hintStyle: TextStyle(
-                  color: AppColors.primaryColor,
-                ),
+                hintStyle: TextStyle(color: AppColors.primaryColor),
                 controller: hospitalNameController,
                 hintText: 'hospitalName'.tr(context),
                 validator: (value) =>
@@ -232,17 +221,16 @@ class DonerRequestState extends State<DonerRequest> {
                 },
               ),
               CustomRequestTextField(
-                  hintStyle: TextStyle(
-                    color: AppColors.primaryColor,
-                  ),
-                  controller: distanceController,
-                  textInputType: TextInputType.number,
-                  hintText: 'Distance'.tr(context),
-                  validator: (value) =>
-                      Validators.validateDistance(value, context),
-                  onSaved: (value) {
-                    log('Distance: ${distanceController.text}');
-                  }),
+                hintStyle: TextStyle(color: AppColors.primaryColor),
+                controller: distanceController,
+                textInputType: TextInputType.number,
+                hintText: 'Distance'.tr(context),
+                validator: (value) =>
+                    Validators.validateDistance(value, context),
+                onSaved: (value) {
+                  log('Distance: ${distanceController.text}');
+                },
+              ),
               const SizedBox(height: 16),
               CustomButton(
                 text: 'Submit Request'.tr(context),
@@ -254,11 +242,17 @@ class DonerRequestState extends State<DonerRequest> {
                       name: nameController.text,
                       age: num.parse(ageController.text),
                       bloodType: bloodTypeController.text,
-                      donationType: null, // Pass the selected donation type
+                      donationType: donationTypeController.text,
                       gender: genderController.text,
                       idCard: num.parse(idCardController.text),
-                      lastDonationDate: null, // Pass the selected date
-                      nextDonationDate: null, // Pass the selected date
+                      lastDonationDate:
+                          lastDonationDateController.text.isNotEmpty
+                              ? DateTime.parse(lastDonationDateController.text)
+                              : null,
+                      nextDonationDate:
+                          nextDonationDateController.text.isNotEmpty
+                              ? DateTime.parse(nextDonationDateController.text)
+                              : null,
                       medicalConditions: medicalConditionsController.text,
                       units: num.parse(unitsController.text),
                       contact: num.parse(contactController.text),
