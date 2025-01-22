@@ -1,4 +1,3 @@
-import 'package:blood_bank/core/helper_function/scccess_top_snak_bar.dart';
 import 'package:blood_bank/core/utils/app_text_style.dart';
 import 'package:blood_bank/core/utils/assets_images.dart';
 import 'package:blood_bank/core/widget/coustom_dialog.dart';
@@ -38,9 +37,6 @@ class BloodRequest extends StatelessWidget {
               title: 'thanks for your contribution'.tr(context),
               content: 'No requests available at the moment.'.tr(context),
             );
-
-            // const Center(
-            //     child: Text('No requests available at the moment.'));
           }
 
           return ListView.builder(
@@ -49,12 +45,6 @@ class BloodRequest extends StatelessWidget {
               final request = requests[index].data();
               return BloodRequestCard(
                 request: request,
-                onAccept: () {
-                  successTopSnackBar(context, 'Request Accepted');
-                },
-                onDecline: () {
-                  failureTopSnackBar(context, 'Request Declined');
-                },
               );
             },
           );
