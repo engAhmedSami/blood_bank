@@ -190,6 +190,7 @@ class NeedRequestState extends State<NeedRequest> {
         uId: _user.uid,
         hospitalName: hospitalName,
         dateTime: DateTime.now(),
+        status: 'pending',
       );
 
       context.read<AddNeederRequestCubit>().addNeederRequest(request);

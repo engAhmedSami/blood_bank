@@ -14,6 +14,30 @@ class BloodRequestCard extends StatelessWidget {
     required this.request,
   });
 
+  String getStatusMessage(BuildContext context) {
+    switch (request['status']) {
+      case 'accepted':
+        return 'request_accepted'.tr(context);
+      case 'rejected':
+        return 'request_rejected'.tr(context);
+      case 'pending':
+      default:
+        return 'request_pending'.tr(context);
+    }
+  }
+
+  Color getStatusColor() {
+    switch (request['status']) {
+      case 'accepted':
+        return Colors.green;
+      case 'rejected':
+        return Colors.red;
+      case 'pending':
+      default:
+        return AppColors.backgroundColor.withValues(alpha: 0.6);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,7 +49,7 @@ class BloodRequestCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: .1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 6,
               offset: const Offset(0, 6),
             ),
@@ -108,18 +132,14 @@ class BloodRequestCard extends StatelessWidget {
               children: [
                 Icon(
                   Icons.access_time,
-                  color: AppColors.primaryColor.withValues(
-                    alpha: 0.6,
-                  ),
+                  color: getStatusColor(),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    "We will respond to your request as soon as possible",
+                    getStatusMessage(context),
                     style: TextStyles.semiBold16.copyWith(
-                      color: AppColors.primaryColor.withValues(
-                        alpha: 0.6,
-                      ),
+                      color: getStatusColor(),
                     ),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,

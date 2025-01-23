@@ -169,13 +169,16 @@
 
 "find_donors": "Find Donors",
 "request_for_blood": "Request for blood",
-"blood_instructions": "Blood Instructions"
+"blood_instructions": "Blood Instructions",
+"request_accepted": "Request Accepted",
+"request_rejected": "Request Rejected",
+"request_pending":  "We will respond to your request as soon as possible",
 
 
 
 
 
-,    "see_all": "See All",
+    "see_all": "See All",
     "blood_types": "Blood Type", 
     "product_added_successfully": "Donation Added Successfully",
     "something_went_wrong": "Something went wrong",  

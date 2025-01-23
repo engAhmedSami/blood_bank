@@ -11,6 +11,7 @@ class NeederRequestEntity {
   final String uId;
   final String hospitalName;
   final DateTime? dateTime;
+  final String status;
   NeederRequestEntity({
     required this.patientName,
     required this.uId,
@@ -23,6 +24,7 @@ class NeederRequestEntity {
     required this.address,
     required this.gender,
     required this.hospitalName,
+    required this.status,
     this.dateTime,
   });
 }

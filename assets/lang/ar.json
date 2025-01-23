@@ -67,6 +67,9 @@
       "request_for_blood": "طلب دم",
       "blood_instructions": "تعليمات الدم",
       "blood_needed": "الدم المطلوب",
+      "request_accepted": "تم قبول الطلب",
+"request_rejected": "تم رفض الطلب",
+"request_pending":  "سوف نقوم بالرد على طلبك في أقرب وقت ممكن",
 
 "user_not": "المستخدم غير موجود",
     "failed_to_update_user_state": "فشل في تحديث حالة المستخدم",

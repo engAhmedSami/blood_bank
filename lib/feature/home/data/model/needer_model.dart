@@ -13,6 +13,7 @@ class NeederModel {
   final String uId;
   final String hospitalName;
   final DateTime? dateTime;
+  final String status;
 
   NeederModel({
     required this.patientName,
@@ -27,6 +28,7 @@ class NeederModel {
     required this.gender,
     required this.hospitalName,
     this.dateTime,
+    required this.status,
   });
   factory NeederModel.fromEntity(NeederRequestEntity addNeederInputEntity) {
     return NeederModel(
@@ -42,6 +44,7 @@ class NeederModel {
       uId: addNeederInputEntity.uId,
       hospitalName: addNeederInputEntity.hospitalName,
       dateTime: addNeederInputEntity.dateTime,
+      status: addNeederInputEntity.status,
     );
   }
   toJson() {
@@ -58,6 +61,7 @@ class NeederModel {
       'uId': uId,
       'hospitalName': hospitalName,
       'dateTime': dateTime,
+      'status': status,
     };
   }
 }
