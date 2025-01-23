@@ -195,7 +195,7 @@ AppBar buildAppBar(BuildContext context) {
     backgroundColor: Colors.white,
     title: Text(
       "find_donors".tr(context),
-      style: TextStyles.bold19,
+      style: TextStyles.bold19.copyWith(color: Colors.black),
     ),
     centerTitle: true,
     leading: IconButton(
