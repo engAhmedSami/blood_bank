@@ -81,8 +81,8 @@ This project is open-source and available under the MIT License.
 
 ## 📩 Contact
 For any inquiries, feel free to reach out via:
-- **Email**: scarlow011@gmail.com - basel.a.embaby@gmail.com
-- **Phone**: +201060417664 - +20 102 358 2057
+- **Email**: ii.ahmedsami0@gmail.com - basel.a.embaby@gmail.com
+- **Phone**: +201060417664 - +201023582057
 - **LinkedIn**:
   - [Ahmed Sami](https://www.linkedin.com/in/ahmedsami011/)
   - [Basel Embaby](https://www.linkedin.com/in/baselembaby/)
