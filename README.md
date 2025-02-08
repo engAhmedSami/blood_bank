@@ -10,6 +10,7 @@ A Flutter-based blood donation management system designed to help users find and
 - **Authentication**: Firebase Auth
 - **Cloud Storage**: Firebase Storage
 - **Localization**: Supports Arabic & English
+- **CI/CD**: Using Shorebird 
 
 ## ✨ Features
 - 🔹 **User Authentication** (Signup/Login using Firebase Auth)
