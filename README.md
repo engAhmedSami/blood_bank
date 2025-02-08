@@ -56,4 +56,4 @@ lib/
 This project is open-source and available under the MIT License.
 
 ## 📩 Contact
-For any inquiries, feel free to reach out via [your email] or open an issue in the repository.
+For any inquiries, feel free to reach out via scarlow011@gmail.com - basel.a.emabay@gmail.com or open an issue in the repository.
