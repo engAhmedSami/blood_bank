@@ -1,10 +1,7 @@
-تم تعديل ملف README.md ليعكس هيكلة المشروع كما هي موضحة في الصورة التي أرسلتها. إليك النسخة الجديدة:  
-
-```markdown
-# 🏥 Blood Donation Management System
+# Blood Donation Management System
 
 ## 📌 Overview
-A Flutter-based blood donation management system designed to help users find and request blood donations efficiently. The system includes user authentication, request management, notifications, and a well-structured UI with multilingual support (Arabic & English).
+A Flutter-based blood donation management system designed to help users find and request blood donations efficiently. The system includes user authentication, request management, and a well-structured UI with multilingual support (Arabic & English).
 
 ## 🛠️ Tech Stack
 - **Flutter** (Dart)
@@ -18,52 +15,46 @@ A Flutter-based blood donation management system designed to help users find and
 - 🔹 **User Authentication** (Signup/Login using Firebase Auth)
 - 🔹 **Request Management** (Create, update, and track blood donation requests)
 - 🔹 **Multilingual Support** (Arabic & English localization)
-- 🔹 **Push Notifications** (Firebase Cloud Messaging)
-- 🔹 **Optimized UI Components** (Reusable widgets for better UX)
+- 🔹 **Optimized UI Components** (Custom widgets for better UX)
 - 🔹 **Error Handling & Performance Enhancements**
 
 ## 📂 Project Structure
 ```
 lib/
-│── main.dart                     # Main entry point
-│── app_blood_bank.dart            # Main app file
-│── constants.dart                 # Constants used across the app
-│── firebase_options.dart          # Firebase configuration
-│
-│── core/                          # Core utilities and services
-│   ├── errors/                    # Error handling
-│   ├── helper_function/           # Helper functions
-│   ├── services/                  # API & background services
-│   ├── utils/                      # Utility functions & constants
-│   ├── widget/                     # Reusable widgets
-│
-│── feature/                        # App features
-│   ├── auth/                       # Authentication module
-│   │   ├── data/                   # Data sources (API, Local storage)
-│   │   ├── domain/                 # Models & business logic
-│   │   ├── presentation/           # UI screens & components
-│   │
-│   ├── home/                       # Home screen feature
-│   │   ├── data/                   
-│   │   ├── domain/                 
-│   │   ├── presentation/           
-│   │
-│   ├── localization/               # Localization & language settings
-│   │   ├── cubit/                  # State management for languages
-│   │   ├── app_localizations.dart  
+│-- main.dart
+│-- core/
+│   ├── errors/
+│   ├── helper_function/
+│   ├── services/
+│   ├── utils/
+│-- features/
+│   ├── auth/
+│   ├── data/
+│   ├── domain/
+│   ├── presentation/
+│   ├── home/
+│   │   ├── data/
+│   │   ├── domain/
+│   │   ├── presentation/
+│   ├── localization/
+│   │   ├── app_localizations.dart
 │   │   ├── language_cache_helper.dart
-│   │   ├── settings_page.dart
-│   │
-│   ├── notification/               # Push notifications module
-│
-│   ├── on_boarding/                # Onboarding flow
-│   │   ├── presentation/           
-│   │   │   ├── views/              # Onboarding screens
-│   │   │   ├── widget/             # Onboarding widgets
-│   │   │   ├── chooes_to_signup_or_login_view.dart
-│   │   │   ├── on_boarding_view.dart
-│
-│── splash/                         # Splash screen
+│   ├── settings_page.dart
+│   ├── notification/
+│   ├── on_boarding/
+│   │   ├── presentation/
+│   │   │   ├── views/
+│   │   │   │   ├── choose_to_signup_or_login_view.dart
+│   │   │   │   ├── on_boarding_view.dart
+│   │   ├── widget/
+│-- shared/
+│   ├── widgets/
+│   ├── helper/
+│-- splash/
+│   ├── app_blood_bank.dart
+│   ├── constants.dart
+│   ├── firebase_options.dart
+│-- 
 ```
 
 ## 🚀 Getting Started
@@ -88,8 +79,4 @@ lib/
 This project is open-source and available under the MIT License.
 
 ## 📩 Contact
-For any inquiries, feel free to reach out via scarlow011@gmail.com - basel.a.emabay@gmail.com or open an issue in the repository.
-```
-
-🔹 تم تعديل **الـ structure** ليعكس الملفات والمجلدات الموجودة في الصورة التي أرسلتها.  
-🔹 لو في أي إضافات أو تعديلات، قولي! 🚀🔥
+For any inquiries, feel free to reach out via scarlow011@gmail.com - basel.a.embaby@gmail.com or open an issue in the repository.
