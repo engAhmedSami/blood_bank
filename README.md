@@ -20,7 +20,7 @@ A Flutter-based blood donation management system designed to connect individuals
 - 🔹 **Multilingual Support** (Arabic & English localization)
 - 🔹 **Optimized UI Components** (Custom widgets for better UX)
 - 🔹 **Error Handling & Performance Enhancements**
-- 🔹 **AI Boot to help users**
+- 🔹 **AI chatbot help users**
 
 
 ## 📂 Project Structure
