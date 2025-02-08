@@ -11,8 +11,6 @@ A Flutter-based blood donation management system designed to connect individuals
 - **Cloud Storage**: Firebase Storage
 - **Localization**: Supports Arabic & English
 - **CI/CD**: Using Shorebird
-- 
-
 
 ## ✨ Features
 - 🔹 **User Authentication** (Signup/Login using Firebase Auth)
@@ -20,8 +18,7 @@ A Flutter-based blood donation management system designed to connect individuals
 - 🔹 **Multilingual Support** (Arabic & English localization)
 - 🔹 **Optimized UI Components** (Custom widgets for better UX)
 - 🔹 **Error Handling & Performance Enhancements**
-- 🔹 **AI chatbot help users**
-
+- 🔹 **AI chatbot to help users**
 
 ## 📂 Project Structure
 ```
@@ -59,7 +56,6 @@ lib/
 │   ├── app_blood_bank.dart
 │   ├── constants.dart
 │   ├── firebase_options.dart
-│-- 
 ```
 
 ## 🚀 Getting Started
@@ -84,4 +80,17 @@ lib/
 This project is open-source and available under the MIT License.
 
 ## 📩 Contact
-For any inquiries, feel free to reach out via scarlow011@gmail.com - basel.a.embaby@gmail.com or open an issue in the repository.
+For any inquiries, feel free to reach out via:
+- **Email**: scarlow011@gmail.com - basel.a.embaby@gmail.com
+- **Phone**: +201060417664 - +20 102 358 2057
+- **LinkedIn**:
+  - [Ahmed Sami](https://www.linkedin.com/in/ahmedsami011/)
+  - [Basel Embaby](https://www.linkedin.com/in/baselembaby/)
+
+You can also open an issue in the repository for any questions or suggestions.
+
+## 📥 Download APK
+You can download the APK file from the following Google Drive link until it is uploaded to Google Play:
+- [Download APK](https://drive.google.com/drive/folders/1GQ3padkGZhP6vYv1715g4VFMUsA7uOW4?usp=sharing)
+
+Replace `yourfileid` with the actual file ID from your Google Drive. Make sure the file is shared with the appropriate permissions to allow downloads.
