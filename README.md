@@ -1,7 +1,7 @@
 # Blood Donation Management System
 
 ## 📌 Overview
-A Flutter-based blood donation management system designed to help users find and request blood donations efficiently. The system includes user authentication, request management, and a well-structured UI with multilingual support (Arabic & English).
+A Flutter-based blood donation management system designed to connect individuals in need of blood with potential donors efficiently. The system includes user authentication, request management, and a well-structured UI with multilingual support (Arabic & English).
 
 ## 🛠️ Tech Stack
 - **Flutter** (Dart)
