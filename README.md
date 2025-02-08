@@ -93,4 +93,3 @@ You can also open an issue in the repository for any questions or suggestions.
 You can download the APK file from the following Google Drive link until it is uploaded to Google Play:
 - [Download APK](https://drive.google.com/drive/folders/1GQ3padkGZhP6vYv1715g4VFMUsA7uOW4?usp=sharing)
 
-Replace `yourfileid` with the actual file ID from your Google Drive. Make sure the file is shared with the appropriate permissions to allow downloads.
