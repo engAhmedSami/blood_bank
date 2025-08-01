@@ -77,12 +77,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
         child: PageView(
           controller: controller,
           physics: const NeverScrollableScrollPhysics(),
-          children: [
-            HomeView(),
-            NeedView(),
-            DonerView(),
-            ProfileView(),
-          ],
+          children: [HomeView(), NeedView(), DonerView(), ProfileView()],
         ),
       ),
     );
@@ -132,11 +127,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       elevation: 15,
       shape: const CircleBorder(),
       onPressed: () {
-        Navigator.of(context).push(
-          buildPageRoute(
-            const ChatBotViewBody(),
-          ),
-        );
+        Navigator.of(context).push(buildPageRoute(const ChatBotViewBody()));
       },
       backgroundColor: AppColors.primaryColor,
       child: Lottie.asset(
@@ -157,10 +148,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
         colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
         height: 28,
       ),
-      selectedIcon: SvgPicture.asset(
-        asset,
-        height: 30,
-      ),
+      selectedIcon: SvgPicture.asset(asset, height: 30),
       selectedColor: AppColors.primaryColor,
       title: Text(label),
     );

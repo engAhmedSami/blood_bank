@@ -18,6 +18,5 @@ void main() async {
   setupGetit();
   Bloc.observer = CustomBlockObserver();
   await SQlHelperHealthRequest().database;
-
   runApp(const BloodBank());
 }

@@ -1,0 +1,2 @@
+D:/courses/Flutter/projects/Portofolio/blood_bank/android/app/.cxx/Debug/k4c3s3b5/x86_64/CMakeFiles/edit_cache.dir
+D:/courses/Flutter/projects/Portofolio/blood_bank/android/app/.cxx/Debug/k4c3s3b5/x86_64/CMakeFiles/rebuild_cache.dir
